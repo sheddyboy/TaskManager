@@ -1,5 +1,5 @@
 import React from "react";
-import { CheckboxWrapper } from "./CheckBox.styled";
+import { CheckboxWrapper } from "./CheckboxWrapper.styled";
 
 interface CheckboxProps {
   name: string;
