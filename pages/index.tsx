@@ -12,6 +12,7 @@ const Index = () => {
   useEffect(() => {
     axios("/api/boards").then((data) => console.log(data));
   }, []);
+  console.log("Hey");
   return (
     <ThemeProvider theme={{ theme }}>
       <Button state="primary" onClick={toggleTheme}>
