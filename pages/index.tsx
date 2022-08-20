@@ -1,15 +1,14 @@
-import axios from "axios";
+// import axios from "axios";
 import React, { useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { Button, DelButton } from "../components/UI/Button.styled";
 import Checkbox from "../components/UI/Checkbox";
 
-const index = () => {
+const Index = () => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const toggleTheme = () => {
     setTheme((theme) => (theme === "light" ? "dark" : "light"));
   };
-
   return (
     <ThemeProvider theme={{ theme }}>
       <Button state="primary" onClick={toggleTheme}>
@@ -27,4 +26,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
