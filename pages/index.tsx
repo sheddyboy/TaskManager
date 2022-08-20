@@ -1,5 +1,5 @@
-// import axios from "axios";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { Button, DelButton } from "../components/UI/Button.styled";
 import Checkbox from "../components/UI/Checkbox";
@@ -9,6 +9,9 @@ const Index = () => {
   const toggleTheme = () => {
     setTheme((theme) => (theme === "light" ? "dark" : "light"));
   };
+  useEffect(() => {
+    axios("/api/boards").then((data) => console.log(data));
+  }, []);
   return (
     <ThemeProvider theme={{ theme }}>
       <Button state="primary" onClick={toggleTheme}>
