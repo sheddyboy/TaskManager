@@ -35,4 +35,4 @@ yarn-error.log*
 *.tsbuildinfo
 
 #keys
-database.tsx
+.env
