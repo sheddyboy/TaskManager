@@ -1,0 +1,104 @@
+[
+  {
+    "name": "Platform Launch",
+    "status": ["Todo", "Doing", "Done"],
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Build UI for onboarding flow",
+        "description": "",
+        "status": "Todo"
+      },
+      {
+        "id": 2,
+        "title": "Build UI for search",
+        "description": "",
+        "status": "Todo"
+      },
+      { "title": "QA and test all major user journeys", "description": "" },
+      {
+        "id": 3,
+        "title": "Design settings and search pages",
+        "description": "",
+        "status": "Todo"
+      },
+      {
+        "id": 4,
+        "title": "Add account management endpoints",
+        "description": "",
+        "status": "Todo"
+      },
+      {
+        "id": 5,
+        "title": "Add search enpoints",
+        "description": "",
+        "status": "Todo"
+      },
+      {
+        "id": 6,
+        "title": "Research pricing points of various competitors and trial different business models",
+        "description": "",
+        "status": "Todo"
+      }
+    ],
+    "subtasks": [
+      { "title": "Welcome", "isCompleted": true, "tid": 1 },
+      { "title": "Welcome", "isCompleted": false, "tid": 1 },
+      { "title": "Welcome", "isCompleted": true, "tid": 1 },
+      { "title": "Welcome", "isCompleted": true, "tid": 2 },
+      { "title": "Welcome", "isCompleted": true, "tid": 2 },
+      { "title": "Welcome", "isCompleted": true, "tid": 3 }
+    ]
+  },
+  {
+    "name": "Roadmap",
+    "status": ["Todo", "Doing", "Done"],
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Build UI for onboarding flow",
+        "description": "",
+        "status": "Todo"
+      },
+      {
+        "id": 2,
+        "title": "Build UI for search",
+        "description": "",
+        "status": "Todo"
+      },
+      { "title": "QA and test all major user journeys", "description": "" },
+      {
+        "id": 3,
+        "title": "Design settings and search pages",
+        "description": "",
+        "status": "Todo"
+      },
+      {
+        "id": 4,
+        "title": "Add account management endpoints",
+        "description": "",
+        "status": "Todo"
+      },
+      {
+        "id": 5,
+        "title": "Add search enpoints",
+        "description": "",
+        "status": "Todo"
+      },
+      {
+        "id": 6,
+        "title": "Research pricing points of various competitors and trial different business models",
+        "description": "",
+        "status": "Todo"
+      }
+    ],
+    "subtasks": [
+      { "title": "Welcome", "isCompleted": true, "tid": 1 },
+      { "title": "Welcome", "isCompleted": false, "tid": 1 },
+      { "title": "Welcome", "isCompleted": true, "tid": 1 },
+      { "title": "Welcome", "isCompleted": true, "tid": 2 },
+      { "title": "Welcome", "isCompleted": true, "tid": 2 },
+      { "title": "Welcome", "isCompleted": true, "tid": 3 }
+    ]
+  }
+]

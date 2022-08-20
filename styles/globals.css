@@ -14,3 +14,21 @@ a {
 * {
   box-sizing: border-box;
 }
+
+#light form {
+  background-color: aqua;
+}
+#dark form {
+  background-color: rgb(225, 228, 42);
+}
+
+/* #light .btn {
+  background-color: aqua;
+  width: 100px;
+  height: 100px;
+}
+#dark .btn {
+  background-color: rgb(125, 207, 30);
+  width: 100px;
+  height: 100px;
+} */
