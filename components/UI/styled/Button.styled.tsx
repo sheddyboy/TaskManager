@@ -60,3 +60,6 @@ export const DelButton = styled(Button)`
     background-color: #ff9898;
   }
 `;
+export const NewTaskButton = styled(Button)`
+  padding: 15px 25px 15px 25px;
+`;
