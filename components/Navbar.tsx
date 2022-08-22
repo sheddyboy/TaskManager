@@ -8,7 +8,7 @@ import {
   NavbarWrapper,
   Title,
 } from "./styled/NavbarWrapper.styled";
-import { NewTaskButton } from "./UI/styled/Button.styled";
+import { AddButton } from "./UI/styled/Button.styled";
 
 const Navbar = () => {
   const { state } = useContext(StateManagerCtx);
@@ -29,9 +29,9 @@ const Navbar = () => {
       <Content>
         <Title>Platform Launch</Title>
         <Actions>
-          <NewTaskButton state="primary" size="large">
+          <AddButton state="primary" size="large">
             + Add New Task
-          </NewTaskButton>
+          </AddButton>
           <i>
             <Image src="/icon-vertical-ellipsis.svg" width={5} height={20} />
           </i>

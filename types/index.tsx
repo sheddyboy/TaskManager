@@ -23,9 +23,7 @@ export interface StateManagerCtxProps {
 export interface StateManagerProviderProps {
   children: React.ReactNode;
 }
-export interface BodyProps {
-  children: React.ReactNode;
-}
+
 export interface TaskManagerProps {
   state: StateReducerProps;
 }

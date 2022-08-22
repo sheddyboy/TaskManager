@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const NavbarWrapper = styled.div`
   display: flex;
   align-items: center;
-  height: 97px;
   width: 100%;
   background: ${({ theme }) => (theme.theme === "light" ? light.bg : dark.bg)};
   font-weight: 700;
