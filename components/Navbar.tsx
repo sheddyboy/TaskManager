@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React, { useContext } from "react";
-import { ThemeContext } from "styled-components";
-import Sidebar from "./Sidebar";
+import { StateManagerCtx } from "../stateManager/StateManagerProvider";
 import {
   Actions,
   Content,
@@ -9,22 +8,24 @@ import {
   NavbarWrapper,
   Title,
 } from "./styled/NavbarWrapper.styled";
-import { Button, NewTaskButton } from "./UI/styled/Button.styled";
+import { NewTaskButton } from "./UI/styled/Button.styled";
 
 const Navbar = () => {
-  const theme = useContext(ThemeContext);
+  const { state } = useContext(StateManagerCtx);
+
+  const { theme, toggleSidebar } = state;
+
   return (
     <NavbarWrapper>
-      {false && (
+      {!toggleSidebar && (
         <Logo>
           <Image
-            src={theme.theme === "light" ? "/logo-dark.svg" : "/logo-light.svg"}
+            src={theme === "light" ? "/logo-dark.svg" : "/logo-light.svg"}
             width={153}
             height={26}
           />
         </Logo>
       )}
-      {/* <Sidebar /> */}
       <Content>
         <Title>Platform Launch</Title>
         <Actions>

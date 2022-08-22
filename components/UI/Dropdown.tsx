@@ -23,7 +23,7 @@ const Dropdown = ({ options, onChange, value }: DropdownProps) => {
   const toggleDropdown = () => {
     setDropdownToggle((dropdownToggle) => !dropdownToggle);
   };
-  const handleOption = (option: Options) => {
+  const handleClick = (option: Options) => {
     toggleDropdown();
     onChange(option);
   };
@@ -39,12 +39,12 @@ const Dropdown = ({ options, onChange, value }: DropdownProps) => {
       </DropdownHeader>
       {dropdownToggle && (
         <DropdownList>
-          {options?.map((i) => (
+          {options.map((option) => (
             <Option
-              key={i.id}
-              title={i.title}
+              key={option.id}
+              title={option.title}
               onClick={() => {
-                handleOption(i);
+                handleClick(option);
               }}
             />
           ))}

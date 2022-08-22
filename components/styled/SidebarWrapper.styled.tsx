@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export const SidebarWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: ${({ theme }) =>
     theme.theme === "light" ? "#FFFFFF" : "#2B2C37"};
   height: 100%;
@@ -74,3 +77,40 @@ export const CreateBoard = styled.div`
   }
 `;
 export const Bottom = styled.div``;
+export const Theme = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${({ theme }) =>
+    theme.theme === "light" ? "#f4f7fd" : "#20212C"};
+  border-radius: 6px;
+  margin-left: 24px;
+  height: 48px;
+`;
+export const Sun = styled.i`
+  margin-right: 24px;
+`;
+export const Moon = styled.i`
+  margin-left: 24px;
+`;
+
+export const HideSidebar = styled.div`
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 22px;
+  margin-bottom: 47px;
+  margin-left: 31px;
+  align-items: center;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 19px;
+  color: #828fa3;
+
+  i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+  }
+`;
