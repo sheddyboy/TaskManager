@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { InputWrapper } from "./styled/InputWrapper.styled";
+import { InputWrapper, Label } from "./styled/InputWrapper.styled";
 
 interface InputProps
   extends React.DetailedHTMLProps<
@@ -7,9 +7,18 @@ interface InputProps
     HTMLInputElement
   > {
   name?: string;
+  canDelete?: boolean;
+  marginBottom?: string;
+  value?: string;
 }
 
-const Input = ({ name, ...att }: InputProps) => {
+const Input = ({
+  name,
+  value,
+  canDelete,
+  marginBottom,
+  ...attr
+}: InputProps) => {
   const [validation, setValidation] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -17,9 +26,14 @@ const Input = ({ name, ...att }: InputProps) => {
     inputRef.current?.value === "" && setValidation(true);
   };
   return (
-    <InputWrapper>
-      <label>{name}</label>
+    <InputWrapper
+      canDelete={canDelete as false}
+      style={{ marginBottom: marginBottom }}
+    >
+      <Label>{name}</Label>
       <input
+        {...attr}
+        value={value}
         style={{
           borderColor: validation ? "#EA5555" : "rgba(130, 143, 163, 0.25)",
         }}
@@ -28,7 +42,6 @@ const Input = ({ name, ...att }: InputProps) => {
         onFocus={() => {
           setValidation(false);
         }}
-        {...att}
       />
       {validation && <span>Can&apos;t be empty</span>}
     </InputWrapper>

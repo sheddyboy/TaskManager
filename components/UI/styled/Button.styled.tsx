@@ -3,9 +3,14 @@ import styled from "styled-components";
 interface ButtonProps {
   size?: "small" | "large";
   state?: "primary" | "secondary";
+  marginTop?: string;
+  marginBottom?: string;
 }
 
 export const Button = styled.button<ButtonProps>`
+  width: 100%;
+  margin-top: ${({ marginTop }) => marginTop};
+  margin-bottom: ${({ marginBottom }) => marginBottom};
   font-size: ${({ size }) => (size === "small" ? "13px" : "15px")};
   padding: ${({ size }) =>
     size === "small" ? "15px 70px 12px 70px" : "19px 63px 14px 63px"};
@@ -50,6 +55,8 @@ const dark = {
 Button.defaultProps = {
   size: "small",
   state: "primary",
+  marginTop: "0px",
+  marginBottom: "0px",
 };
 
 export const DelButton = styled(Button)`

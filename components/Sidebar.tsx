@@ -19,7 +19,8 @@ import Toggle from "./UI/Toggle";
 
 const Sidebar = () => {
   const { dispatch, state } = useContext(StateManagerCtx);
-  const { SIDEBAR_TOGGLE, THEME_TOGGLE, THEME_TOGGLE_BUTTON } = actionValues;
+  const { SIDEBAR_TOGGLE, THEME_TOGGLE, THEME_TOGGLE_BUTTON, MODAL_TOGGLE } =
+    actionValues;
   const { theme, themeButton } = state;
 
   return (
@@ -40,7 +41,11 @@ const Sidebar = () => {
             </i>
             <p>Platform Launch</p>
           </AddedBoard>
-          <CreateBoard>
+          <CreateBoard
+            onClick={() => {
+              dispatch({ type: MODAL_TOGGLE });
+            }}
+          >
             <i>
               <Image src="/icon-board-purple.svg" width={16} height={16} />
             </i>

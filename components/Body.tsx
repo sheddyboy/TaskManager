@@ -1,16 +1,20 @@
 import React, { useContext } from "react";
+import { actionValues } from "../defaultValues";
 import { StateManagerCtx } from "../stateManager/StateManagerProvider";
+import AddNewBoard from "./AddNewBoard";
 import Column from "./Column";
 import Navbar from "./Navbar";
 import { BodyWrapper } from "./styled/BodyWrapper.styled";
 import { Content } from "./styled/Content.styled";
 import { EmptyBoard } from "./styled/EmptyBoard.styled";
 import { NewColumn } from "./styled/NewColumn.styled";
+import Modal from "./UI/Modal";
 import SideBarToggle from "./UI/SideBarToggle";
 import { AddButton } from "./UI/styled/Button.styled";
 
 const Body = () => {
-  const { state } = useContext(StateManagerCtx);
+  const { MODAL_TOGGLE } = actionValues;
+  const { state, dispatch } = useContext(StateManagerCtx);
   const { toggleSidebar } = state;
 
   return (
@@ -27,6 +31,15 @@ const Body = () => {
         <NewColumn>
           <p>+ New Column</p>
         </NewColumn>
+        {state.toggleModal && (
+          <Modal
+            onClick={() => {
+              dispatch({ type: MODAL_TOGGLE });
+            }}
+          >
+            <AddNewBoard />
+          </Modal>
+        )}
       </Content>
       {!toggleSidebar && <SideBarToggle />}
     </BodyWrapper>

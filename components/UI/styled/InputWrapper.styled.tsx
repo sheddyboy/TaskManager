@@ -1,17 +1,11 @@
 import styled from "styled-components";
 
-export const InputWrapper = styled.div`
-  position: relative;
+interface InputWrapperProps {
+  canDelete: boolean;
+}
 
-  label {
-    font-family: "Plus Jakarta Sans";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 12px;
-    line-height: 15px;
-    color: ${({ theme }) =>
-      theme.theme === "light" ? light.labelColor : dark.labelColor};
-  }
+export const InputWrapper = styled.div<InputWrapperProps>`
+  position: relative;
 
   input {
     border: 1px solid rgba(130, 143, 163, 0.25);
@@ -47,9 +41,35 @@ export const InputWrapper = styled.div`
     font-size: 13px;
     line-height: 23px;
     position: absolute;
-    bottom: 9px;
-    right: 16px;
+    bottom: 8px;
+    right: ${({ canDelete }) => (canDelete ? "47px" : "16px")};
   }
+`;
+
+interface InputFieldProps {
+  canDelete: boolean;
+}
+
+export const InputField = styled.div<InputFieldProps>`
+  display: grid;
+  align-items: center;
+  grid-template-columns: ${({ canDelete }) =>
+    canDelete ? "auto 31px" : "auto"};
+  i {
+    cursor: pointer;
+    margin-left: 16px;
+    display: ${({ canDelete }) => (canDelete ? "block" : "none")};
+  }
+`;
+export const Label = styled.label`
+  display: block;
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  color: ${({ theme }) =>
+    theme.theme === "light" ? light.labelColor : dark.labelColor};
 `;
 
 const light = {
