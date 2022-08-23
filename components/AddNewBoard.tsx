@@ -1,18 +1,32 @@
-import React from "react";
-import { actionValues } from "../defaultValues";
-import StateManager from "../stateManager/StateManagerReducer";
+import React, { useContext } from "react";
+import { v4 as uuidv4 } from "uuid";
+import DataManager from "../dataManager/DataManager";
+import useStateManager from "../hooks/useStateManager";
 import Input from "./UI/Input";
 import { Button } from "./UI/styled/Button.styled";
 import { Card, Title } from "./UI/styled/Card.styled";
 import { InputField, Label } from "./UI/styled/InputWrapper.styled";
 
 const AddNewBoard = () => {
-  const { COLUMN_INPUT, BOARD_NAME_INPUT } = actionValues;
-  const { state, dispatch } = StateManager();
+  const { state, dispatch, actionValues } = useStateManager();
+  const { COLUMN_INPUT, BOARD_NAME_INPUT, MODAL_TOGGLE } = actionValues;
+  const { addBoard } = DataManager();
   const { columnInput } = state;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    dispatch({ type: MODAL_TOGGLE });
     e.preventDefault();
+    console.log(state.toggleModal);
+    console.log(state.toggleModal);
+
+    const status = state.columnInput.map((i) => {
+      return { name: i.column, c_id: uuidv4() };
+    });
+    const addBoardData = {
+      name: state.boardNameInput,
+      status: status,
+    };
+    addBoard(addBoardData);
   };
 
   return (
@@ -79,7 +93,7 @@ const AddNewBoard = () => {
             + Add New Column
           </Button>
         )}
-        <Button marginTop="24px" state="primary">
+        <Button type="submit" marginTop="24px" state="primary">
           Create New Board
         </Button>
       </form>

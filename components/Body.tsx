@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
-import { actionValues } from "../defaultValues";
-import { StateManagerCtx } from "../stateManager/StateManagerProvider";
+import React from "react";
+import useStateManager from "../hooks/useStateManager";
 import AddNewBoard from "./AddNewBoard";
 import Column from "./Column";
 import Navbar from "./Navbar";
@@ -13,8 +12,8 @@ import SideBarToggle from "./UI/SideBarToggle";
 import { AddButton } from "./UI/styled/Button.styled";
 
 const Body = () => {
+  const { state, dispatch, actionValues } = useStateManager();
   const { MODAL_TOGGLE } = actionValues;
-  const { state, dispatch } = useContext(StateManagerCtx);
   const { toggleSidebar } = state;
 
   return (

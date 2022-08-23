@@ -74,5 +74,6 @@ export interface SubTaskProps {
   isCompleted: boolean;
 }
 export interface AddBoardProps {
-  body: { name: string; status: string[] };
+  name: string;
+  status: { name: string; c_id: string }[];
 }

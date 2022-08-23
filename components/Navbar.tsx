@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { useContext } from "react";
-import { StateManagerCtx } from "../stateManager/StateManagerProvider";
+import useStateManager from "../hooks/useStateManager";
 import {
   Actions,
   Content,
@@ -11,7 +11,7 @@ import {
 import { AddButton } from "./UI/styled/Button.styled";
 
 const Navbar = () => {
-  const { state } = useContext(StateManagerCtx);
+  const { state } = useStateManager();
 
   const { theme, toggleSidebar } = state;
 

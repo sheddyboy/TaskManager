@@ -1,7 +1,6 @@
 import Image from "next/image";
-import React, { useContext } from "react";
-import { actionValues } from "../defaultValues";
-import { StateManagerCtx } from "../stateManager/StateManagerProvider";
+import React from "react";
+import useStateManager from "../hooks/useStateManager";
 import {
   AddedBoard,
   Board,
@@ -18,7 +17,7 @@ import {
 import Toggle from "./UI/Toggle";
 
 const Sidebar = () => {
-  const { dispatch, state } = useContext(StateManagerCtx);
+  const { state, dispatch, actionValues } = useStateManager();
   const { SIDEBAR_TOGGLE, THEME_TOGGLE, THEME_TOGGLE_BUTTON, MODAL_TOGGLE } =
     actionValues;
   const { theme, themeButton } = state;
@@ -35,9 +34,9 @@ const Sidebar = () => {
         </Logo>
         <Board>
           <span>ALL BOARDS</span>
-          <AddedBoard active={true}>
+          <AddedBoard active={false}>
             <i>
-              <Image src="/icon-board-white.svg" width={16} height={16} />
+              <Image src="/icon-board.svg" width={16} height={16} />
             </i>
             <p>Platform Launch</p>
           </AddedBoard>

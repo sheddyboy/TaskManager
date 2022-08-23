@@ -1,6 +1,7 @@
 import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
 import { NextApiRequest, NextApiResponse } from "next";
-import { uuid } from "uuidv4";
+import { v4 as uuidv4 } from "uuid";
+
 import db from "../../../../../../../../database/database";
 
 const subtasks = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -30,7 +31,7 @@ const subtasks = async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     case "POST":
       {
-        const t_id = uuid();
+        const t_id = uuidv4();
         const taskData = {
           title: req.body.title,
           status: req.body.status,
@@ -41,7 +42,7 @@ const subtasks = async (req: NextApiRequest, res: NextApiResponse) => {
         await updateDoc(boardRef, { tasks: arrayUnion(taskData) });
         const subtasks: [] = req.body.subtasks;
         subtasks.map(async (title) => {
-          const s_id = uuid();
+          const s_id = uuidv4();
           const subtaskData = {
             t_id: t_id,
             s_id: s_id,

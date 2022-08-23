@@ -1,12 +1,10 @@
 import axios from "axios";
-import { useContext } from "react";
-import { actionValues } from "../defaultValues";
-import { StateManagerCtx } from "../stateManager/StateManagerProvider";
+import useStateManager from "../hooks/useStateManager";
 import { AddBoardProps } from "../types";
 
 const DataManager = () => {
+  const { dispatch, actionValues } = useStateManager();
   const { BOARDS, IS_LOADING } = actionValues;
-  const { dispatch } = useContext(StateManagerCtx);
 
   const getBoards = () => {
     axios("/api/boards").then((data) => {
@@ -15,7 +13,7 @@ const DataManager = () => {
     });
   };
 
-  const addBoard = ({ body }: AddBoardProps) => {
+  const addBoard = ({ ...body }: AddBoardProps) => {
     let id;
     axios.post("/api/boards", body).then((data) => (id = data.data));
 

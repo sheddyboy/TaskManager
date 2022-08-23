@@ -1,11 +1,10 @@
 import Image from "next/image";
-import React, { useContext } from "react";
-import { actionValues } from "../../defaultValues";
-import { StateManagerCtx } from "../../stateManager/StateManagerProvider";
+import React from "react";
+import useStateManager from "../../hooks/useStateManager";
 import { SideBarToggleWrapper } from "./styled/SideBarToggleWrapper.styled";
 
 const SideBarToggle = () => {
-  const { dispatch } = useContext(StateManagerCtx);
+  const { dispatch, actionValues } = useStateManager();
   const { SIDEBAR_TOGGLE } = actionValues;
 
   return (
