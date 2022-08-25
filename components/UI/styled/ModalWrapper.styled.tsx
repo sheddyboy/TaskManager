@@ -7,7 +7,8 @@ export const ModalWrapper = styled.div`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
+  display: grid;
+  grid-template-columns: 480px;
   justify-content: center;
   align-items: center;
 `;

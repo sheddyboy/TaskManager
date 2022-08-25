@@ -1,12 +1,42 @@
 import React from "react";
+import useStateManager from "../../hooks/useStateManager";
 import { ModalProps } from "../../types";
+import AddNewBoard from "../AddNewBoard";
+import AddNewTask from "../AddNewTask";
+import DeleteBoard from "../DeleteBoard";
 import { ModalWrapper, Overlay } from "./styled/ModalWrapper.styled";
 
-const Modal = ({ children, onClick }: ModalProps) => {
+const Modal = ({ onClick }: ModalProps) => {
+  const { state } = useStateManager();
+  const { modalTracker } = state;
   return (
     <ModalWrapper>
       <Overlay onClick={onClick} />
-      {children}
+      {modalTracker.map((i) => {
+        let modal;
+        if (i.name === "addNewBoard" && i.value) {
+          modal = <AddNewBoard key={i.name} />;
+        }
+        if (i.name === "addNewTask" && i.value) {
+          modal = <AddNewTask key={i.name} />;
+        }
+        if (i.name === "deleteBoard" && i.value) {
+          modal = <DeleteBoard key={i.name} />;
+        }
+        if (i.name === "deleteTask" && i.value) {
+          modal = <AddNewBoard key={i.name} />;
+        }
+        if (i.name === "editBoard" && i.value) {
+          modal = <AddNewBoard key={i.name} />;
+        }
+        if (i.name === "editTask" && i.value) {
+          modal = <AddNewBoard key={i.name} />;
+        }
+        if (i.name === "viewTask" && i.value) {
+          modal = <AddNewBoard key={i.name} />;
+        }
+        return modal;
+      })}
     </ModalWrapper>
   );
 };

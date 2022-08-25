@@ -14,7 +14,7 @@ export const InputWrapper = styled.div<InputWrapperProps>`
       theme.theme === "light" ? light.bgColor : dark.bgColor};
     padding-left: 16px;
     padding-right: 25px;
-    margin-top: 8px;
+    /* margin-top: 8px; */
     color: ${({ theme }) =>
       theme.theme === "light" ? light.inputColor : dark.inputColor};
     height: 40px;

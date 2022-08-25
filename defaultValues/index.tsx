@@ -9,25 +9,40 @@ import {
 
 export const defaultBoard: BoardProps = {
   name: "",
-  status: [""],
+  status: [{ name: "", c_id: "" }],
   tasks: [{ title: "", status: "", t_id: "", description: "" }],
   subtasks: [{ s_title: "", t_id: "", s_id: "", isCompleted: false }],
 };
 
 export const defaultBoards: BoardsProps = {
   id: "",
-  boards: [defaultBoard],
+  data: defaultBoard,
 };
 
 export const defaultReducerStates: StateReducerProps = {
   toggleSidebar: true,
   toggleModal: false,
+  toggleOptionEditOrDeleteBoard: false,
   theme: "light",
   themeButton: false,
   isLoading: false,
-  boards: defaultBoards,
+  boards: [defaultBoards],
   columnInput: [{ column: "" }],
+  subtaskInput: [{ subtask: "" }],
+  dropdownInput: { name: "", c_id: "" },
   boardNameInput: "",
+  taskNameInput: "",
+  descriptionInput: "",
+  currentBoard: { name: "", id: "" },
+  modalTracker: [
+    { name: "viewTask", value: false },
+    { name: "addNewTask", value: false },
+    { name: "editTask", value: false },
+    { name: "addNewBoard", value: false },
+    { name: "editBoard", value: false },
+    { name: "deleteBoard", value: false },
+    { name: "deleteTask", value: false },
+  ],
 };
 
 export const defaultStateManagerCtxProps: StateManagerCtxProps = {
@@ -39,17 +54,24 @@ export const actionValues: ActionReducerTypeProps = {
   SIDEBAR_TOGGLE: "SIDEBAR_TOGGLE",
   MODAL_TOGGLE: "MODAL_TOGGLE",
   THEME_TOGGLE: "THEME_TOGGLE",
+  OPTION_EDIT_OR_DELETE_BOARD_TOGGLE: "OPTION_EDIT_OR_DELETE_BOARD_TOGGLE",
   THEME_TOGGLE_BUTTON: "THEME_TOGGLE_BUTTON",
   BOARDS: "BOARDS",
   IS_LOADING: "IS_LOADING",
   COLUMN_INPUT: "COLUMN_INPUT",
+  SUBTASK_INPUT: "SUBTASK_INPUT",
+  DROPDOWN_INPUT: "DROPDOWN_INPUT",
   BOARD_NAME_INPUT: "BOARD_NAME_INPUT",
+  TASK_NAME_INPUT: "TASK_NAME_INPUT",
+  DESCRIPTION_INPUT: "DESCRIPTION_INPUT",
+  CURRENT_BOARD: "CURRENT_BOARD",
+  MODAL_TRACKER: "MODAL_TRACKER",
 };
 
 export const testValues: Options[] = [
-  { title: "What", id: "1" },
-  { title: "Alright", id: "2" },
-  { title: "Hey", id: "3" },
-  { title: "Yoo", id: "4" },
-  { title: "Okay", id: "5" },
+  { name: "What", c_id: "1" },
+  { name: "Alright", c_id: "2" },
+  { name: "Hey", c_id: "3" },
+  { name: "Yoo", c_id: "4" },
+  { name: "Okay", c_id: "5" },
 ];

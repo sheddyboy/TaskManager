@@ -26,13 +26,6 @@ const boards = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(200).json(id);
       }
       break;
-    case "DELETE":
-      {
-        const boardRef = doc(db, "boards", req.body.id);
-        await deleteDoc(boardRef);
-        res.status(200).json({ Message: `${req.body.id} Deleted` });
-      }
-      break;
     default:
       res.status(200).json({ Message: `${req.method} not allowed` });
       break;

@@ -5,12 +5,16 @@ interface ButtonProps {
   state?: "primary" | "secondary";
   marginTop?: string;
   marginBottom?: string;
+  marginLeft?: string;
+  marginRight?: string;
 }
 
 export const Button = styled.button<ButtonProps>`
   width: 100%;
   margin-top: ${({ marginTop }) => marginTop};
   margin-bottom: ${({ marginBottom }) => marginBottom};
+  margin-left: ${({ marginLeft }) => marginLeft};
+  margin-right: ${({ marginRight }) => marginRight};
   font-size: ${({ size }) => (size === "small" ? "13px" : "15px")};
   padding: ${({ size }) =>
     size === "small" ? "15px 70px 12px 70px" : "19px 63px 14px 63px"};

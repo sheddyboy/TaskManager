@@ -1,6 +1,7 @@
 import Image from "next/image";
-import React, { useContext } from "react";
+import React from "react";
 import useStateManager from "../hooks/useStateManager";
+import OptionEditOrDeleteBoard from "./OptionEditOrDeleteBoard";
 import {
   Actions,
   Content,
@@ -11,9 +12,12 @@ import {
 import { AddButton } from "./UI/styled/Button.styled";
 
 const Navbar = () => {
-  const { state } = useStateManager();
+  const { state, dispatch, actionValues } = useStateManager();
+  const { OPTION_EDIT_OR_DELETE_BOARD_TOGGLE, MODAL_TOGGLE, MODAL_TRACKER } =
+    actionValues;
 
-  const { theme, toggleSidebar } = state;
+  const { theme, toggleSidebar, toggleOptionEditOrDeleteBoard, currentBoard } =
+    state;
 
   return (
     <NavbarWrapper>
@@ -28,14 +32,31 @@ const Navbar = () => {
       )}
       <Content>
         <Title>Platform Launch</Title>
-        <Actions>
-          <AddButton state="primary" size="large">
-            + Add New Task
-          </AddButton>
-          <i>
-            <Image src="/icon-vertical-ellipsis.svg" width={5} height={20} />
-          </i>
-        </Actions>
+        {currentBoard.id !== "" && (
+          <Actions>
+            <AddButton
+              onClick={() => {
+                dispatch({ type: MODAL_TOGGLE });
+                dispatch({
+                  type: MODAL_TRACKER,
+                  modalTrackerPayload: { name: "addNewTask", value: true },
+                });
+              }}
+              state="primary"
+              size="large"
+            >
+              + Add New Task
+            </AddButton>
+            <i
+              onClick={() => {
+                dispatch({ type: OPTION_EDIT_OR_DELETE_BOARD_TOGGLE });
+              }}
+            >
+              <Image src="/icon-vertical-ellipsis.svg" width={5} height={20} />
+            </i>
+            {toggleOptionEditOrDeleteBoard && <OptionEditOrDeleteBoard />}
+          </Actions>
+        )}
       </Content>
     </NavbarWrapper>
   );

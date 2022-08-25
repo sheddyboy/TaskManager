@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React, { useState } from "react";
+import useStateManager from "../../hooks/useStateManager";
 import { DropdownHeader } from "./styled/DropdownHeader.styled";
 import { DropdownHeaderTitle } from "./styled/DropdownHeaderTitle.styled";
 import { DropdownList } from "./styled/DropdownList.styled";
@@ -7,29 +8,28 @@ import { DropdownListItem } from "./styled/DropdownListItem.styled";
 import { DropdownWrapper } from "./styled/DropdownWrapper.styled";
 
 export interface Options {
-  title: string;
-  id: string;
+  name: string;
+  c_id: string;
 }
 
 interface DropdownProps {
   options: Options[];
-  onChange: ({}: Options) => void;
   value: string;
+  marginBottom?: string;
 }
 
-const Dropdown = ({ options, onChange, value }: DropdownProps) => {
+const Dropdown = ({ options, value, marginBottom }: DropdownProps) => {
   const [dropdownToggle, setDropdownToggle] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownToggle((dropdownToggle) => !dropdownToggle);
   };
-  const handleClick = (option: Options) => {
-    toggleDropdown();
-    onChange(option);
-  };
+
+  const { dispatch, actionValues } = useStateManager();
+  const { DROPDOWN_INPUT } = actionValues;
 
   return (
-    <DropdownWrapper>
+    <DropdownWrapper style={{ marginBottom: marginBottom }}>
       <span>Status</span>
       <DropdownHeader onClick={toggleDropdown}>
         <Title title={value}></Title>
@@ -41,10 +41,14 @@ const Dropdown = ({ options, onChange, value }: DropdownProps) => {
         <DropdownList>
           {options.map((option) => (
             <Option
-              key={option.id}
-              title={option.title}
+              key={option.c_id}
+              title={option.name}
               onClick={() => {
-                handleClick(option);
+                toggleDropdown();
+                dispatch({
+                  type: DROPDOWN_INPUT,
+                  dropdownInputPayload: option,
+                });
               }}
             />
           ))}

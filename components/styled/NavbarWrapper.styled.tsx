@@ -35,11 +35,12 @@ export const Title = styled.div`
   align-items: center;
 `;
 export const Actions = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
 
   i {
-    margin-left: 24px;
+    padding-left: 24px;
     cursor: pointer;
   }
 `;

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import DataManager from "../dataManager/DataManager";
 import useStateManager from "../hooks/useStateManager";
@@ -10,14 +10,12 @@ import { InputField, Label } from "./UI/styled/InputWrapper.styled";
 const AddNewBoard = () => {
   const { state, dispatch, actionValues } = useStateManager();
   const { COLUMN_INPUT, BOARD_NAME_INPUT, MODAL_TOGGLE } = actionValues;
-  const { addBoard } = DataManager();
+  const { addBoard, getBoards } = DataManager();
   const { columnInput } = state;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     dispatch({ type: MODAL_TOGGLE });
     e.preventDefault();
-    console.log(state.toggleModal);
-    console.log(state.toggleModal);
 
     const status = state.columnInput.map((i) => {
       return { name: i.column, c_id: uuidv4() };
@@ -27,6 +25,18 @@ const AddNewBoard = () => {
       status: status,
     };
     addBoard(addBoardData);
+    getBoards();
+    // Reset form inputs
+    dispatch({
+      type: BOARD_NAME_INPUT,
+      boardNameInputPayload: "",
+    });
+    dispatch({
+      type: COLUMN_INPUT,
+      columnInputPayload: {
+        function: "reset",
+      },
+    });
   };
 
   return (
@@ -41,7 +51,7 @@ const AddNewBoard = () => {
           onChange={(e) => {
             dispatch({
               type: BOARD_NAME_INPUT,
-              boaedNameInputPayload: e.target.value,
+              boardNameInputPayload: e.target.value,
             });
           }}
         />
@@ -57,6 +67,7 @@ const AddNewBoard = () => {
               <Input
                 required
                 value={i.column}
+                marginBottom="12px"
                 onChange={(e) => {
                   dispatch({
                     type: COLUMN_INPUT,

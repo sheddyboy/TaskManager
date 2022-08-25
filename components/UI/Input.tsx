@@ -9,6 +9,8 @@ interface InputProps
   name?: string;
   canDelete?: boolean;
   marginBottom?: string;
+  marginTop?: string;
+  height?: string;
   value?: string;
 }
 
@@ -17,6 +19,8 @@ const Input = ({
   value,
   canDelete,
   marginBottom,
+  marginTop,
+  height,
   ...attr
 }: InputProps) => {
   const [validation, setValidation] = useState(false);
@@ -28,7 +32,7 @@ const Input = ({
   return (
     <InputWrapper
       canDelete={canDelete as false}
-      style={{ marginBottom: marginBottom }}
+      style={{ marginBottom: marginBottom, marginTop: marginTop }}
     >
       <Label>{name}</Label>
       <input

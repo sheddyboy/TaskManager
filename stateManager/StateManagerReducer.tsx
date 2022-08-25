@@ -11,9 +11,82 @@ const {
   MODAL_TOGGLE,
   COLUMN_INPUT,
   BOARD_NAME_INPUT,
+  CURRENT_BOARD,
+  OPTION_EDIT_OR_DELETE_BOARD_TOGGLE,
+  MODAL_TRACKER,
+  SUBTASK_INPUT,
+  DROPDOWN_INPUT,
+  DESCRIPTION_INPUT,
+  TASK_NAME_INPUT,
 } = actionValues;
 const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
   switch (action.type) {
+    case BOARDS:
+      if (action.boardsPayload)
+        return { ...state, boards: action.boardsPayload };
+    case CURRENT_BOARD:
+      if (action.currentBoardPayload !== undefined)
+        return { ...state, currentBoard: action.currentBoardPayload };
+    case BOARD_NAME_INPUT:
+      if (action.boardNameInputPayload !== undefined)
+        return { ...state, boardNameInput: action.boardNameInputPayload };
+    case TASK_NAME_INPUT:
+      if (action.taskNameInputPayload !== undefined)
+        return { ...state, taskNameInput: action.taskNameInputPayload };
+    case DESCRIPTION_INPUT:
+      if (action.descriptionInputPayload !== undefined)
+        return { ...state, descriptionInput: action.descriptionInputPayload };
+    case DROPDOWN_INPUT:
+      if (action.dropdownInputPayload)
+        return { ...state, dropdownInput: action.dropdownInputPayload };
+    case COLUMN_INPUT: {
+      let dummyArray = [{ column: "" }];
+      if (
+        action.columnInputPayload?.function === "delete" &&
+        action.columnInputPayload.index !== undefined
+      ) {
+        dummyArray = [...state.columnInput];
+        dummyArray.splice(action.columnInputPayload.index, 1);
+      } else if (
+        action.columnInputPayload?.function === "update" &&
+        action.columnInputPayload.index !== undefined
+      ) {
+        dummyArray = [...state.columnInput];
+        if (action.columnInputPayload.value !== undefined) {
+          dummyArray[action.columnInputPayload.index].column =
+            action.columnInputPayload.value;
+        }
+      } else if (action.columnInputPayload?.function === "reset") {
+        dummyArray = [{ column: "" }];
+      } else {
+        dummyArray = [...state.columnInput, { column: "" }];
+      }
+      return { ...state, columnInput: dummyArray };
+    }
+    case SUBTASK_INPUT: {
+      let dummyArray = [{ subtask: "" }];
+      if (
+        action.subtaskInputPayload?.function === "delete" &&
+        action.subtaskInputPayload.index !== undefined
+      ) {
+        dummyArray = [...state.subtaskInput];
+        dummyArray.splice(action.subtaskInputPayload.index, 1);
+      } else if (action.subtaskInputPayload?.function === "update") {
+        dummyArray = [...state.subtaskInput];
+        if (
+          action.subtaskInputPayload.value !== undefined &&
+          action.subtaskInputPayload.index !== undefined
+        ) {
+          dummyArray[action.subtaskInputPayload.index].subtask =
+            action.subtaskInputPayload.value;
+        }
+      } else if (action.subtaskInputPayload?.function === "reset") {
+        dummyArray = [{ subtask: "" }];
+      } else {
+        dummyArray = [...state.subtaskInput, { subtask: "" }];
+      }
+      return { ...state, subtaskInput: dummyArray };
+    }
     case SIDEBAR_TOGGLE:
       return { ...state, toggleSidebar: !state.toggleSidebar };
     case MODAL_TOGGLE:
@@ -23,31 +96,25 @@ const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
       return { ...state, theme: theme };
     case THEME_TOGGLE_BUTTON:
       return { ...state, themeButton: !state.themeButton };
-    case BOARDS:
-      if (action.boardsPayload)
-        return { ...state, boards: action.boardsPayload };
+
+    case OPTION_EDIT_OR_DELETE_BOARD_TOGGLE:
+      return {
+        ...state,
+        toggleOptionEditOrDeleteBoard: !state.toggleOptionEditOrDeleteBoard,
+      };
+    case MODAL_TRACKER: {
+      const dummyArray = [...state.modalTracker];
+      dummyArray.map((i) => {
+        i.value = false;
+        if (action.modalTrackerPayload?.name === i.name) {
+          i.value = true;
+        }
+      });
+      return { ...state, modalTracker: dummyArray };
+    }
     case IS_LOADING:
       if (action.isLoadingPayload)
         return { ...state, isLoading: action.isLoadingPayload };
-    case COLUMN_INPUT: {
-      let dummyArray = [{ column: "" }];
-      if (action.columnInputPayload?.function === "delete") {
-        dummyArray = [...state.columnInput];
-        dummyArray.splice(action.columnInputPayload.index, 1);
-      } else if (action.columnInputPayload?.function === "update") {
-        dummyArray = [...state.columnInput];
-        if (action.columnInputPayload.value !== undefined) {
-          dummyArray[action.columnInputPayload.index].column =
-            action.columnInputPayload.value;
-        }
-      } else {
-        dummyArray = [...state.columnInput, { column: "" }];
-      }
-      return { ...state, columnInput: dummyArray };
-    }
-    case BOARD_NAME_INPUT:
-      if (action.boaedNameInputPayload !== undefined)
-        return { ...state, boardNameInput: action.boaedNameInputPayload };
     default:
       return state;
   }

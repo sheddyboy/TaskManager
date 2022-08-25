@@ -35,9 +35,7 @@ const Body = () => {
             onClick={() => {
               dispatch({ type: MODAL_TOGGLE });
             }}
-          >
-            <AddNewBoard />
-          </Modal>
+          />
         )}
       </Content>
       {!toggleSidebar && <SideBarToggle />}

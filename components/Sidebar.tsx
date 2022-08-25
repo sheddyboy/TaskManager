@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import useStateManager from "../hooks/useStateManager";
 import {
+  Active,
   AddedBoard,
   Board,
   Bottom,
@@ -18,9 +19,15 @@ import Toggle from "./UI/Toggle";
 
 const Sidebar = () => {
   const { state, dispatch, actionValues } = useStateManager();
-  const { SIDEBAR_TOGGLE, THEME_TOGGLE, THEME_TOGGLE_BUTTON, MODAL_TOGGLE } =
-    actionValues;
-  const { theme, themeButton } = state;
+  const {
+    SIDEBAR_TOGGLE,
+    THEME_TOGGLE,
+    THEME_TOGGLE_BUTTON,
+    MODAL_TOGGLE,
+    CURRENT_BOARD,
+    MODAL_TRACKER,
+  } = actionValues;
+  const { theme, themeButton, boards } = state;
 
   return (
     <SidebarWrapper>
@@ -33,16 +40,36 @@ const Sidebar = () => {
           />
         </Logo>
         <Board>
-          <span>ALL BOARDS</span>
-          <AddedBoard active={false}>
-            <i>
-              <Image src="/icon-board.svg" width={16} height={16} />
-            </i>
-            <p>Platform Launch</p>
-          </AddedBoard>
+          <span>ALL BOARDS ({boards.length})</span>
+          {boards.map((i) => (
+            <AddedBoard key={i.id} active={false}>
+              <label>
+                <input
+                  type="radio"
+                  name="board"
+                  value={i.data.name}
+                  onChange={(e) => {
+                    dispatch({
+                      type: CURRENT_BOARD,
+                      currentBoardPayload: { name: e.target.value, id: i.id },
+                    });
+                  }}
+                />
+                <div></div>
+                <i>
+                  <Image src="/icon-board.svg" width={16} height={16} />
+                </i>
+                <p>{i.data.name}</p>
+              </label>
+            </AddedBoard>
+          ))}
           <CreateBoard
             onClick={() => {
               dispatch({ type: MODAL_TOGGLE });
+              dispatch({
+                type: MODAL_TRACKER,
+                modalTrackerPayload: { name: "addNewBoard", value: true },
+              });
             }}
           >
             <i>

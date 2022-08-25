@@ -1,6 +1,6 @@
 import axios from "axios";
 import useStateManager from "../hooks/useStateManager";
-import { AddBoardProps } from "../types";
+import { AddBoardProps, PostBordBody } from "../types";
 
 const DataManager = () => {
   const { dispatch, actionValues } = useStateManager();
@@ -19,7 +19,15 @@ const DataManager = () => {
 
     return { id };
   };
-  return { getBoards, addBoard };
+
+  const deleteBoard = (id: string) => {
+    axios.delete(`/api/boards/${id}`);
+  };
+  const addTask = (id: string, body: PostBordBody) => {
+    axios.put(`/api/boards/${id}`, body);
+  };
+
+  return { getBoards, addBoard, deleteBoard, addTask };
 };
 
 export default DataManager;

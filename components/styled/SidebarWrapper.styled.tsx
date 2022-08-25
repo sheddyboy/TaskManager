@@ -37,19 +37,63 @@ interface AddedBoardProps {
   active?: boolean;
 }
 export const AddedBoard = styled.div<AddedBoardProps>`
+  position: relative;
   background-color: ${({ active }) => (active ? "#635FC7" : "")};
   border-radius: 0px 100px 100px 0px;
-  padding-left: 32px;
-  padding-top: 14px;
-  padding-bottom: 14px;
+  height: 48px;
   cursor: pointer;
-  display: flex;
+
+  label {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-left: 32px;
+    border-radius: 0px 100px 100px 0px;
+  }
+
+  input {
+    display: none;
+  }
+
+  input:checked ~ div {
+    background-color: #635fc7;
+  }
+
+  input:checked ~ p {
+    color: #ffffff;
+  }
+
+  i img {
+    src: url("/icon-board.svg");
+  }
+
+  input:checked ~ i img {
+    src: url("/icon-board-white.svg");
+  }
+
+  & div {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0px 100px 100px 0px;
+    background-color: transparent;
+  }
+
   i {
     display: flex;
     align-items: center;
     margin-right: 16px;
   }
   p {
+    pointer-events: none;
+    position: relative;
     font-size: 15px;
     line-height: 19px;
     color: ${({ active }) => (active ? "#FFFFFF" : "#828FA3")};
@@ -113,4 +157,14 @@ export const HideSidebar = styled.div`
     align-items: center;
     margin-right: 15px;
   }
+`;
+
+export const Active = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 0px 100px 100px 0px;
+  background-color: #635fc7;
 `;
