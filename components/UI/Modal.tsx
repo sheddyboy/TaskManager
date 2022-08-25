@@ -4,6 +4,7 @@ import { ModalProps } from "../../types";
 import AddNewBoard from "../AddNewBoard";
 import AddNewTask from "../AddNewTask";
 import DeleteBoard from "../DeleteBoard";
+import ViewTask from "../ViewTask";
 import { ModalWrapper, Overlay } from "./styled/ModalWrapper.styled";
 
 const Modal = ({ onClick }: ModalProps) => {
@@ -33,7 +34,7 @@ const Modal = ({ onClick }: ModalProps) => {
           modal = <AddNewBoard key={i.name} />;
         }
         if (i.name === "viewTask" && i.value) {
-          modal = <AddNewBoard key={i.name} />;
+          modal = <ViewTask key={i.name} />;
         }
         return modal;
       })}

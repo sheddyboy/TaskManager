@@ -9,7 +9,7 @@ import { Card } from "./UI/styled/Card.styled";
 import { InputField } from "./UI/styled/InputWrapper.styled";
 import { Textarea } from "./UI/styled/Textarea.styled";
 import DataManager from "../dataManager/DataManager";
-import { PostBordBody } from "../types";
+import { PostBoardBody } from "../types";
 
 const Title = styled.h2`
   font-style: normal;
@@ -30,7 +30,7 @@ const Label = styled.span`
 `;
 
 const AddNewTask = () => {
-  const { addTask } = DataManager();
+  const { addTask, getBoards } = DataManager();
   const { state, dispatch, actionValues } = useStateManager();
   const {
     subtaskInput,
@@ -55,10 +55,11 @@ const AddNewTask = () => {
     const subtasks = subtaskInput.map((i) => ({
       isCompleted: false,
       s_id: uuidv4(),
+      c_id: dropdownInput.c_id,
       s_title: i.subtask,
       t_id: t_id,
     }));
-    const body: PostBordBody = {
+    const body: PostBoardBody = {
       tasks: {
         t_id: t_id,
         description: descriptionInput,
@@ -70,6 +71,7 @@ const AddNewTask = () => {
       subtasks: subtasks,
     };
     addTask(currentBoard.id, body);
+    getBoards();
     dispatch({ type: MODAL_TOGGLE });
     // Reset form inputs
     dispatch({

@@ -3,6 +3,7 @@ import { CheckboxWrapper } from "./styled/CheckboxWrapper.styled";
 
 interface CheckboxProps {
   name: string;
+  // value: boolean;
 }
 
 const Checkbox = ({ name }: CheckboxProps) => {

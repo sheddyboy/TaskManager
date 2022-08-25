@@ -15,10 +15,12 @@ export const StatusWrapper = styled.div`
   }
 
   p {
+    font-style: normal;
     font-weight: 700;
     font-size: 12px;
     line-height: 15px;
     letter-spacing: 2.4px;
     color: #828fa3;
+    text-transform: uppercase;
   }
 `;

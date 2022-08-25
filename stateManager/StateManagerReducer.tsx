@@ -18,6 +18,7 @@ const {
   DROPDOWN_INPUT,
   DESCRIPTION_INPUT,
   TASK_NAME_INPUT,
+  CURRENT_TASK,
 } = actionValues;
 const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
   switch (action.type) {
@@ -27,6 +28,9 @@ const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
     case CURRENT_BOARD:
       if (action.currentBoardPayload !== undefined)
         return { ...state, currentBoard: action.currentBoardPayload };
+    case CURRENT_TASK:
+      if (action.currentTaskPayload !== undefined)
+        return { ...state, currentTask: action.currentTaskPayload };
     case BOARD_NAME_INPUT:
       if (action.boardNameInputPayload !== undefined)
         return { ...state, boardNameInput: action.boardNameInputPayload };

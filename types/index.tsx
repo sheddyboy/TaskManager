@@ -13,6 +13,7 @@ export interface StateReducerProps {
   descriptionInput: string;
   dropdownInput: { name: string; c_id: string };
   currentBoard: { name: string; id: string };
+  currentTask: { tasks: TaskProps; subtasks: SubTaskProps[] };
   columnInput: { column: string }[];
   subtaskInput: { subtask: string }[];
   modalTracker: {
@@ -36,6 +37,7 @@ export interface ActionReducerProps {
   descriptionInputPayload?: string;
   dropdownInputPayload?: { name: string; c_id: string };
   currentBoardPayload?: { name: string; id: string };
+  currentTaskPayload?: { tasks: TaskProps; subtasks: SubTaskProps[] };
   modalTrackerPayload?: {
     name:
       | "viewTask"
@@ -74,6 +76,7 @@ export interface ActionReducerTypeProps {
   DROPDOWN_INPUT: string;
   BOARD_NAME_INPUT: string;
   CURRENT_BOARD: string;
+  CURRENT_TASK: string;
   MODAL_TRACKER: string;
 }
 
@@ -108,11 +111,13 @@ export interface TaskProps {
   title: string;
   status: string;
   t_id: string;
+  c_id: string;
   description: string;
 }
 export interface SubTaskProps {
   s_title: string;
   t_id: string;
+  c_id: string;
   s_id: string;
   isCompleted: boolean;
 }
@@ -121,7 +126,7 @@ export interface AddBoardProps {
   status: { name: string; c_id: string }[];
 }
 
-export interface PostBordBody {
+export interface PostBoardBody {
   tasks: {
     t_id: string;
     c_id: string;
@@ -132,6 +137,7 @@ export interface PostBordBody {
   subtasks: {
     isCompleted: boolean;
     s_id: string;
+    c_id: string;
     s_title: string;
     t_id: string;
   }[];

@@ -14,7 +14,10 @@ import { AddButton } from "./UI/styled/Button.styled";
 const Body = () => {
   const { state, dispatch, actionValues } = useStateManager();
   const { MODAL_TOGGLE } = actionValues;
-  const { toggleSidebar } = state;
+  const { toggleSidebar, currentBoard, boards } = state;
+
+  const selectedBoardData = boards.find((i) => i.id === currentBoard.id);
+  const columns = selectedBoardData?.data.status;
 
   return (
     <BodyWrapper>
@@ -26,7 +29,9 @@ const Body = () => {
             <AddButton>+ Add New Column</AddButton>
           </EmptyBoard>
         )}
-        <Column />
+        {columns?.map((i) => {
+          return <Column key={i.c_id} status={i.name} c_id={i.c_id} />;
+        })}
         <NewColumn>
           <p>+ New Column</p>
         </NewColumn>

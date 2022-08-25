@@ -31,7 +31,7 @@ const Navbar = () => {
         </Logo>
       )}
       <Content>
-        <Title>Platform Launch</Title>
+        <Title>{currentBoard.name}</Title>
         {currentBoard.id !== "" && (
           <Actions>
             <AddButton

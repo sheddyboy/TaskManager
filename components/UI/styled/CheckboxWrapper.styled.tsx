@@ -9,6 +9,7 @@ export const CheckboxWrapper = styled.div`
   display: block;
   position: relative;
   padding-left: 42px;
+  padding-right: 16px;
   padding-top: 12px;
   padding-bottom: 12px;
   margin-top: 8px;

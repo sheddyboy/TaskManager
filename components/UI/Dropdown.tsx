@@ -16,9 +16,17 @@ interface DropdownProps {
   options: Options[];
   value: string;
   marginBottom?: string;
+  marginTop?: string;
+  label?: string;
 }
 
-const Dropdown = ({ options, value, marginBottom }: DropdownProps) => {
+const Dropdown = ({
+  options,
+  value,
+  marginBottom,
+  marginTop,
+  label,
+}: DropdownProps) => {
   const [dropdownToggle, setDropdownToggle] = useState(false);
 
   const toggleDropdown = () => {
@@ -29,8 +37,10 @@ const Dropdown = ({ options, value, marginBottom }: DropdownProps) => {
   const { DROPDOWN_INPUT } = actionValues;
 
   return (
-    <DropdownWrapper style={{ marginBottom: marginBottom }}>
-      <span>Status</span>
+    <DropdownWrapper
+      style={{ marginBottom: marginBottom, marginTop: marginTop }}
+    >
+      <span>{label}</span>
       <DropdownHeader onClick={toggleDropdown}>
         <Title title={value}></Title>
         <i>

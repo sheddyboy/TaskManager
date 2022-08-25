@@ -65,7 +65,7 @@ const AddNewBoard = () => {
           return (
             <InputField canDelete={canDelete} key={index}>
               <Input
-                required
+                // required
                 value={i.column}
                 marginBottom="12px"
                 onChange={(e) => {

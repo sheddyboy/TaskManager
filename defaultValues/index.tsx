@@ -10,8 +10,8 @@ import {
 export const defaultBoard: BoardProps = {
   name: "",
   status: [{ name: "", c_id: "" }],
-  tasks: [{ title: "", status: "", t_id: "", description: "" }],
-  subtasks: [{ s_title: "", t_id: "", s_id: "", isCompleted: false }],
+  tasks: [{ title: "", status: "", t_id: "", description: "", c_id: "" }],
+  subtasks: [{ s_title: "", t_id: "", s_id: "", isCompleted: false, c_id: "" }],
 };
 
 export const defaultBoards: BoardsProps = {
@@ -34,6 +34,12 @@ export const defaultReducerStates: StateReducerProps = {
   taskNameInput: "",
   descriptionInput: "",
   currentBoard: { name: "", id: "" },
+  currentTask: {
+    tasks: { title: "", status: "", t_id: "", c_id: "", description: "" },
+    subtasks: [
+      { s_title: "", t_id: "", s_id: "", isCompleted: false, c_id: "" },
+    ],
+  },
   modalTracker: [
     { name: "viewTask", value: false },
     { name: "addNewTask", value: false },
@@ -65,6 +71,7 @@ export const actionValues: ActionReducerTypeProps = {
   TASK_NAME_INPUT: "TASK_NAME_INPUT",
   DESCRIPTION_INPUT: "DESCRIPTION_INPUT",
   CURRENT_BOARD: "CURRENT_BOARD",
+  CURRENT_TASK: "CURRENT_TASK",
   MODAL_TRACKER: "MODAL_TRACKER",
 };
 
