@@ -30,9 +30,9 @@ const Column = ({ status, c_id }: ColumnProps) => {
             key={i.t_id}
             onClick={() => {
               const currentSubtasks = columnSubtasks?.filter(
-                (st) => (st.t_id = i.t_id)
+                (st) => st.t_id === i.t_id
               );
-
+              console.log(currentSubtasks);
               dispatch({ type: MODAL_TOGGLE });
               dispatch({
                 type: MODAL_TRACKER,
@@ -46,7 +46,6 @@ const Column = ({ status, c_id }: ColumnProps) => {
                     subtasks: currentSubtasks,
                   },
                 });
-              console.log("called");
             }}
           >
             <p>{i.title}</p>

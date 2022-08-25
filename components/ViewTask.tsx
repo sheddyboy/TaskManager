@@ -46,7 +46,6 @@ const ViewTask = () => {
   const { state } = useStateManager();
   const { currentTask } = state;
   const { tasks, subtasks } = currentTask;
-  console.log(currentTask);
   return (
     <Card>
       <TitleWrapper>

@@ -11,7 +11,6 @@ const Index = () => {
   const { toggleSidebar } = state;
 
   useEffect(() => {
-    console.log("Mounted");
     getBoards();
   }, []);
 
