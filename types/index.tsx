@@ -105,8 +105,8 @@ export interface TaskManagerProps {
 export interface BoardProps {
   name: string;
   status: { name: string; c_id: string }[];
-  tasks: TaskProps[];
-  subtasks: SubTaskProps[];
+  tasks?: TaskProps[];
+  subtasks?: SubTaskProps[];
 }
 
 export interface BoardsProps {

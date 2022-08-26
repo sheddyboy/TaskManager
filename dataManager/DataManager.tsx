@@ -14,10 +14,11 @@ const DataManager = () => {
   };
 
   const addBoard = ({ ...body }: AddBoardProps) => {
-    let id;
-    axios.post("/api/boards", body).then((data) => (id = data.data));
+    let data: Promise<string> = axios
+      .post("/api/boards", body)
+      .then((data) => data.data);
 
-    return { id };
+    return { data };
   };
 
   const deleteBoard = (id: string) => {

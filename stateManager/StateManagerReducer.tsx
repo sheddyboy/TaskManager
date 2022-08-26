@@ -1,6 +1,10 @@
 import { useReducer } from "react";
 import { ActionReducerProps, StateReducerProps } from "../types";
-import { defaultReducerStates, actionValues } from "../defaultValues";
+import {
+  defaultReducerStates,
+  actionValues,
+  defaultBoards,
+} from "../defaultValues";
 
 const {
   SIDEBAR_TOGGLE,
@@ -23,9 +27,13 @@ const {
 } = actionValues;
 const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
   switch (action.type) {
-    case BOARDS:
-      if (action.boardsPayload)
-        return { ...state, boards: action.boardsPayload };
+    case BOARDS: {
+      let dummyArray = [defaultBoards];
+      if (action.boardsPayload) {
+        dummyArray = [...state.boards, ...action.boardsPayload];
+      }
+      return { ...state, boards: dummyArray };
+    }
     case CURRENT_BOARD:
       if (action.currentBoardPayload !== undefined)
         return { ...state, currentBoard: action.currentBoardPayload };

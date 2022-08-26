@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Taskmanager } from "../components/styled/Taskmanager.styled";
 import Sidebar from "../components/Sidebar";
 import Body from "../components/Body";
@@ -10,8 +10,14 @@ const Index = () => {
   const { state } = useStateManager();
   const { toggleSidebar } = state;
 
+  // onMount Ref stops the useeffect from mounting twice
+  const onMount = useRef(true);
   useEffect(() => {
-    getBoards();
+    if (onMount.current) {
+      onMount.current = false;
+      console.log("Mounted");
+      getBoards();
+    }
   }, []);
 
   return (

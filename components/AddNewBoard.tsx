@@ -9,7 +9,7 @@ import { InputField, Label } from "./UI/styled/InputWrapper.styled";
 
 const AddNewBoard = () => {
   const { state, dispatch, actionValues } = useStateManager();
-  const { COLUMN_INPUT, BOARD_NAME_INPUT, MODAL_TOGGLE } = actionValues;
+  const { COLUMN_INPUT, BOARD_NAME_INPUT, MODAL_TOGGLE, BOARDS } = actionValues;
   const { addBoard, getBoards } = DataManager();
   const { columnInput } = state;
 
@@ -24,8 +24,16 @@ const AddNewBoard = () => {
       name: state.boardNameInput,
       status: status,
     };
-    addBoard(addBoardData);
-    getBoards();
+    const { data } = addBoard(addBoardData);
+
+    data.then((id) => {
+      dispatch({
+        type: BOARDS,
+        boardsPayload: [
+          { id: id, data: { name: state.boardNameInput, status: status } },
+        ],
+      });
+    });
     // Reset form inputs
     dispatch({
       type: BOARD_NAME_INPUT,
@@ -65,7 +73,7 @@ const AddNewBoard = () => {
           return (
             <InputField canDelete={canDelete} key={index}>
               <Input
-                // required
+                required
                 value={i.column}
                 marginBottom="12px"
                 onChange={(e) => {

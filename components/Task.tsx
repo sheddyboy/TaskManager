@@ -14,7 +14,7 @@ const Task = ({ task }: CurrentTaskProps) => {
   const { boards, currentBoard } = state;
 
   const currentBoardData = boards.find((i) => i.id === currentBoard.id);
-  const currentSubtasksData = currentBoardData?.data.subtasks.filter(
+  const currentSubtasksData = currentBoardData?.data.subtasks?.filter(
     (i) => i.t_id === task.t_id
   );
 
