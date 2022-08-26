@@ -10,7 +10,7 @@ import { InputField, Label } from "./UI/styled/InputWrapper.styled";
 const AddNewBoard = () => {
   const { state, dispatch, actionValues } = useStateManager();
   const { COLUMN_INPUT, BOARD_NAME_INPUT, MODAL_TOGGLE, BOARDS } = actionValues;
-  const { addBoard, getBoards } = DataManager();
+  const { addBoard } = DataManager();
   const { columnInput } = state;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

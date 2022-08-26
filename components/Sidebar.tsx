@@ -41,7 +41,7 @@ const Sidebar = () => {
         </Logo>
         <Board>
           <span>ALL BOARDS ({boards.length})</span>
-          {boards.map((i) => (
+          {boards.map((i, index) => (
             <AddedBoard key={i.id} active={false}>
               <label>
                 <input
@@ -51,7 +51,12 @@ const Sidebar = () => {
                   onChange={(e) => {
                     dispatch({
                       type: CURRENT_BOARD,
-                      currentBoardPayload: { name: e.target.value, id: i.id },
+                      currentBoardPayload: {
+                        name: e.target.value,
+                        id: i.id,
+                        index: index,
+                        data: i,
+                      },
                     });
                   }}
                 />

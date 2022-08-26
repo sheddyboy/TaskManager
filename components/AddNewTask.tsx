@@ -30,7 +30,7 @@ const Label = styled.span`
 `;
 
 const AddNewTask = () => {
-  const { addTask, getBoards, addTaskLocally } = DataManager();
+  const { addTask, addTaskLocally } = DataManager();
   const { state, dispatch, actionValues } = useStateManager();
   const {
     subtaskInput,
@@ -46,13 +46,7 @@ const AddNewTask = () => {
     TASK_NAME_INPUT,
     DESCRIPTION_INPUT,
     DROPDOWN_INPUT,
-    BOARDS,
   } = actionValues;
-  let currentBoardIndex = -1;
-  const currentBoardDetails = boards.find((i, index) => {
-    currentBoardIndex = index;
-    return i.id === currentBoard.id;
-  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -175,13 +169,11 @@ const AddNewTask = () => {
             + Add New Subtask
           </Button>
         )}
-        {currentBoardDetails && (
-          <Dropdown
-            marginBottom="24px"
-            value={dropdownInput.name}
-            options={currentBoardDetails.data.status}
-          />
-        )}
+        <Dropdown
+          marginBottom="24px"
+          value={dropdownInput.name}
+          options={currentBoard.data.data.status}
+        />
         <Button type="submit">Create Task</Button>
       </form>
     </Card>

@@ -12,7 +12,7 @@ export interface StateReducerProps {
   taskNameInput: string;
   descriptionInput: string;
   dropdownInput: { name: string; c_id: string };
-  currentBoard: { name: string; id: string };
+  currentBoard: { name: string; id: string; index: number; data: BoardsProps };
   currentTask: { tasks: TaskProps; subtasks: SubTaskProps[] };
   columnInput: { column: string }[];
   checkBoxInput: {
@@ -42,7 +42,12 @@ export interface ActionReducerProps {
   taskNameInputPayload?: string;
   descriptionInputPayload?: string;
   dropdownInputPayload?: { name: string; c_id: string };
-  currentBoardPayload?: { name: string; id: string };
+  currentBoardPayload?: {
+    name: string;
+    id: string;
+    index: number;
+    data: BoardsProps;
+  };
   currentTaskPayload?: { tasks: TaskProps; subtasks: SubTaskProps[] };
   modalTrackerPayload?: {
     name:

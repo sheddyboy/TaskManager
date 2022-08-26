@@ -35,7 +35,7 @@ export const defaultReducerStates: StateReducerProps = {
   boardNameInput: "",
   taskNameInput: "",
   descriptionInput: "",
-  currentBoard: { name: "", id: "" },
+  currentBoard: { name: "", id: "", index: -1, data: defaultBoards },
   currentTask: {
     tasks: { title: "", status: "", t_id: "", c_id: "", description: "" },
     subtasks: [

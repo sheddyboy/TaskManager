@@ -39,40 +39,52 @@ const DataManager = () => {
   };
 
   const addTaskLocally = (tasks: TaskProps, subtasks: SubTaskProps[]) => {
-    let currentBoardIndex = -1;
-    const currentBoardDetails = boards.find((i, index) => {
-      currentBoardIndex = index;
-      return i.id === currentBoard.id;
+    let prevTasks = currentBoard.data.data.tasks
+      ? currentBoard.data.data.tasks
+      : [];
+    let prevSubTasks = currentBoard.data.data.subtasks
+      ? currentBoard.data.data.subtasks
+      : [];
+    const updatedCurrentBoard: BoardsProps = {
+      id: currentBoard.id,
+      data: {
+        name: currentBoard.data?.data.name,
+        status: currentBoard.data?.data.status,
+        tasks: [...prevTasks, tasks],
+        subtasks: [...prevSubTasks, ...subtasks],
+      },
+    };
+    const dummyBoards = [...boards];
+    dummyBoards[currentBoard.index] = updatedCurrentBoard;
+    dispatch({
+      type: BOARDS,
+      boardsPayload: {
+        data: dummyBoards,
+        function: "update",
+      },
     });
-    if (currentBoardDetails) {
-      let prevTasks = currentBoardDetails.data.tasks
-        ? currentBoardDetails.data.tasks
-        : [];
-      let prevSubTasks = currentBoardDetails.data.subtasks
-        ? currentBoardDetails.data.subtasks
-        : [];
-      const updatedCurrentBoard: BoardsProps = {
-        id: currentBoard.id,
-        data: {
-          name: currentBoardDetails?.data.name,
-          status: currentBoardDetails?.data.status,
-          tasks: [...prevTasks, tasks],
-          subtasks: [...prevSubTasks, ...subtasks],
-        },
-      };
-      const dummyBoards = [...boards];
-      dummyBoards[currentBoardIndex] = updatedCurrentBoard;
-      dispatch({
-        type: BOARDS,
-        boardsPayload: {
-          data: dummyBoards,
-          function: "update",
-        },
-      });
-    }
   };
 
-  return { getBoards, addBoard, deleteBoard, addTask, addTaskLocally };
+  const deleteBoardLocally = () => {
+    const dummyBoards = [...boards];
+    dummyBoards.splice(currentBoard.index, 1);
+    dispatch({
+      type: BOARDS,
+      boardsPayload: {
+        data: dummyBoards,
+        function: "update",
+      },
+    });
+  };
+
+  return {
+    getBoards,
+    addBoard,
+    deleteBoard,
+    addTask,
+    addTaskLocally,
+    deleteBoardLocally,
+  };
 };
 
 export default DataManager;

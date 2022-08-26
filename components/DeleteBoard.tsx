@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import DataManager from "../dataManager/DataManager";
+import { defaultBoards } from "../defaultValues";
 import useStateManager from "../hooks/useStateManager";
 import { Button, DelButton } from "./UI/styled/Button.styled";
 import { Card } from "./UI/styled/Card.styled";
@@ -28,7 +29,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const DeleteBoard = () => {
-  const { deleteBoard, getBoards } = DataManager();
+  const { deleteBoard, deleteBoardLocally } = DataManager();
   const { state, dispatch, actionValues } = useStateManager();
   const { MODAL_TOGGLE, CURRENT_BOARD } = actionValues;
   return (
@@ -42,12 +43,17 @@ const DeleteBoard = () => {
         <DelButton
           onClick={() => {
             deleteBoard(state.currentBoard.id);
+            deleteBoardLocally();
             dispatch({ type: MODAL_TOGGLE });
             dispatch({
               type: CURRENT_BOARD,
-              currentBoardPayload: { name: "", id: "" },
+              currentBoardPayload: {
+                name: "",
+                id: "",
+                index: -1,
+                data: defaultBoards,
+              },
             });
-            getBoards();
           }}
         >
           Delete
