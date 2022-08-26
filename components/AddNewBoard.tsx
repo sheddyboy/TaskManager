@@ -29,9 +29,12 @@ const AddNewBoard = () => {
     data.then((id) => {
       dispatch({
         type: BOARDS,
-        boardsPayload: [
-          { id: id, data: { name: state.boardNameInput, status: status } },
-        ],
+        boardsPayload: {
+          data: [
+            { id: id, data: { name: state.boardNameInput, status: status } },
+          ],
+          onMount: false,
+        },
       });
     });
     // Reset form inputs

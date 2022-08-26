@@ -35,7 +35,7 @@ export interface StateReducerProps {
 }
 export interface ActionReducerProps {
   type: string;
-  boardsPayload?: BoardsProps[];
+  boardsPayload?: { data: BoardsProps[]; onMount: boolean };
   isLoadingPayload?: boolean;
   boardNameInputPayload?: string;
   checkBoxInputPayload?: { index: number; value: boolean };

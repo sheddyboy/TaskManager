@@ -46,6 +46,7 @@ const AddNewTask = () => {
     TASK_NAME_INPUT,
     DESCRIPTION_INPUT,
     DROPDOWN_INPUT,
+    BOARDS,
   } = actionValues;
   const currentBoardDetails = boards.find((i) => i.id === currentBoard.id);
 
@@ -72,6 +73,15 @@ const AddNewTask = () => {
     };
     addTask(currentBoard.id, body);
     getBoards();
+    // dispatch({
+    //   type: BOARDS,
+    //   boardsPayload: [
+    //     {
+    //       id: currentBoard.id,
+    //       data: { name: state.boardNameInput, status: status },
+    //     },
+    //   ],
+    // });
     dispatch({ type: MODAL_TOGGLE });
     // Reset form inputs
     dispatch({

@@ -9,7 +9,10 @@ const DataManager = () => {
   const getBoards = () => {
     axios("/api/boards").then((data) => {
       dispatch({ type: IS_LOADING, isLoadingPayload: true });
-      dispatch({ type: BOARDS, boardsPayload: data.data });
+      dispatch({
+        type: BOARDS,
+        boardsPayload: { data: data.data, onMount: true },
+      });
     });
   };
 

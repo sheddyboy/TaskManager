@@ -28,11 +28,14 @@ const {
 const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
   switch (action.type) {
     case BOARDS: {
-      let dummyArray = [defaultBoards];
-      if (action.boardsPayload) {
-        dummyArray = [...state.boards, ...action.boardsPayload];
+      if (action.boardsPayload?.onMount === false) {
+        const dummyArray = [...state.boards, ...action.boardsPayload.data];
+        return { ...state, boards: dummyArray };
       }
-      return { ...state, boards: dummyArray };
+      if (action.boardsPayload?.onMount === true) {
+        const dummyArray = [...action.boardsPayload.data];
+        return { ...state, boards: dummyArray };
+      }
     }
     case CURRENT_BOARD:
       if (action.currentBoardPayload !== undefined)
