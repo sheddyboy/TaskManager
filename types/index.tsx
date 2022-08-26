@@ -35,7 +35,7 @@ export interface StateReducerProps {
 }
 export interface ActionReducerProps {
   type: string;
-  boardsPayload?: { data: BoardsProps[]; onMount: boolean };
+  boardsPayload?: { data: BoardsProps[]; function: "mount" | "add" | "update" };
   isLoadingPayload?: boolean;
   boardNameInputPayload?: string;
   checkBoxInputPayload?: { index: number; value: boolean };

@@ -33,7 +33,7 @@ const AddNewBoard = () => {
           data: [
             { id: id, data: { name: state.boardNameInput, status: status } },
           ],
-          onMount: false,
+          function: "add",
         },
       });
     });

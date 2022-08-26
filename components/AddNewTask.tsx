@@ -30,7 +30,7 @@ const Label = styled.span`
 `;
 
 const AddNewTask = () => {
-  const { addTask, getBoards } = DataManager();
+  const { addTask, getBoards, addTaskLocally } = DataManager();
   const { state, dispatch, actionValues } = useStateManager();
   const {
     subtaskInput,
@@ -48,11 +48,22 @@ const AddNewTask = () => {
     DROPDOWN_INPUT,
     BOARDS,
   } = actionValues;
-  const currentBoardDetails = boards.find((i) => i.id === currentBoard.id);
+  let currentBoardIndex = -1;
+  const currentBoardDetails = boards.find((i, index) => {
+    currentBoardIndex = index;
+    return i.id === currentBoard.id;
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const t_id = uuidv4();
+    const tasks = {
+      t_id: t_id,
+      description: descriptionInput,
+      status: dropdownInput.name,
+      c_id: dropdownInput.c_id,
+      title: taskNameInput,
+    };
     const subtasks = subtaskInput.map((i) => ({
       isCompleted: false,
       s_id: uuidv4(),
@@ -61,27 +72,12 @@ const AddNewTask = () => {
       t_id: t_id,
     }));
     const body: PostBoardBody = {
-      tasks: {
-        t_id: t_id,
-        description: descriptionInput,
-        status: dropdownInput.name,
-        c_id: dropdownInput.c_id,
-        title: taskNameInput,
-      },
-
+      tasks: tasks,
       subtasks: subtasks,
     };
     addTask(currentBoard.id, body);
-    getBoards();
-    // dispatch({
-    //   type: BOARDS,
-    //   boardsPayload: [
-    //     {
-    //       id: currentBoard.id,
-    //       data: { name: state.boardNameInput, status: status },
-    //     },
-    //   ],
-    // });
+    addTaskLocally(tasks, subtasks);
+
     dispatch({ type: MODAL_TOGGLE });
     // Reset form inputs
     dispatch({

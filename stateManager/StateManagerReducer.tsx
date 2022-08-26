@@ -28,11 +28,15 @@ const {
 const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
   switch (action.type) {
     case BOARDS: {
-      if (action.boardsPayload?.onMount === false) {
+      if (action.boardsPayload?.function === "add") {
         const dummyArray = [...state.boards, ...action.boardsPayload.data];
         return { ...state, boards: dummyArray };
       }
-      if (action.boardsPayload?.onMount === true) {
+      if (action.boardsPayload?.function === "mount") {
+        const dummyArray = [...action.boardsPayload.data];
+        return { ...state, boards: dummyArray };
+      }
+      if (action.boardsPayload?.function === "update") {
         const dummyArray = [...action.boardsPayload.data];
         return { ...state, boards: dummyArray };
       }
