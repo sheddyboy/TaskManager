@@ -43,9 +43,12 @@ const Content = styled.div`
 `;
 
 const ViewTask = () => {
-  const { state } = useStateManager();
-  const { currentTask } = state;
+  const { state, dispatch, actionValues } = useStateManager();
+  const { CHECKBOX_INPUT } = actionValues;
+  const { currentTask, checkBoxInput } = state;
   const { tasks, subtasks } = currentTask;
+
+  const completedSubtasks = subtasks.filter((i) => i.isCompleted === true);
   return (
     <Card>
       <TitleWrapper>
@@ -56,9 +59,19 @@ const ViewTask = () => {
       </TitleWrapper>
       <Content>
         <p>{tasks.description}</p>
-        <label>Subtasks (2 of 3)</label>
-        {subtasks.map((i) => (
-          <Checkbox key={i.s_id} name={i.s_title} />
+        <label>{`Subtasks (${completedSubtasks.length} of ${subtasks.length})`}</label>
+        {checkBoxInput.map((i, index) => (
+          <Checkbox
+            key={i.s_id}
+            name={i.s_title}
+            value={i.isCompleted}
+            onChange={() => {
+              dispatch({
+                type: CHECKBOX_INPUT,
+                checkBoxInputPayload: { index: index, value: !i.isCompleted },
+              });
+            }}
+          />
         ))}
       </Content>
       <Dropdown

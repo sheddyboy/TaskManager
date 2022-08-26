@@ -3,13 +3,14 @@ import { CheckboxWrapper } from "./styled/CheckboxWrapper.styled";
 
 interface CheckboxProps {
   name: string;
-  // value: boolean;
+  value: boolean;
+  onChange: () => void;
 }
 
-const Checkbox = ({ name }: CheckboxProps) => {
+const Checkbox = ({ name, value, onChange }: CheckboxProps) => {
   return (
     <CheckboxWrapper>
-      <input type="checkbox" />
+      <input checked={value} type="checkbox" onChange={onChange} />
       <span></span>
       <label>{name}</label>
     </CheckboxWrapper>

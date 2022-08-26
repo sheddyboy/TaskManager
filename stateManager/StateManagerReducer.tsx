@@ -19,6 +19,7 @@ const {
   DESCRIPTION_INPUT,
   TASK_NAME_INPUT,
   CURRENT_TASK,
+  CHECKBOX_INPUT,
 } = actionValues;
 const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
   switch (action.type) {
@@ -43,8 +44,21 @@ const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
     case DROPDOWN_INPUT:
       if (action.dropdownInputPayload)
         return { ...state, dropdownInput: action.dropdownInputPayload };
+    case CHECKBOX_INPUT: {
+      let subtasks = [...state.currentTask.subtasks];
+      let tasks = state.currentTask.tasks;
+      if (action.checkBoxInputPayload) {
+        subtasks[action.checkBoxInputPayload.index].isCompleted =
+          action.checkBoxInputPayload.value;
+      }
+      return {
+        ...state,
+        checkBoxInput: subtasks,
+        currentTask: { tasks, subtasks },
+      };
+    }
     case COLUMN_INPUT: {
-      let dummyArray = [{ column: "" }];
+      let dummyArray = [...state.columnInput, { column: "" }];
       if (
         action.columnInputPayload?.function === "delete" &&
         action.columnInputPayload.index !== undefined
@@ -62,13 +76,11 @@ const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
         }
       } else if (action.columnInputPayload?.function === "reset") {
         dummyArray = [{ column: "" }];
-      } else {
-        dummyArray = [...state.columnInput, { column: "" }];
       }
       return { ...state, columnInput: dummyArray };
     }
     case SUBTASK_INPUT: {
-      let dummyArray = [{ subtask: "" }];
+      let dummyArray = [...state.subtaskInput, { subtask: "" }];
       if (
         action.subtaskInputPayload?.function === "delete" &&
         action.subtaskInputPayload.index !== undefined
@@ -86,8 +98,6 @@ const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
         }
       } else if (action.subtaskInputPayload?.function === "reset") {
         dummyArray = [{ subtask: "" }];
-      } else {
-        dummyArray = [...state.subtaskInput, { subtask: "" }];
       }
       return { ...state, subtaskInput: dummyArray };
     }

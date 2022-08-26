@@ -5,6 +5,7 @@ import {
   BoardsProps,
   StateManagerCtxProps,
   StateReducerProps,
+  SubTaskProps,
 } from "../types";
 
 export const defaultBoard: BoardProps = {
@@ -28,6 +29,7 @@ export const defaultReducerStates: StateReducerProps = {
   isLoading: false,
   boards: [defaultBoards],
   columnInput: [{ column: "" }],
+  checkBoxInput: [{ s_id: "", isCompleted: false, s_title: "" }],
   subtaskInput: [{ subtask: "" }],
   dropdownInput: { name: "", c_id: "" },
   boardNameInput: "",
@@ -55,6 +57,13 @@ export const defaultStateManagerCtxProps: StateManagerCtxProps = {
   state: defaultReducerStates,
   dispatch: () => {},
 };
+export const defaultSubTasksProps: SubTaskProps = {
+  c_id: "",
+  isCompleted: false,
+  s_id: "",
+  s_title: "",
+  t_id: "",
+};
 
 export const actionValues: ActionReducerTypeProps = {
   SIDEBAR_TOGGLE: "SIDEBAR_TOGGLE",
@@ -67,6 +76,7 @@ export const actionValues: ActionReducerTypeProps = {
   COLUMN_INPUT: "COLUMN_INPUT",
   SUBTASK_INPUT: "SUBTASK_INPUT",
   DROPDOWN_INPUT: "DROPDOWN_INPUT",
+  CHECKBOX_INPUT: "CHECKBOX_INPUT",
   BOARD_NAME_INPUT: "BOARD_NAME_INPUT",
   TASK_NAME_INPUT: "TASK_NAME_INPUT",
   DESCRIPTION_INPUT: "DESCRIPTION_INPUT",
