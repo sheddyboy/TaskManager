@@ -1,10 +1,10 @@
 import Image from "next/image";
 import React from "react";
 import styled from "styled-components";
-import { testValues } from "../defaultValues";
+import DataManager from "../dataManager/DataManager";
 import useStateManager from "../hooks/useStateManager";
 import Checkbox from "./UI/Checkbox";
-import Dropdown from "./UI/Dropdown";
+import Dropdown, { Options } from "./UI/Dropdown";
 import { Card } from "./UI/styled/Card.styled";
 
 const TitleWrapper = styled.div`
@@ -43,9 +43,10 @@ const Content = styled.div`
 `;
 
 const ViewTask = () => {
+  const { changeStatus } = DataManager();
   const { state, dispatch, actionValues } = useStateManager();
   const { CHECKBOX_INPUT } = actionValues;
-  const { currentTask, checkBoxInput } = state;
+  const { currentTask, checkBoxInput, currentBoard } = state;
   const { tasks, subtasks } = currentTask;
 
   const completedSubtasks = subtasks.filter((i) => i.isCompleted === true);
@@ -76,8 +77,11 @@ const ViewTask = () => {
       </Content>
       <Dropdown
         label="Current Status"
-        options={testValues}
-        value="Doing"
+        options={currentBoard.data.data.status}
+        onChange={(option: Options) => {
+          changeStatus(option);
+        }}
+        value={currentTask.tasks.status}
         marginTop="20px"
       />
     </Card>

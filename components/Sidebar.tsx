@@ -2,7 +2,6 @@ import Image from "next/image";
 import React from "react";
 import useStateManager from "../hooks/useStateManager";
 import {
-  Active,
   AddedBoard,
   Board,
   Bottom,

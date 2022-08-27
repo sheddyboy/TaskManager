@@ -1,8 +1,6 @@
 import React from "react";
-import { defaultSubTasksProps } from "../defaultValues";
 import useStateManager from "../hooks/useStateManager";
 import { ColumnWrapper } from "./styled/ColumnWrapper.styled";
-import { MiniCardWrapper } from "./styled/MiniCardWrapper.styled";
 import { StatusWrapper } from "./styled/StatusWrapper.styled";
 import Task from "./Task";
 
@@ -27,8 +25,8 @@ const Column = ({ status, c_id }: ColumnProps) => {
             columnTasks?.length ? columnTasks?.length : 0
           })`}</p>
         </StatusWrapper>
-        {columnTasks?.map((i) => (
-          <Task task={i} key={i.t_id} />
+        {columnTasks?.map((i, index) => (
+          <Task task={i} key={i.t_id} index={index} />
         ))}
       </ColumnWrapper>
     </>

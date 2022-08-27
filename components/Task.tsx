@@ -5,9 +5,10 @@ import { MiniCardWrapper } from "./styled/MiniCardWrapper.styled";
 
 interface CurrentTaskProps {
   task: TaskProps;
+  index: number;
 }
 
-const Task = ({ task }: CurrentTaskProps) => {
+const Task = ({ task, index }: CurrentTaskProps) => {
   const { state, dispatch, actionValues } = useStateManager();
   const { MODAL_TRACKER, MODAL_TOGGLE, CURRENT_TASK, CHECKBOX_INPUT } =
     actionValues;
@@ -16,6 +17,10 @@ const Task = ({ task }: CurrentTaskProps) => {
   const currentBoardData = boards.find((i) => i.id === currentBoard.id);
   const currentSubtasksData = currentBoardData?.data.subtasks?.filter(
     (i) => i.t_id === task.t_id
+  );
+
+  const numberOfCompletedTasks = currentSubtasksData?.filter(
+    (i) => i.isCompleted === true
   );
 
   return (
@@ -32,13 +37,14 @@ const Task = ({ task }: CurrentTaskProps) => {
             currentTaskPayload: {
               tasks: task,
               subtasks: currentSubtasksData,
+              index: index,
             },
           });
         dispatch({ type: CHECKBOX_INPUT });
       }}
     >
       <p>{task.title}</p>
-      <span>{`0 of ${currentSubtasksData?.length} substasks`}</span>
+      <span>{`${numberOfCompletedTasks?.length} of ${currentSubtasksData?.length} substasks`}</span>
     </MiniCardWrapper>
   );
 };

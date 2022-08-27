@@ -69,7 +69,7 @@ const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
       return {
         ...state,
         checkBoxInput: subtasks,
-        currentTask: { tasks, subtasks },
+        currentTask: { tasks, subtasks, index: state.currentTask.index },
       };
     }
     case COLUMN_INPUT: {

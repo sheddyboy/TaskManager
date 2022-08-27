@@ -29,7 +29,9 @@ export const defaultReducerStates: StateReducerProps = {
   isLoading: false,
   boards: [defaultBoards],
   columnInput: [{ column: "" }],
-  checkBoxInput: [{ s_id: "", isCompleted: false, s_title: "" }],
+  checkBoxInput: [
+    { s_id: "", isCompleted: false, s_title: "", c_id: "", t_id: "" },
+  ],
   subtaskInput: [{ subtask: "" }],
   dropdownInput: { name: "", c_id: "" },
   boardNameInput: "",
@@ -41,6 +43,7 @@ export const defaultReducerStates: StateReducerProps = {
     subtasks: [
       { s_title: "", t_id: "", s_id: "", isCompleted: false, c_id: "" },
     ],
+    index: -1,
   },
   modalTracker: [
     { name: "viewTask", value: false },

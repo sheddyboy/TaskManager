@@ -1,6 +1,5 @@
 import React from "react";
 import useStateManager from "../hooks/useStateManager";
-import AddNewBoard from "./AddNewBoard";
 import Column from "./Column";
 import Navbar from "./Navbar";
 import { BodyWrapper } from "./styled/BodyWrapper.styled";

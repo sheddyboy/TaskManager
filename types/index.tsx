@@ -13,13 +13,9 @@ export interface StateReducerProps {
   descriptionInput: string;
   dropdownInput: { name: string; c_id: string };
   currentBoard: { name: string; id: string; index: number; data: BoardsProps };
-  currentTask: { tasks: TaskProps; subtasks: SubTaskProps[] };
+  currentTask: { tasks: TaskProps; subtasks: SubTaskProps[]; index: number };
   columnInput: { column: string }[];
-  checkBoxInput: {
-    s_id: string;
-    s_title: string;
-    isCompleted: boolean;
-  }[];
+  checkBoxInput: SubTaskProps[];
   subtaskInput: { subtask: string }[];
   modalTracker: {
     name:
@@ -35,7 +31,7 @@ export interface StateReducerProps {
 }
 export interface ActionReducerProps {
   type: string;
-  boardsPayload?: { data: BoardsProps[]; function: "mount" | "add" | "update" };
+  boardsPayload?: { data: any; function: "mount" | "add" | "update" };
   isLoadingPayload?: boolean;
   boardNameInputPayload?: string;
   checkBoxInputPayload?: { index: number; value: boolean };
@@ -48,7 +44,11 @@ export interface ActionReducerProps {
     index: number;
     data: BoardsProps;
   };
-  currentTaskPayload?: { tasks: TaskProps; subtasks: SubTaskProps[] };
+  currentTaskPayload?: {
+    tasks: TaskProps;
+    subtasks: SubTaskProps[];
+    index: number;
+  };
   modalTrackerPayload?: {
     name:
       | "viewTask"
@@ -110,8 +110,8 @@ export interface TaskManagerProps {
 export interface BoardProps {
   name: string;
   status: { name: string; c_id: string }[];
-  tasks?: TaskProps[];
-  subtasks?: SubTaskProps[];
+  tasks: TaskProps[];
+  subtasks: SubTaskProps[];
 }
 
 export interface BoardsProps {

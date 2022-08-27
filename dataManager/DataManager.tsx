@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Options } from "../components/UI/Dropdown";
 import useStateManager from "../hooks/useStateManager";
 import {
   AddBoardProps,
@@ -10,7 +11,7 @@ import {
 
 const DataManager = () => {
   const { state, dispatch, actionValues } = useStateManager();
-  const { boards, currentBoard } = state;
+  const { boards, currentBoard, checkBoxInput, currentTask } = state;
   const { BOARDS, IS_LOADING } = actionValues;
 
   const getBoards = () => {
@@ -77,6 +78,33 @@ const DataManager = () => {
     });
   };
 
+  const changeStatus = (option: Options) => {
+    const dummyBoards = [...boards];
+    dummyBoards.map((i, index, array) => {
+      if (i.id === currentBoard.id) {
+        i.data.tasks.map((t, tIndex) => {
+          if (t.t_id === currentTask.tasks.t_id) {
+            array[index].data.tasks[tIndex].status = option.name;
+            array[index].data.tasks[tIndex].c_id = option.c_id;
+          }
+        });
+        i.data.subtasks.map((st, stIndex) => {
+          if (st.t_id === currentTask.tasks.t_id) {
+            array[index].data.subtasks[stIndex].c_id = option.c_id;
+          }
+        });
+      }
+    });
+
+    dispatch({
+      type: BOARDS,
+      boardsPayload: {
+        data: dummyBoards,
+        function: "update",
+      },
+    });
+  };
+
   return {
     getBoards,
     addBoard,
@@ -84,6 +112,7 @@ const DataManager = () => {
     addTask,
     addTaskLocally,
     deleteBoardLocally,
+    changeStatus,
   };
 };
 

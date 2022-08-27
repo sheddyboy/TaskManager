@@ -35,7 +35,6 @@ const AddNewTask = () => {
   const {
     subtaskInput,
     descriptionInput,
-    boards,
     currentBoard,
     dropdownInput,
     taskNameInput,

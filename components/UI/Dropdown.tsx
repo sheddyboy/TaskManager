@@ -15,6 +15,7 @@ export interface Options {
 interface DropdownProps {
   options: Options[];
   value: string;
+  onChange?: ({}: Options) => void;
   marginBottom?: string;
   marginTop?: string;
   label?: string;
@@ -26,6 +27,7 @@ const Dropdown = ({
   marginBottom,
   marginTop,
   label,
+  onChange,
 }: DropdownProps) => {
   const [dropdownToggle, setDropdownToggle] = useState(false);
 
@@ -33,7 +35,8 @@ const Dropdown = ({
     setDropdownToggle((dropdownToggle) => !dropdownToggle);
   };
 
-  const { dispatch, actionValues } = useStateManager();
+  const { state, dispatch, actionValues } = useStateManager();
+  const { dropdownInput } = state;
   const { DROPDOWN_INPUT } = actionValues;
 
   return (
@@ -59,6 +62,7 @@ const Dropdown = ({
                   type: DROPDOWN_INPUT,
                   dropdownInputPayload: option,
                 });
+                onChange && onChange(option);
               }}
             />
           ))}
