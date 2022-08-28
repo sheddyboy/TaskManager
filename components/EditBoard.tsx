@@ -83,7 +83,7 @@ const EditBoard = () => {
           </Button>
         )}
         <Button type="submit" marginTop="24px" state="primary">
-          Edit Board
+          Save Changes
         </Button>
       </form>
     </Card>

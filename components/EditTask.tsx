@@ -1,35 +1,15 @@
 import React from "react";
-import styled from "styled-components";
+import DataManager from "../dataManager/DataManager";
 import useStateManager from "../hooks/useStateManager";
+import { Label, Title } from "./AddNewTask";
 import Dropdown from "./UI/Dropdown";
-import { v4 as uuidv4 } from "uuid";
 import Input from "./UI/Input";
 import { Button } from "./UI/styled/Button.styled";
 import { Card } from "./UI/styled/Card.styled";
 import { InputField } from "./UI/styled/InputWrapper.styled";
 import { Textarea } from "./UI/styled/Textarea.styled";
-import DataManager from "../dataManager/DataManager";
-import { PostBoardBody } from "../types";
 
-export const Title = styled.h2`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 23px;
-  color: #000112;
-  margin-bottom: 24px;
-`;
-export const Label = styled.span`
-  display: inline-block;
-  margin-bottom: 8px;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 15px;
-  color: #828fa3;
-`;
-
-const AddNewTask = () => {
+const EditTask = () => {
   const { addTask, addTaskLocally } = DataManager();
   const { state, dispatch, actionValues } = useStateManager();
   const {
@@ -47,56 +27,11 @@ const AddNewTask = () => {
     DROPDOWN_INPUT,
   } = actionValues;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const t_id = uuidv4();
-    const tasks = {
-      t_id: t_id,
-      description: descriptionInput,
-      status: dropdownInput.name,
-      c_id: dropdownInput.c_id,
-      title: taskNameInput,
-    };
-    const subtasks = subtaskInput.map((i) => ({
-      isCompleted: false,
-      s_id: uuidv4(),
-      c_id: dropdownInput.c_id,
-      s_title: i.subtask,
-      t_id: t_id,
-    }));
-    const body: PostBoardBody = {
-      tasks: tasks,
-      subtasks: subtasks,
-    };
-    addTask(currentBoard.id, body);
-    addTaskLocally(tasks, subtasks);
-
-    dispatch({ type: MODAL_TOGGLE });
-    // Reset form inputs
-    dispatch({
-      type: TASK_NAME_INPUT,
-      taskNameInputPayload: "",
-    });
-    dispatch({
-      type: DESCRIPTION_INPUT,
-      descriptionInputPayload: "",
-    });
-    dispatch({
-      type: SUBTASK_INPUT,
-      subtaskInputPayload: {
-        function: "reset",
-      },
-    });
-    dispatch({
-      type: DROPDOWN_INPUT,
-      dropdownInputPayload: { name: "", c_id: "" },
-    });
-  };
-
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {};
   return (
     <Card>
       <form onSubmit={handleSubmit}>
-        <Title>Add New Task</Title>
+        <Title>Edit Task</Title>
         <Label>Title</Label>
         <Input
           value={taskNameInput}
@@ -174,10 +109,10 @@ const AddNewTask = () => {
           value={dropdownInput.name}
           options={currentBoard.data.status}
         />
-        <Button type="submit">Create Task</Button>
+        <Button type="submit">Save Changes</Button>
       </form>
     </Card>
   );
 };
 
-export default AddNewTask;
+export default EditTask;

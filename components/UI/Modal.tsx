@@ -6,6 +6,7 @@ import AddNewTask from "../AddNewTask";
 import DeleteBoard from "../DeleteBoard";
 import DeleteTask from "../DeleteTask";
 import EditBoard from "../EditBoard";
+import EditTask from "../EditTask";
 import ViewTask from "../ViewTask";
 import { ModalWrapper, Overlay } from "./styled/ModalWrapper.styled";
 
@@ -33,7 +34,7 @@ const Modal = ({ onClick }: ModalProps) => {
           modal = <EditBoard key={i.name} />;
         }
         if (i.name === "editTask" && i.value) {
-          modal = <AddNewBoard key={i.name} />;
+          modal = <EditTask key={i.name} />;
         }
         if (i.name === "viewTask" && i.value) {
           modal = <ViewTask key={i.name} />;

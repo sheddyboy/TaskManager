@@ -11,17 +11,17 @@ const AddNewBoard = () => {
   const { state, dispatch, actionValues } = useStateManager();
   const { COLUMN_INPUT, BOARD_NAME_INPUT, MODAL_TOGGLE, BOARDS } = actionValues;
   const { addBoard } = DataManager();
-  const { columnInput } = state;
+  const { columnInput, boardNameInput } = state;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     dispatch({ type: MODAL_TOGGLE });
     e.preventDefault();
 
-    const status = state.columnInput.map((i) => {
+    const status = columnInput.map((i) => {
       return { name: i.name, c_id: uuidv4() };
     });
     const addBoardData = {
-      name: state.boardNameInput,
+      name: boardNameInput,
       status: status,
     };
     const { data } = addBoard(addBoardData);
@@ -30,9 +30,7 @@ const AddNewBoard = () => {
       dispatch({
         type: BOARDS,
         boardsPayload: {
-          data: [
-            { id: id, data: { name: state.boardNameInput, status: status } },
-          ],
+          data: [{ id: id, data: { name: boardNameInput, status: status } }],
           function: "add",
         },
       });
@@ -58,7 +56,7 @@ const AddNewBoard = () => {
           required
           name="Name"
           marginBottom="20px"
-          value={state.boardNameInput}
+          value={boardNameInput}
           onChange={(e) => {
             dispatch({
               type: BOARD_NAME_INPUT,

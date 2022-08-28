@@ -29,13 +29,41 @@ const DeleteTask = styled.p`
 `;
 
 const OptionEditOrDeleteTask = () => {
-  const { dispatch, actionValues } = useStateManager();
-  const { MODAL_TRACKER, OPTION_EDIT_OR_DELETE_TASK_TOGGLE } = actionValues;
+  const { state, dispatch, actionValues } = useStateManager();
+  const { currentTask } = state;
+  const {
+    MODAL_TRACKER,
+    OPTION_EDIT_OR_DELETE_TASK_TOGGLE,
+    TASK_NAME_INPUT,
+    DESCRIPTION_INPUT,
+  } = actionValues;
 
   return (
     <OptionEditOrDeleteTaskWrapper>
       <OptionsCard>
-        <EditTask>Edit Task</EditTask>
+        <EditTask
+          onClick={() => {
+            dispatch({
+              type: DESCRIPTION_INPUT,
+              descriptionInputPayload: currentTask.tasks.description,
+            });
+            dispatch({
+              type: TASK_NAME_INPUT,
+              taskNameInputPayload: currentTask.tasks.title,
+            });
+
+            dispatch({ type: OPTION_EDIT_OR_DELETE_TASK_TOGGLE });
+            dispatch({
+              type: MODAL_TRACKER,
+              modalTrackerPayload: {
+                name: "editTask",
+                value: true,
+              },
+            });
+          }}
+        >
+          Edit Task
+        </EditTask>
         <DeleteTask
           onClick={() => {
             dispatch({ type: OPTION_EDIT_OR_DELETE_TASK_TOGGLE });
