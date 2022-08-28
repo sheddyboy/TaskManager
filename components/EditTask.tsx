@@ -10,7 +10,7 @@ import { InputField } from "./UI/styled/InputWrapper.styled";
 import { Textarea } from "./UI/styled/Textarea.styled";
 
 const EditTask = () => {
-  const { addTask, addTaskLocally } = DataManager();
+  const { editTask } = DataManager();
   const { state, dispatch, actionValues } = useStateManager();
   const {
     subtaskInput,
@@ -19,15 +19,12 @@ const EditTask = () => {
     dropdownInput,
     taskNameInput,
   } = state;
-  const {
-    SUBTASK_INPUT,
-    MODAL_TOGGLE,
-    TASK_NAME_INPUT,
-    DESCRIPTION_INPUT,
-    DROPDOWN_INPUT,
-  } = actionValues;
+  const { SUBTASK_INPUT, TASK_NAME_INPUT, DESCRIPTION_INPUT } = actionValues;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {};
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    editTask();
+  };
   return (
     <Card>
       <form onSubmit={handleSubmit}>
@@ -67,14 +64,14 @@ const EditTask = () => {
               <Input
                 marginBottom="12px"
                 required
-                value={i.subtask}
+                value={i.s_title}
                 onChange={(e) => {
                   dispatch({
                     type: SUBTASK_INPUT,
                     subtaskInputPayload: {
                       function: "update",
                       index: index,
-                      value: e.target.value,
+                      name: e.target.value,
                     },
                   });
                 }}

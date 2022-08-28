@@ -11,9 +11,19 @@ import {
 
 const DataManager = () => {
   const { state, dispatch, actionValues } = useStateManager();
-  const { boards, currentBoard, currentTask, boardNameInput, columnInput } =
-    state;
-  const { BOARDS, IS_LOADING, MODAL_TOGGLE, CURRENT_BOARD } = actionValues;
+  const {
+    boards,
+    currentBoard,
+    currentTask,
+    boardNameInput,
+    columnInput,
+    descriptionInput,
+    dropdownInput,
+    taskNameInput,
+    subtaskInput,
+  } = state;
+  const { BOARDS, IS_LOADING, MODAL_TOGGLE, CURRENT_BOARD, CURRENT_TASK } =
+    actionValues;
 
   const getBoards = () => {
     axios("/api/boards").then((data) => {
@@ -157,6 +167,44 @@ const DataManager = () => {
         i.data.status = columnInput;
       }
     });
+
+    dispatch({
+      type: BOARDS,
+      boardsPayload: {
+        data: dummyBoards,
+        function: "update",
+      },
+    });
+  };
+
+  const editTask = () => {
+    const dummyBoards = [...boards];
+    dummyBoards.map((i, index, array) => {
+      if (i.id === currentBoard.id) {
+        i.data.tasks.map((t, tIndex) => {
+          if (t.t_id === currentTask.tasks.t_id) {
+            array[index].data.tasks[tIndex].title = taskNameInput;
+            array[index].data.tasks[tIndex].description = descriptionInput;
+            array[index].data.tasks[tIndex].status = dropdownInput.name;
+            array[index].data.tasks[tIndex].c_id = dropdownInput.c_id;
+          }
+        });
+        const dummySubtasks = i.data.subtasks.filter(
+          (st) => st.t_id !== currentTask.tasks.t_id
+        );
+        array[index].data.subtasks = [...dummySubtasks, ...subtaskInput];
+      }
+    });
+
+    dispatch({
+      type: BOARDS,
+      boardsPayload: {
+        data: dummyBoards,
+        function: "update",
+      },
+    });
+
+    dispatch({ type: MODAL_TOGGLE });
   };
 
   return {
@@ -169,6 +217,7 @@ const DataManager = () => {
     changeStatus,
     deleteTask,
     editBoard,
+    editTask,
   };
 };
 

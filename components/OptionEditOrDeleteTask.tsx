@@ -30,12 +30,13 @@ const DeleteTask = styled.p`
 
 const OptionEditOrDeleteTask = () => {
   const { state, dispatch, actionValues } = useStateManager();
-  const { currentTask } = state;
+  const { currentTask, currentBoard } = state;
   const {
     MODAL_TRACKER,
     OPTION_EDIT_OR_DELETE_TASK_TOGGLE,
     TASK_NAME_INPUT,
     DESCRIPTION_INPUT,
+    SUBTASK_INPUT,
   } = actionValues;
 
   return (
@@ -43,6 +44,13 @@ const OptionEditOrDeleteTask = () => {
       <OptionsCard>
         <EditTask
           onClick={() => {
+            dispatch({
+              type: SUBTASK_INPUT,
+              subtaskInputPayload: {
+                function: "override",
+                value: currentTask.subtasks,
+              },
+            });
             dispatch({
               type: DESCRIPTION_INPUT,
               descriptionInputPayload: currentTask.tasks.description,

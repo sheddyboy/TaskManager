@@ -22,7 +22,7 @@ export interface StateReducerProps {
   };
   columnInput: { name: string; c_id: string }[];
   checkBoxInput: SubTaskProps[];
-  subtaskInput: { subtask: string }[];
+  subtaskInput: SubTaskProps[];
   modalTracker: {
     name:
       | "viewTask"
@@ -75,9 +75,16 @@ export interface ActionReducerProps {
     value?: { name: string; c_id: string }[];
   };
   subtaskInputPayload?: {
-    function: "delete" | "update" | "reset";
+    function: "delete" | "update" | "reset" | "override";
     index?: number;
-    value?: string;
+    name?: string;
+    value?: {
+      s_title: string;
+      t_id: string;
+      s_id: string;
+      isCompleted: boolean;
+      c_id: string;
+    }[];
   };
 }
 

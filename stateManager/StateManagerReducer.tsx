@@ -1,6 +1,10 @@
 import { useReducer } from "react";
 import { ActionReducerProps, StateReducerProps } from "../types";
-import { defaultReducerStates, actionValues } from "../defaultValues";
+import {
+  defaultReducerStates,
+  actionValues,
+  defaultBoard,
+} from "../defaultValues";
 
 const {
   SIDEBAR_TOGGLE,
@@ -26,14 +30,19 @@ const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
   switch (action.type) {
     case BOARDS: {
       if (action.boardsPayload?.function === "add") {
+        console.log("add called");
+
         const dummyArray = [...state.boards, ...action.boardsPayload.data];
         return { ...state, boards: dummyArray };
       }
       if (action.boardsPayload?.function === "mount") {
+        console.log("mount called");
+
         const dummyArray = [...action.boardsPayload.data];
         return { ...state, boards: dummyArray };
       }
       if (action.boardsPayload?.function === "update") {
+        console.log("update called");
         const dummyArray = [...action.boardsPayload.data];
         return { ...state, boards: dummyArray };
       }
@@ -109,24 +118,34 @@ const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
       };
     }
     case SUBTASK_INPUT: {
-      let dummyArray = [...state.subtaskInput, { subtask: "" }];
+      let dummyArray = [
+        ...state.subtaskInput,
+        { s_title: "", t_id: "", s_id: "", isCompleted: false, c_id: "" },
+      ];
       if (
         action.subtaskInputPayload?.function === "delete" &&
         action.subtaskInputPayload.index !== undefined
       ) {
         dummyArray = [...state.subtaskInput];
         dummyArray.splice(action.subtaskInputPayload.index, 1);
-      } else if (action.subtaskInputPayload?.function === "update") {
+      } else if (
+        action.subtaskInputPayload?.function === "update" &&
+        action.subtaskInputPayload.index !== undefined
+      ) {
         dummyArray = [...state.subtaskInput];
-        if (
-          action.subtaskInputPayload.value !== undefined &&
-          action.subtaskInputPayload.index !== undefined
-        ) {
-          dummyArray[action.subtaskInputPayload.index].subtask =
-            action.subtaskInputPayload.value;
+        if (action.subtaskInputPayload.name !== undefined) {
+          dummyArray[action.subtaskInputPayload.index].s_title =
+            action.subtaskInputPayload.name;
         }
       } else if (action.subtaskInputPayload?.function === "reset") {
-        dummyArray = [{ subtask: "" }];
+        dummyArray = [
+          { s_title: "", t_id: "", s_id: "", isCompleted: false, c_id: "" },
+        ];
+      } else if (
+        action.subtaskInputPayload?.function === "override" &&
+        action.subtaskInputPayload.value
+      ) {
+        dummyArray = action.subtaskInputPayload.value;
       }
       return { ...state, subtaskInput: dummyArray };
     }

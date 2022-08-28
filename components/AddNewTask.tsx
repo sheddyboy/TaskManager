@@ -61,7 +61,7 @@ const AddNewTask = () => {
       isCompleted: false,
       s_id: uuidv4(),
       c_id: dropdownInput.c_id,
-      s_title: i.subtask,
+      s_title: i.s_title,
       t_id: t_id,
     }));
     const body: PostBoardBody = {
@@ -132,14 +132,14 @@ const AddNewTask = () => {
               <Input
                 marginBottom="12px"
                 required
-                value={i.subtask}
+                value={i.s_title}
                 onChange={(e) => {
                   dispatch({
                     type: SUBTASK_INPUT,
                     subtaskInputPayload: {
                       function: "update",
                       index: index,
-                      value: e.target.value,
+                      name: e.target.value,
                     },
                   });
                 }}

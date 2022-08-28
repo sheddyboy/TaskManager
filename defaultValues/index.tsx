@@ -33,7 +33,7 @@ export const defaultReducerStates: StateReducerProps = {
   checkBoxInput: [
     { s_id: "", isCompleted: false, s_title: "", c_id: "", t_id: "" },
   ],
-  subtaskInput: [{ subtask: "" }],
+  subtaskInput: [...defaultBoard.subtasks],
   dropdownInput: { name: "", c_id: "" },
   boardNameInput: "",
   taskNameInput: "",
