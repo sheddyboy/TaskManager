@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import DataManager from "../dataManager/DataManager";
-import { defaultBoards } from "../defaultValues";
 import useStateManager from "../hooks/useStateManager";
 import { Button, DelButton } from "./UI/styled/Button.styled";
 import { Card } from "./UI/styled/Card.styled";
@@ -28,33 +27,24 @@ const ButtonWrapper = styled.div`
   grid-column-gap: 16px;
 `;
 
-const DeleteBoard = () => {
-  const { deleteBoard, deleteBoardLocally } = DataManager();
+const DeleteTask = () => {
+  const { deleteTask } = DataManager();
   const { state, dispatch, actionValues } = useStateManager();
-  const { currentBoard } = state;
+  const { currentTask } = state;
   const { MODAL_TOGGLE, CURRENT_BOARD } = actionValues;
+
   return (
     <Card>
-      <Title>Delete this board?</Title>
+      <Title>Delete this task?</Title>
       <Content>
-        {`Are you sure you want to delete the ‘${currentBoard.name}’ board? This action
+        {`Are you sure you want to delete the ‘${currentTask.tasks.title}’ board? This action
         will remove all columns and tasks and cannot be reversed.`}
       </Content>
       <ButtonWrapper>
         <DelButton
           onClick={() => {
-            deleteBoard(currentBoard.id);
-            deleteBoardLocally();
+            deleteTask();
             dispatch({ type: MODAL_TOGGLE });
-            dispatch({
-              type: CURRENT_BOARD,
-              currentBoardPayload: {
-                name: "",
-                id: "",
-                index: -1,
-                data: defaultBoards.data,
-              },
-            });
           }}
         >
           Delete
@@ -72,4 +62,4 @@ const DeleteBoard = () => {
   );
 };
 
-export default DeleteBoard;
+export default DeleteTask;

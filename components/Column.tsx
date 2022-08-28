@@ -12,8 +12,8 @@ const Column = ({ status, c_id }: ColumnProps) => {
   const { state } = useStateManager();
   const { currentBoard, boards } = state;
 
-  const selectedBoardData = boards.find((i) => i.id === currentBoard.id);
-  const tasks = selectedBoardData?.data.tasks;
+  // const selectedBoardData = boards.find((i) => i.id === currentBoard.id);
+  const tasks = currentBoard?.data.tasks;
   const columnTasks = tasks?.filter((i) => i.c_id === c_id);
 
   return (

@@ -24,11 +24,12 @@ export const defaultReducerStates: StateReducerProps = {
   toggleSidebar: true,
   toggleModal: false,
   toggleOptionEditOrDeleteBoard: false,
+  toggleOptionEditOrDeleteTask: false,
   theme: "light",
   themeButton: false,
   isLoading: false,
   boards: [defaultBoards],
-  columnInput: [{ column: "" }],
+  columnInput: [{ name: "", c_id: "" }],
   checkBoxInput: [
     { s_id: "", isCompleted: false, s_title: "", c_id: "", t_id: "" },
   ],
@@ -37,9 +38,11 @@ export const defaultReducerStates: StateReducerProps = {
   boardNameInput: "",
   taskNameInput: "",
   descriptionInput: "",
-  currentBoard: { name: "", id: "", index: -1, data: defaultBoards },
+  currentBoard: { name: "", id: "", index: -1, data: defaultBoard },
   currentTask: {
+    status: [{ name: "", c_id: "" }],
     tasks: { title: "", status: "", t_id: "", c_id: "", description: "" },
+
     subtasks: [
       { s_title: "", t_id: "", s_id: "", isCompleted: false, c_id: "" },
     ],
@@ -73,6 +76,7 @@ export const actionValues: ActionReducerTypeProps = {
   MODAL_TOGGLE: "MODAL_TOGGLE",
   THEME_TOGGLE: "THEME_TOGGLE",
   OPTION_EDIT_OR_DELETE_BOARD_TOGGLE: "OPTION_EDIT_OR_DELETE_BOARD_TOGGLE",
+  OPTION_EDIT_OR_DELETE_TASK_TOGGLE: "OPTION_EDIT_OR_DELETE_TASK_TOGGLE",
   THEME_TOGGLE_BUTTON: "THEME_TOGGLE_BUTTON",
   BOARDS: "BOARDS",
   IS_LOADING: "IS_LOADING",

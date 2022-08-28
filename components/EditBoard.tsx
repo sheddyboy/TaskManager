@@ -1,5 +1,4 @@
 import React from "react";
-import { v4 as uuidv4 } from "uuid";
 import DataManager from "../dataManager/DataManager";
 import useStateManager from "../hooks/useStateManager";
 import Input from "./UI/Input";
@@ -7,58 +6,26 @@ import { Button } from "./UI/styled/Button.styled";
 import { Card, Title } from "./UI/styled/Card.styled";
 import { InputField, Label } from "./UI/styled/InputWrapper.styled";
 
-const AddNewBoard = () => {
+const EditBoard = () => {
   const { state, dispatch, actionValues } = useStateManager();
   const { COLUMN_INPUT, BOARD_NAME_INPUT, MODAL_TOGGLE, BOARDS } = actionValues;
-  const { addBoard } = DataManager();
-  const { columnInput } = state;
+  const { editBoard } = DataManager();
+  const { columnInput, boardNameInput } = state;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    dispatch({ type: MODAL_TOGGLE });
     e.preventDefault();
-
-    const status = state.columnInput.map((i) => {
-      return { name: i.name, c_id: uuidv4() };
-    });
-    const addBoardData = {
-      name: state.boardNameInput,
-      status: status,
-    };
-    const { data } = addBoard(addBoardData);
-
-    data.then((id) => {
-      dispatch({
-        type: BOARDS,
-        boardsPayload: {
-          data: [
-            { id: id, data: { name: state.boardNameInput, status: status } },
-          ],
-          function: "add",
-        },
-      });
-    });
-    // Reset form inputs
-    dispatch({
-      type: BOARD_NAME_INPUT,
-      boardNameInputPayload: "",
-    });
-    dispatch({
-      type: COLUMN_INPUT,
-      columnInputPayload: {
-        function: "reset",
-      },
-    });
+    editBoard();
   };
 
   return (
     <Card>
       <form onSubmit={handleSubmit}>
-        <Title>Add New Board</Title>
+        <Title>Edit Board</Title>
         <Input
           required
           name="Name"
           marginBottom="20px"
-          value={state.boardNameInput}
+          value={boardNameInput}
           onChange={(e) => {
             dispatch({
               type: BOARD_NAME_INPUT,
@@ -116,11 +83,11 @@ const AddNewBoard = () => {
           </Button>
         )}
         <Button type="submit" marginTop="24px" state="primary">
-          Create New Board
+          Edit Board
         </Button>
       </form>
     </Card>
   );
 };
 
-export default AddNewBoard;
+export default EditBoard;

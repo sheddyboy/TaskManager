@@ -19,6 +19,8 @@ const Task = ({ task, index }: CurrentTaskProps) => {
     (i) => i.t_id === task.t_id
   );
 
+  const currentBoardStatus = currentBoardData?.data.status;
+
   const numberOfCompletedTasks = currentSubtasksData?.filter(
     (i) => i.isCompleted === true
   );
@@ -32,11 +34,13 @@ const Task = ({ task, index }: CurrentTaskProps) => {
           modalTrackerPayload: { name: "viewTask", value: true },
         });
         currentSubtasksData &&
+          currentBoardStatus &&
           dispatch({
             type: CURRENT_TASK,
             currentTaskPayload: {
               tasks: task,
               subtasks: currentSubtasksData,
+              status: currentBoardStatus,
               index: index,
             },
           });

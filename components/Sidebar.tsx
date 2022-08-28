@@ -54,7 +54,7 @@ const Sidebar = () => {
                         name: e.target.value,
                         id: i.id,
                         index: index,
-                        data: i,
+                        data: i.data,
                       },
                     });
                   }}

@@ -4,6 +4,7 @@ export interface StateReducerProps {
   toggleSidebar: boolean;
   toggleModal: boolean;
   toggleOptionEditOrDeleteBoard: boolean;
+  toggleOptionEditOrDeleteTask: boolean;
   theme: string;
   themeButton: boolean;
   isLoading: boolean;
@@ -12,9 +13,14 @@ export interface StateReducerProps {
   taskNameInput: string;
   descriptionInput: string;
   dropdownInput: { name: string; c_id: string };
-  currentBoard: { name: string; id: string; index: number; data: BoardsProps };
-  currentTask: { tasks: TaskProps; subtasks: SubTaskProps[]; index: number };
-  columnInput: { column: string }[];
+  currentBoard: { name: string; id: string; index: number; data: BoardProps };
+  currentTask: {
+    tasks: TaskProps;
+    subtasks: SubTaskProps[];
+    index: number;
+    status: StatusProps[];
+  };
+  columnInput: { name: string; c_id: string }[];
   checkBoxInput: SubTaskProps[];
   subtaskInput: { subtask: string }[];
   modalTracker: {
@@ -42,12 +48,13 @@ export interface ActionReducerProps {
     name: string;
     id: string;
     index: number;
-    data: BoardsProps;
+    data: BoardProps;
   };
   currentTaskPayload?: {
     tasks: TaskProps;
     subtasks: SubTaskProps[];
     index: number;
+    status: StatusProps[];
   };
   modalTrackerPayload?: {
     name:
@@ -61,9 +68,11 @@ export interface ActionReducerProps {
     value: boolean;
   };
   columnInputPayload?: {
-    function: "delete" | "update" | "reset";
+    function: "delete" | "update" | "reset" | "override";
     index?: number;
-    value?: string;
+    name?: string;
+    c_id?: string;
+    value?: { name: string; c_id: string }[];
   };
   subtaskInputPayload?: {
     function: "delete" | "update" | "reset";
@@ -77,6 +86,7 @@ export interface ActionReducerTypeProps {
   MODAL_TOGGLE: string;
   THEME_TOGGLE: string;
   OPTION_EDIT_OR_DELETE_BOARD_TOGGLE: string;
+  OPTION_EDIT_OR_DELETE_TASK_TOGGLE: string;
   THEME_TOGGLE_BUTTON: string;
   BOARDS: string;
   IS_LOADING: string;
@@ -132,6 +142,10 @@ export interface SubTaskProps {
   c_id: string;
   s_id: string;
   isCompleted: boolean;
+}
+export interface StatusProps {
+  name: string;
+  c_id: string;
 }
 export interface AddBoardProps {
   name: string;

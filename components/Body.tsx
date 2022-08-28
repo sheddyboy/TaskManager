@@ -15,8 +15,7 @@ const Body = () => {
   const { MODAL_TOGGLE } = actionValues;
   const { toggleSidebar, currentBoard, boards } = state;
 
-  const selectedBoardData = boards.find((i) => i.id === currentBoard.id);
-  const columns = selectedBoardData?.data.status;
+  const columns = currentBoard.data.status;
 
   return (
     <BodyWrapper>

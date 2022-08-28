@@ -3,11 +3,13 @@ import React from "react";
 import styled from "styled-components";
 import DataManager from "../dataManager/DataManager";
 import useStateManager from "../hooks/useStateManager";
+import OptionEditOrDeleteTask from "./OptionEditOrDeleteTask";
 import Checkbox from "./UI/Checkbox";
 import Dropdown, { Options } from "./UI/Dropdown";
 import { Card } from "./UI/styled/Card.styled";
 
 const TitleWrapper = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -45,8 +47,13 @@ const Content = styled.div`
 const ViewTask = () => {
   const { changeStatus } = DataManager();
   const { state, dispatch, actionValues } = useStateManager();
-  const { CHECKBOX_INPUT } = actionValues;
-  const { currentTask, checkBoxInput, currentBoard } = state;
+  const { CHECKBOX_INPUT, OPTION_EDIT_OR_DELETE_TASK_TOGGLE } = actionValues;
+  const {
+    currentTask,
+    checkBoxInput,
+    currentBoard,
+    toggleOptionEditOrDeleteTask,
+  } = state;
   const { tasks, subtasks } = currentTask;
 
   const completedSubtasks = subtasks.filter((i) => i.isCompleted === true);
@@ -54,9 +61,14 @@ const ViewTask = () => {
     <Card>
       <TitleWrapper>
         <h2>{tasks.title}</h2>
-        <i>
+        <i
+          onClick={() => {
+            dispatch({ type: OPTION_EDIT_OR_DELETE_TASK_TOGGLE });
+          }}
+        >
           <Image src="/icon-vertical-ellipsis.svg" width={5} height={20} />
         </i>
+        {toggleOptionEditOrDeleteTask && <OptionEditOrDeleteTask />}
       </TitleWrapper>
       <Content>
         <p>{tasks.description}</p>
@@ -77,7 +89,7 @@ const ViewTask = () => {
       </Content>
       <Dropdown
         label="Current Status"
-        options={currentBoard.data.data.status}
+        options={currentBoard.data.status}
         onChange={(option: Options) => {
           changeStatus(option);
         }}

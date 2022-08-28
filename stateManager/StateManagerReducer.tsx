@@ -1,10 +1,6 @@
 import { useReducer } from "react";
 import { ActionReducerProps, StateReducerProps } from "../types";
-import {
-  defaultReducerStates,
-  actionValues,
-  defaultBoards,
-} from "../defaultValues";
+import { defaultReducerStates, actionValues } from "../defaultValues";
 
 const {
   SIDEBAR_TOGGLE,
@@ -24,6 +20,7 @@ const {
   TASK_NAME_INPUT,
   CURRENT_TASK,
   CHECKBOX_INPUT,
+  OPTION_EDIT_OR_DELETE_TASK_TOGGLE,
 } = actionValues;
 const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
   switch (action.type) {
@@ -48,8 +45,12 @@ const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
       if (action.currentTaskPayload !== undefined)
         return { ...state, currentTask: action.currentTaskPayload };
     case BOARD_NAME_INPUT:
-      if (action.boardNameInputPayload !== undefined)
-        return { ...state, boardNameInput: action.boardNameInputPayload };
+      if (action.boardNameInputPayload !== undefined) {
+        return {
+          ...state,
+          boardNameInput: action.boardNameInputPayload,
+        };
+      }
     case TASK_NAME_INPUT:
       if (action.taskNameInputPayload !== undefined)
         return { ...state, taskNameInput: action.taskNameInputPayload };
@@ -69,11 +70,16 @@ const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
       return {
         ...state,
         checkBoxInput: subtasks,
-        currentTask: { tasks, subtasks, index: state.currentTask.index },
+        currentTask: {
+          tasks,
+          subtasks,
+          status: state.currentTask.status,
+          index: state.currentTask.index,
+        },
       };
     }
     case COLUMN_INPUT: {
-      let dummyArray = [...state.columnInput, { column: "" }];
+      let dummyArray = [...state.columnInput, { name: "", c_id: "" }];
       if (
         action.columnInputPayload?.function === "delete" &&
         action.columnInputPayload.index !== undefined
@@ -85,14 +91,22 @@ const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
         action.columnInputPayload.index !== undefined
       ) {
         dummyArray = [...state.columnInput];
-        if (action.columnInputPayload.value !== undefined) {
-          dummyArray[action.columnInputPayload.index].column =
-            action.columnInputPayload.value;
+        if (action.columnInputPayload.name !== undefined) {
+          dummyArray[action.columnInputPayload.index].name =
+            action.columnInputPayload.name;
         }
       } else if (action.columnInputPayload?.function === "reset") {
-        dummyArray = [{ column: "" }];
+        dummyArray = [{ name: "", c_id: "" }];
+      } else if (
+        action.columnInputPayload?.function === "override" &&
+        action.columnInputPayload.value
+      ) {
+        dummyArray = action.columnInputPayload.value;
       }
-      return { ...state, columnInput: dummyArray };
+      return {
+        ...state,
+        columnInput: dummyArray,
+      };
     }
     case SUBTASK_INPUT: {
       let dummyArray = [...state.subtaskInput, { subtask: "" }];
@@ -130,6 +144,11 @@ const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
       return {
         ...state,
         toggleOptionEditOrDeleteBoard: !state.toggleOptionEditOrDeleteBoard,
+      };
+    case OPTION_EDIT_OR_DELETE_TASK_TOGGLE:
+      return {
+        ...state,
+        toggleOptionEditOrDeleteTask: !state.toggleOptionEditOrDeleteTask,
       };
     case MODAL_TRACKER: {
       const dummyArray = [...state.modalTracker];

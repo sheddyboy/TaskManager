@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import useStateManager from "../hooks/useStateManager";
 import Dropdown from "./UI/Dropdown";
@@ -171,7 +171,7 @@ const AddNewTask = () => {
         <Dropdown
           marginBottom="24px"
           value={dropdownInput.name}
-          options={currentBoard.data.data.status}
+          options={currentBoard.data.status}
         />
         <Button type="submit">Create Task</Button>
       </form>

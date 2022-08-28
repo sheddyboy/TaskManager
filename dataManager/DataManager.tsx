@@ -11,8 +11,9 @@ import {
 
 const DataManager = () => {
   const { state, dispatch, actionValues } = useStateManager();
-  const { boards, currentBoard, checkBoxInput, currentTask } = state;
-  const { BOARDS, IS_LOADING } = actionValues;
+  const { boards, currentBoard, currentTask, boardNameInput, columnInput } =
+    state;
+  const { BOARDS, IS_LOADING, MODAL_TOGGLE, CURRENT_BOARD } = actionValues;
 
   const getBoards = () => {
     axios("/api/boards").then((data) => {
@@ -40,17 +41,15 @@ const DataManager = () => {
   };
 
   const addTaskLocally = (tasks: TaskProps, subtasks: SubTaskProps[]) => {
-    let prevTasks = currentBoard.data.data.tasks
-      ? currentBoard.data.data.tasks
-      : [];
-    let prevSubTasks = currentBoard.data.data.subtasks
-      ? currentBoard.data.data.subtasks
+    let prevTasks = currentBoard.data.tasks ? currentBoard.data.tasks : [];
+    let prevSubTasks = currentBoard.data.subtasks
+      ? currentBoard.data.subtasks
       : [];
     const updatedCurrentBoard: BoardsProps = {
       id: currentBoard.id,
       data: {
-        name: currentBoard.data?.data.name,
-        status: currentBoard.data?.data.status,
+        name: currentBoard.data?.name,
+        status: currentBoard.data?.status,
         tasks: [...prevTasks, tasks],
         subtasks: [...prevSubTasks, ...subtasks],
       },
@@ -62,6 +61,15 @@ const DataManager = () => {
       boardsPayload: {
         data: dummyBoards,
         function: "update",
+      },
+    });
+    dispatch({
+      type: CURRENT_BOARD,
+      currentBoardPayload: {
+        name: currentBoard.name,
+        id: currentBoard.id,
+        index: currentBoard.index,
+        data: updatedCurrentBoard.data,
       },
     });
   };
@@ -105,6 +113,52 @@ const DataManager = () => {
     });
   };
 
+  const deleteTask = () => {
+    const dummyBoards = [...boards];
+    dummyBoards.map((i, index, array) => {
+      if (i.id === currentBoard.id) {
+        i.data.tasks.map((t, tIndex) => {
+          if (t.t_id === currentTask.tasks.t_id) {
+            array[index].data.tasks.splice(tIndex, 1);
+          }
+        });
+        for (let fl = array[index].data.subtasks.length - 1; fl >= 0; fl--) {
+          if (array[index].data.subtasks[fl].t_id === currentTask.tasks.t_id) {
+            array[index].data.subtasks.splice(fl, 1);
+          }
+        }
+      }
+    });
+    dispatch({
+      type: BOARDS,
+      boardsPayload: {
+        data: dummyBoards,
+        function: "update",
+      },
+    });
+  };
+  const editBoard = () => {
+    dispatch({
+      type: CURRENT_BOARD,
+      currentBoardPayload: {
+        name: boardNameInput,
+        data: currentBoard.data,
+        id: currentBoard.id,
+        index: currentBoard.index,
+      },
+    });
+    dispatch({
+      type: MODAL_TOGGLE,
+    });
+    const dummyBoards = [...boards];
+    dummyBoards.map((i) => {
+      if (i.id === currentBoard.id) {
+        i.data.name = boardNameInput;
+        i.data.status = columnInput;
+      }
+    });
+  };
+
   return {
     getBoards,
     addBoard,
@@ -113,6 +167,8 @@ const DataManager = () => {
     addTaskLocally,
     deleteBoardLocally,
     changeStatus,
+    deleteTask,
+    editBoard,
   };
 };
 

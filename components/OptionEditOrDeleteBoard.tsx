@@ -27,13 +27,41 @@ const DeleteBoard = styled.p`
 `;
 
 const OptionEditOrDeleteBoard = () => {
-  const { dispatch, actionValues } = useStateManager();
-  const { MODAL_TOGGLE, MODAL_TRACKER, OPTION_EDIT_OR_DELETE_BOARD_TOGGLE } =
-    actionValues;
+  const { state, dispatch, actionValues } = useStateManager();
+  const { currentBoard } = state;
+  const {
+    MODAL_TOGGLE,
+    MODAL_TRACKER,
+    OPTION_EDIT_OR_DELETE_BOARD_TOGGLE,
+    BOARD_NAME_INPUT,
+    COLUMN_INPUT,
+  } = actionValues;
   return (
     <OptionEditOrDeleteBoardWrapper>
       <OptionsCard>
-        <EditBoard>Edit Board</EditBoard>
+        <EditBoard
+          onClick={() => {
+            dispatch({
+              type: COLUMN_INPUT,
+              columnInputPayload: {
+                function: "override",
+                value: currentBoard.data.status,
+              },
+            });
+            dispatch({
+              type: BOARD_NAME_INPUT,
+              boardNameInputPayload: currentBoard.name,
+            });
+            dispatch({ type: MODAL_TOGGLE });
+            dispatch({ type: OPTION_EDIT_OR_DELETE_BOARD_TOGGLE });
+            dispatch({
+              type: MODAL_TRACKER,
+              modalTrackerPayload: { name: "editBoard", value: true },
+            });
+          }}
+        >
+          Edit Board
+        </EditBoard>
         <DeleteBoard
           onClick={() => {
             dispatch({ type: MODAL_TOGGLE });

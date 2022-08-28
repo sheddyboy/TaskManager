@@ -1,12 +1,4 @@
-import {
-  addDoc,
-  collection,
-  CollectionReference,
-  deleteDoc,
-  doc,
-  DocumentData,
-  getDocs,
-} from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { NextApiRequest, NextApiResponse } from "next";
 import db from "../../../database/database";
 const boards = async (req: NextApiRequest, res: NextApiResponse) => {
