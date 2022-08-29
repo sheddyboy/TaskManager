@@ -1,7 +1,6 @@
 import React from "react";
 import useStateManager from "../hooks/useStateManager";
 import Column from "./Column";
-import { BodyWrapper } from "./styled/BodyWrapper.styled";
 import { Content } from "./styled/Content.styled";
 import { EmptyBoard } from "./styled/EmptyBoard.styled";
 import { NewColumn } from "./styled/NewColumn.styled";
@@ -17,7 +16,6 @@ const Body = () => {
   const columns = currentBoard.data.status;
 
   return (
-    // <BodyWrapper>
     <Content>
       {false && (
         <EmptyBoard>
@@ -40,7 +38,6 @@ const Body = () => {
       )}
       {!toggleSidebar && <SideBarToggle />}
     </Content>
-    // </BodyWrapper>
   );
 };
 

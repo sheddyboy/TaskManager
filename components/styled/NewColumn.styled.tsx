@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Theme } from "./SidebarWrapper.styled";
 
 export const NewColumn = styled.div`
   cursor: pointer;

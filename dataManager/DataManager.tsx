@@ -22,15 +22,35 @@ const DataManager = () => {
     taskNameInput,
     subtaskInput,
   } = state;
-  const { BOARDS, IS_LOADING, MODAL_TOGGLE, CURRENT_BOARD, CURRENT_TASK } =
-    actionValues;
+  const {
+    BOARDS,
+    IS_LOADING,
+    MODAL_TOGGLE,
+    CURRENT_BOARD,
+    BOARD_NAME_INPUT,
+    COLUMN_INPUT,
+    TASK_NAME_INPUT,
+    DESCRIPTION_INPUT,
+    SUBTASK_INPUT,
+  } = actionValues;
 
   const getBoards = () => {
     axios("/api/boards").then((data) => {
+      console.log("then called");
+
       dispatch({ type: IS_LOADING, isLoadingPayload: true });
       dispatch({
         type: BOARDS,
         boardsPayload: { data: data.data, function: "mount" },
+      });
+      dispatch({
+        type: CURRENT_BOARD,
+        currentBoardPayload: {
+          name: data.data[0].data.name,
+          id: data.data[0].id,
+          index: 0,
+          data: data.data[0].data,
+        },
       });
     });
   };
@@ -203,8 +223,36 @@ const DataManager = () => {
         function: "update",
       },
     });
-
     dispatch({ type: MODAL_TOGGLE });
+  };
+
+  const boardInputReset = () => {
+    dispatch({
+      type: BOARD_NAME_INPUT,
+      boardNameInputPayload: "",
+    });
+    dispatch({
+      type: COLUMN_INPUT,
+      columnInputPayload: {
+        function: "reset",
+      },
+    });
+  };
+  const taskInputReset = () => {
+    dispatch({
+      type: TASK_NAME_INPUT,
+      taskNameInputPayload: "",
+    });
+    dispatch({
+      type: DESCRIPTION_INPUT,
+      descriptionInputPayload: "",
+    });
+    dispatch({
+      type: SUBTASK_INPUT,
+      subtaskInputPayload: {
+        function: "reset",
+      },
+    });
   };
 
   return {
@@ -218,6 +266,8 @@ const DataManager = () => {
     deleteTask,
     editBoard,
     editTask,
+    boardInputReset,
+    taskInputReset,
   };
 };
 

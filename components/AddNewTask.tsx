@@ -121,7 +121,7 @@ const AddNewTask = () => {
           value={descriptionInput}
           placeholder="e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little."
         />
-        <Label>Subtasks Max(3)</Label>
+        <Label>Subtasks</Label>
         {subtaskInput.map((i, index) => {
           let canDelete = false;
           if (subtaskInput.length !== 1) {
@@ -158,17 +158,15 @@ const AddNewTask = () => {
             </InputField>
           );
         })}
-        {subtaskInput.length < 3 && (
-          <Button
-            marginBottom="24px"
-            onClick={() => {
-              dispatch({ type: SUBTASK_INPUT });
-            }}
-            state="secondary"
-          >
-            + Add New Subtask
-          </Button>
-        )}
+        <Button
+          marginBottom="24px"
+          onClick={() => {
+            dispatch({ type: SUBTASK_INPUT });
+          }}
+          state="secondary"
+        >
+          + Add New Subtask
+        </Button>
         <Dropdown
           marginBottom="24px"
           value={dropdownInput.name}

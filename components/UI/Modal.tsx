@@ -1,4 +1,5 @@
 import React from "react";
+import DataManager from "../../dataManager/DataManager";
 import useStateManager from "../../hooks/useStateManager";
 import { ModalProps } from "../../types";
 import AddNewBoard from "../AddNewBoard";
@@ -11,11 +12,18 @@ import ViewTask from "../ViewTask";
 import { ModalWrapper, Overlay } from "./styled/ModalWrapper.styled";
 
 const Modal = ({ onClick }: ModalProps) => {
+  const { boardInputReset, taskInputReset } = DataManager();
   const { state } = useStateManager();
   const { modalTracker } = state;
   return (
     <ModalWrapper>
-      <Overlay onClick={onClick} />
+      <Overlay
+        onClick={() => {
+          onClick();
+          boardInputReset();
+          taskInputReset();
+        }}
+      />
       {modalTracker.map((i) => {
         let modal;
         if (i.name === "addNewBoard" && i.value) {

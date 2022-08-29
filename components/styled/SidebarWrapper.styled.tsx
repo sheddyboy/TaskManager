@@ -23,6 +23,8 @@ export const Logo = styled.div`
   margin-left: 34px;
 `;
 export const Board = styled.div`
+  overflow: auto;
+  max-height: 500px;
   span {
     display: block;
     font-weight: 700;
@@ -122,7 +124,9 @@ export const CreateBoard = styled.div`
     cursor: pointer;
   }
 `;
-export const Bottom = styled.div``;
+export const Bottom = styled.div`
+  margin-top: 25px;
+`;
 export const Theme = styled.div`
   display: flex;
   justify-content: center;

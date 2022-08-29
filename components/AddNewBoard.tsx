@@ -10,7 +10,7 @@ import { InputField, Label } from "./UI/styled/InputWrapper.styled";
 const AddNewBoard = () => {
   const { state, dispatch, actionValues } = useStateManager();
   const { COLUMN_INPUT, BOARD_NAME_INPUT, MODAL_TOGGLE, BOARDS } = actionValues;
-  const { addBoard } = DataManager();
+  const { addBoard, boardInputReset } = DataManager();
   const { columnInput, boardNameInput } = state;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -35,17 +35,7 @@ const AddNewBoard = () => {
         },
       });
     });
-    // Reset form inputs
-    dispatch({
-      type: BOARD_NAME_INPUT,
-      boardNameInputPayload: "",
-    });
-    dispatch({
-      type: COLUMN_INPUT,
-      columnInputPayload: {
-        function: "reset",
-      },
-    });
+    boardInputReset();
   };
 
   return (
@@ -65,7 +55,7 @@ const AddNewBoard = () => {
           }}
         />
 
-        <Label>Column (Max 3)</Label>
+        <Label>Column</Label>
         {columnInput.map((i, index) => {
           let canDelete = false;
           if (columnInput.length !== 1) {
@@ -102,17 +92,15 @@ const AddNewBoard = () => {
             </InputField>
           );
         })}
-        {columnInput.length < 3 && (
-          <Button
-            state="secondary"
-            marginTop="12px"
-            onClick={() => {
-              dispatch({ type: COLUMN_INPUT });
-            }}
-          >
-            + Add New Column
-          </Button>
-        )}
+        <Button
+          state="secondary"
+          marginTop="12px"
+          onClick={() => {
+            dispatch({ type: COLUMN_INPUT });
+          }}
+        >
+          + Add New Column
+        </Button>
         <Button type="submit" marginTop="24px" state="primary">
           Create New Board
         </Button>
