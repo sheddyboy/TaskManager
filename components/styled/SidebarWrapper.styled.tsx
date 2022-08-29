@@ -4,6 +4,8 @@ export const SidebarWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  grid-row: 1/3;
+  grid-column: 1/2;
   background-color: ${({ theme }) =>
     theme.theme === "light" ? "#FFFFFF" : "#2B2C37"};
   height: 100%;

@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import Body from "../components/Body";
 import DataManager from "../dataManager/DataManager";
 import useStateManager from "../hooks/useStateManager";
+import Navbar from "../components/Navbar";
 
 const Index = () => {
   const { getBoards } = DataManager();
@@ -23,6 +24,7 @@ const Index = () => {
   return (
     <Taskmanager state={state}>
       {toggleSidebar && <Sidebar />}
+      <Navbar />
       <Body />
     </Taskmanager>
   );

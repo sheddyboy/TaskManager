@@ -6,6 +6,7 @@ export const Taskmanager = styled.div<TaskManagerProps>`
   display: grid;
   grid-template-columns: ${({ state }) =>
     state.toggleSidebar ? "300px auto" : "auto"};
+  grid-template-rows: 97px;
   height: 100vh;
   width: 100%;
 `;
