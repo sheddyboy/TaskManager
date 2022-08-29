@@ -71,17 +71,15 @@ const EditBoard = () => {
             </InputField>
           );
         })}
-        {columnInput.length < 3 && (
-          <Button
-            state="secondary"
-            marginTop="12px"
-            onClick={() => {
-              dispatch({ type: COLUMN_INPUT });
-            }}
-          >
-            + Add New Column
-          </Button>
-        )}
+        <Button
+          state="secondary"
+          marginTop="12px"
+          onClick={() => {
+            dispatch({ type: COLUMN_INPUT });
+          }}
+        >
+          + Add New Column
+        </Button>
         <Button type="submit" marginTop="24px" state="primary">
           Save Changes
         </Button>

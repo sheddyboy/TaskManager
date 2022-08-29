@@ -90,17 +90,15 @@ const EditTask = () => {
             </InputField>
           );
         })}
-        {subtaskInput.length < 3 && (
-          <Button
-            marginBottom="24px"
-            onClick={() => {
-              dispatch({ type: SUBTASK_INPUT });
-            }}
-            state="secondary"
-          >
-            + Add New Subtask
-          </Button>
-        )}
+        <Button
+          marginBottom="24px"
+          onClick={() => {
+            dispatch({ type: SUBTASK_INPUT });
+          }}
+          state="secondary"
+        >
+          + Add New Subtask
+        </Button>
         <Dropdown
           marginBottom="24px"
           value={dropdownInput.name}
