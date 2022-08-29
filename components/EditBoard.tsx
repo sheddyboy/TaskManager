@@ -34,9 +34,9 @@ const EditBoard = () => {
           }}
         />
 
-        <Label>Column (Max 3)</Label>
+        <Label>Column</Label>
         {columnInput.map((i, index) => {
-          let canDelete = false;
+          let canDelete = true;
           if (columnInput.length !== 1) {
             canDelete = true;
           }

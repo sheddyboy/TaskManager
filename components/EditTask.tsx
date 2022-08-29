@@ -53,7 +53,7 @@ const EditTask = () => {
           value={descriptionInput}
           placeholder="e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little."
         />
-        <Label>Subtasks Max(3)</Label>
+        <Label>Subtasks</Label>
         {subtaskInput.map((i, index) => {
           let canDelete = false;
           if (subtaskInput.length !== 1) {

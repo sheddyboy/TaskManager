@@ -17,38 +17,61 @@ const Body = () => {
   const columns = currentBoard.data.status;
 
   return (
-    <Content>
-      {false && (
+    <Content length={columns.length}>
+      {columns.length === 0 && (
         <EmptyBoard>
           <p>This board is empty. Create a new column to get started.</p>
-          <AddButton>+ Add New Column</AddButton>
+          <AddButton
+            onClick={() => {
+              dispatch({ type: MODAL_TOGGLE });
+              dispatch({
+                type: COLUMN_INPUT,
+                columnInputPayload: {
+                  function: "override",
+                  value: currentBoard.data.status,
+                },
+              });
+              dispatch({
+                type: BOARD_NAME_INPUT,
+                boardNameInputPayload: currentBoard.name,
+              });
+              dispatch({
+                type: MODAL_TRACKER,
+                modalTrackerPayload: { name: "editBoard", value: true },
+              });
+            }}
+          >
+            + Add New Column
+          </AddButton>
         </EmptyBoard>
       )}
       {columns?.map((i) => {
         return <Column key={i.c_id} status={i.name} c_id={i.c_id} />;
       })}
-      <NewColumn
-        onClick={() => {
-          dispatch({ type: MODAL_TOGGLE });
-          dispatch({
-            type: COLUMN_INPUT,
-            columnInputPayload: {
-              function: "override",
-              value: currentBoard.data.status,
-            },
-          });
-          dispatch({
-            type: BOARD_NAME_INPUT,
-            boardNameInputPayload: currentBoard.name,
-          });
-          dispatch({
-            type: MODAL_TRACKER,
-            modalTrackerPayload: { name: "editBoard", value: true },
-          });
-        }}
-      >
-        <p>+ New Column</p>
-      </NewColumn>
+      {columns.length > 0 && (
+        <NewColumn
+          onClick={() => {
+            dispatch({ type: MODAL_TOGGLE });
+            dispatch({
+              type: COLUMN_INPUT,
+              columnInputPayload: {
+                function: "override",
+                value: currentBoard.data.status,
+              },
+            });
+            dispatch({
+              type: BOARD_NAME_INPUT,
+              boardNameInputPayload: currentBoard.name,
+            });
+            dispatch({
+              type: MODAL_TRACKER,
+              modalTrackerPayload: { name: "editBoard", value: true },
+            });
+          }}
+        >
+          <p>+ New Column</p>
+        </NewColumn>
+      )}
       {state.toggleModal && (
         <Modal
           onClick={() => {

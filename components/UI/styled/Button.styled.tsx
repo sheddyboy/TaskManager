@@ -71,6 +71,8 @@ export const DelButton = styled(Button)`
     background-color: #ff9898;
   }
 `;
+
 export const AddButton = styled(Button)`
+  width: 174px;
   padding: 15px 25px 15px 25px;
 `;
