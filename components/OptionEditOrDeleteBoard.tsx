@@ -7,6 +7,11 @@ const OptionEditOrDeleteBoardWrapper = styled.div`
   position: absolute;
   top: 90px;
   width: 192px;
+
+  @media (max-width: 580px) {
+    top: 54px;
+    right: -10px;
+  }
 `;
 const EditBoard = styled.p`
   cursor: pointer;
