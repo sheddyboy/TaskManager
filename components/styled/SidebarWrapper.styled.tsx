@@ -17,7 +17,7 @@ export const SidebarWrapper = styled.div`
     right: 20px;
     top: 85px;
     width: 264px;
-    height: 350px;
+    height: 370px;
     border-radius: 8px;
   }
 `;
@@ -125,6 +125,7 @@ export const AddedBoard = styled.div<AddedBoardProps>`
 `;
 
 export const CreateBoard = styled.div`
+  margin-top: 18px;
   margin-left: 32px;
   display: flex;
   i {
