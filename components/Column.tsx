@@ -19,7 +19,7 @@ const Column = ({ status, c_id }: ColumnProps) => {
     <ColumnWrapper>
       <StatusWrapper>
         <i></i>
-        <p>{`${status} (${columnTasks?.length ? columnTasks?.length : 0})`}</p>
+        <p>{`${status}(${columnTasks?.length ? columnTasks?.length : 0})`}</p>
       </StatusWrapper>
       {columnTasks?.map((i, index) => (
         <Task task={i} key={i.t_id} index={index} />
