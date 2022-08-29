@@ -12,6 +12,8 @@ export const NavbarWrapper = styled.div`
 `;
 
 export const Logo = styled.div`
+  padding-left: 24px;
+  padding-right: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,10 +31,15 @@ export const Content = styled.div`
   width: 100%;
 `;
 export const Title = styled.div`
+  font-size: 24px;
   display: flex;
   color: ${({ theme }) =>
     theme.theme === "light" ? light.titleColor : dark.titleColor};
   align-items: center;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 `;
 export const Actions = styled.div`
   position: relative;

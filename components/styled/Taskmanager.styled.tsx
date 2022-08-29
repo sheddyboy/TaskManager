@@ -6,7 +6,18 @@ export const Taskmanager = styled.div<TaskManagerProps>`
   display: grid;
   grid-template-columns: ${({ state }) =>
     state.toggleSidebar ? "300px auto" : "auto"};
-  grid-template-rows: 97px;
+  grid-template-rows: 97px auto;
   height: 100vh;
   width: 100%;
+
+  @media (max-width: 768px) {
+    grid-template-columns: ${({ state }) =>
+      state.toggleSidebar ? "261px auto" : "auto"};
+    grid-template-rows: 81px auto;
+  }
+
+  @media (max-width: 580px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 64px auto;
+  }
 `;

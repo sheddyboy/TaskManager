@@ -5,7 +5,7 @@ import Dropdown from "./UI/Dropdown";
 import { v4 as uuidv4 } from "uuid";
 import Input from "./UI/Input";
 import { Button } from "./UI/styled/Button.styled";
-import { Card } from "./UI/styled/Card.styled";
+import { Card, ModalCard } from "./UI/styled/Card.styled";
 import { InputField } from "./UI/styled/InputWrapper.styled";
 import { Textarea } from "./UI/styled/Textarea.styled";
 import DataManager from "../dataManager/DataManager";
@@ -94,7 +94,7 @@ const AddNewTask = () => {
   };
 
   return (
-    <Card>
+    <ModalCard>
       <form onSubmit={handleSubmit}>
         <Title>Add New Task</Title>
         <Label>Title</Label>
@@ -174,7 +174,7 @@ const AddNewTask = () => {
         />
         <Button type="submit">Create Task</Button>
       </form>
-    </Card>
+    </ModalCard>
   );
 };
 

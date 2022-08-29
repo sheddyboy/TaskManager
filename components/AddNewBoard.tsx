@@ -4,7 +4,7 @@ import DataManager from "../dataManager/DataManager";
 import useStateManager from "../hooks/useStateManager";
 import Input from "./UI/Input";
 import { Button } from "./UI/styled/Button.styled";
-import { Card, Title } from "./UI/styled/Card.styled";
+import { Card, ModalCard, Title } from "./UI/styled/Card.styled";
 import { InputField, Label } from "./UI/styled/InputWrapper.styled";
 
 const AddNewBoard = () => {
@@ -39,7 +39,7 @@ const AddNewBoard = () => {
   };
 
   return (
-    <Card>
+    <ModalCard>
       <form onSubmit={handleSubmit}>
         <Title>Add New Board</Title>
         <Input
@@ -105,7 +105,7 @@ const AddNewBoard = () => {
           Create New Board
         </Button>
       </form>
-    </Card>
+    </ModalCard>
   );
 };
 

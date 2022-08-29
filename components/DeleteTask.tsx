@@ -3,7 +3,7 @@ import styled from "styled-components";
 import DataManager from "../dataManager/DataManager";
 import useStateManager from "../hooks/useStateManager";
 import { Button, DelButton } from "./UI/styled/Button.styled";
-import { Card } from "./UI/styled/Card.styled";
+import { Card, ModalCard } from "./UI/styled/Card.styled";
 
 const Title = styled.h2`
   margin-bottom: 24px;
@@ -25,6 +25,11 @@ const ButtonWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 16px;
+
+  @media (max-width: 580px) {
+    grid-template-columns: 1fr;
+    grid-row-gap: 16px;
+  }
 `;
 
 const DeleteTask = () => {
@@ -34,7 +39,7 @@ const DeleteTask = () => {
   const { MODAL_TOGGLE, CURRENT_BOARD } = actionValues;
 
   return (
-    <Card>
+    <ModalCard>
       <Title>Delete this task?</Title>
       <Content>
         {`Are you sure you want to delete the ‘${currentTask.tasks.title}’ board? This action
@@ -58,7 +63,7 @@ const DeleteTask = () => {
           Cancel
         </Button>
       </ButtonWrapper>
-    </Card>
+    </ModalCard>
   );
 };
 

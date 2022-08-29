@@ -72,13 +72,13 @@ const Body = () => {
           <p>+ New Column</p>
         </NewColumn>
       )}
-      {state.toggleModal && (
+      {/* {state.toggleModal && (
         <Modal
           onClick={() => {
             dispatch({ type: MODAL_TOGGLE });
           }}
         />
-      )}
+      )} */}
       {!toggleSidebar && <SideBarToggle />}
     </Content>
   );

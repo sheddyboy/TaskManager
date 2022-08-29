@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const ModalWrapper = styled.div`
+  z-index: 1;
   overflow: auto;
   position: absolute;
   top: 0;
@@ -8,8 +9,11 @@ export const ModalWrapper = styled.div`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  display: grid;
+  /* display: grid;
   grid-template-columns: 480px;
+  justify-content: center;
+  align-items: center; */
+  display: flex;
   justify-content: center;
   align-items: center;
 `;

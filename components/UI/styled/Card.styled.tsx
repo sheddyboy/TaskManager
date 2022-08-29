@@ -23,3 +23,10 @@ export const Title = styled.h2`
 export const DeleteTitle = styled(Title)`
   color: #ea5555;
 `;
+
+export const ModalCard = styled(Card)`
+  width: 480px;
+  @media (max-width: 580px) {
+    width: 343px;
+  }
+`;

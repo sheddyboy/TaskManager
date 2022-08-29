@@ -12,6 +12,14 @@ export const SidebarWrapper = styled.div`
   border-right: 1px solid
     ${({ theme }) => (theme.theme === "light" ? "#e4ebfa" : "#3E3F4E")};
   padding-right: 24px;
+  @media (max-width: 580px) {
+    position: absolute;
+    right: 20px;
+    top: 85px;
+    width: 264px;
+    height: 350px;
+    border-radius: 8px;
+  }
 `;
 
 export const Top = styled.div`
@@ -21,10 +29,18 @@ export const Top = styled.div`
 export const Logo = styled.div`
   margin-top: 32px;
   margin-left: 34px;
+
+  @media (max-width: 580px) {
+    display: none;
+  }
 `;
 export const Board = styled.div`
   overflow: auto;
   max-height: 500px;
+
+  @media (max-width: 580px) {
+    max-height: 200px;
+  }
   span {
     display: block;
     font-weight: 700;
@@ -35,6 +51,10 @@ export const Board = styled.div`
     margin-left: 32px;
     margin-top: 54px;
     margin-bottom: 19px;
+
+    @media (max-width: 580px) {
+      margin-top: 16px;
+    }
   }
 `;
 interface AddedBoardProps {

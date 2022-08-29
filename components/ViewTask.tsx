@@ -6,7 +6,7 @@ import useStateManager from "../hooks/useStateManager";
 import OptionEditOrDeleteTask from "./OptionEditOrDeleteTask";
 import Checkbox from "./UI/Checkbox";
 import Dropdown, { Options } from "./UI/Dropdown";
-import { Card } from "./UI/styled/Card.styled";
+import { Card, ModalCard } from "./UI/styled/Card.styled";
 
 const TitleWrapper = styled.div`
   position: relative;
@@ -58,7 +58,7 @@ const ViewTask = () => {
 
   const completedSubtasks = subtasks.filter((i) => i.isCompleted === true);
   return (
-    <Card>
+    <ModalCard>
       <TitleWrapper>
         <h2>{tasks.title}</h2>
         <i
@@ -96,7 +96,7 @@ const ViewTask = () => {
         value={currentTask.tasks.status}
         marginTop="20px"
       />
-    </Card>
+    </ModalCard>
   );
 };
 

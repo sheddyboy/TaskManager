@@ -5,7 +5,7 @@ import { Label, Title } from "./AddNewTask";
 import Dropdown from "./UI/Dropdown";
 import Input from "./UI/Input";
 import { Button } from "./UI/styled/Button.styled";
-import { Card } from "./UI/styled/Card.styled";
+import { Card, ModalCard } from "./UI/styled/Card.styled";
 import { InputField } from "./UI/styled/InputWrapper.styled";
 import { Textarea } from "./UI/styled/Textarea.styled";
 
@@ -26,7 +26,7 @@ const EditTask = () => {
     editTask();
   };
   return (
-    <Card>
+    <ModalCard>
       <form onSubmit={handleSubmit}>
         <Title>Edit Task</Title>
         <Label>Title</Label>
@@ -106,7 +106,7 @@ const EditTask = () => {
         />
         <Button type="submit">Save Changes</Button>
       </form>
-    </Card>
+    </ModalCard>
   );
 };
 

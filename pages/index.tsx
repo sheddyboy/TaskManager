@@ -5,10 +5,12 @@ import Body from "../components/Body";
 import DataManager from "../dataManager/DataManager";
 import useStateManager from "../hooks/useStateManager";
 import Navbar from "../components/Navbar";
+import Modal from "../components/UI/Modal";
 
 const Index = () => {
   const { getBoards } = DataManager();
-  const { state } = useStateManager();
+  const { state, dispatch, actionValues } = useStateManager();
+  const { MODAL_TOGGLE } = actionValues;
   const { toggleSidebar } = state;
 
   // onMount Ref stops the useeffect from mounting twice
@@ -22,11 +24,20 @@ const Index = () => {
   }, []);
 
   return (
-    <Taskmanager state={state}>
-      {toggleSidebar && <Sidebar />}
-      <Navbar />
-      <Body />
-    </Taskmanager>
+    <>
+      {state.toggleModal && (
+        <Modal
+          onClick={() => {
+            dispatch({ type: MODAL_TOGGLE });
+          }}
+        />
+      )}
+      <Taskmanager state={state}>
+        {toggleSidebar && <Sidebar />}
+        <Navbar />
+        <Body />
+      </Taskmanager>
+    </>
   );
 };
 

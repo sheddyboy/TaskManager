@@ -3,7 +3,7 @@ import DataManager from "../dataManager/DataManager";
 import useStateManager from "../hooks/useStateManager";
 import Input from "./UI/Input";
 import { Button } from "./UI/styled/Button.styled";
-import { Card, Title } from "./UI/styled/Card.styled";
+import { Card, ModalCard, Title } from "./UI/styled/Card.styled";
 import { InputField, Label } from "./UI/styled/InputWrapper.styled";
 
 const EditBoard = () => {
@@ -18,7 +18,7 @@ const EditBoard = () => {
   };
 
   return (
-    <Card>
+    <ModalCard>
       <form onSubmit={handleSubmit}>
         <Title>Edit Board</Title>
         <Input
@@ -84,7 +84,7 @@ const EditBoard = () => {
           Save Changes
         </Button>
       </form>
-    </Card>
+    </ModalCard>
   );
 };
 

@@ -4,7 +4,7 @@ import DataManager from "../dataManager/DataManager";
 import { defaultBoards } from "../defaultValues";
 import useStateManager from "../hooks/useStateManager";
 import { Button, DelButton } from "./UI/styled/Button.styled";
-import { Card } from "./UI/styled/Card.styled";
+import { Card, ModalCard } from "./UI/styled/Card.styled";
 
 const Title = styled.h2`
   margin-bottom: 24px;
@@ -26,6 +26,11 @@ const ButtonWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 16px;
+
+  @media (max-width: 580px) {
+    grid-template-columns: 1fr;
+    grid-row-gap: 16px;
+  }
 `;
 
 const DeleteBoard = () => {
@@ -34,7 +39,7 @@ const DeleteBoard = () => {
   const { currentBoard } = state;
   const { MODAL_TOGGLE, CURRENT_BOARD } = actionValues;
   return (
-    <Card>
+    <ModalCard>
       <Title>Delete this board?</Title>
       <Content>
         {`Are you sure you want to delete the ‘${currentBoard.name}’ board? This action
@@ -68,7 +73,7 @@ const DeleteBoard = () => {
           Cancel
         </Button>
       </ButtonWrapper>
-    </Card>
+    </ModalCard>
   );
 };
 
