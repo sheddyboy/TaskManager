@@ -42,20 +42,17 @@ const Navbar = () => {
         </Logo>
       )}
       <Content>
-        <TitleWrapper>
+        <TitleWrapper
+          onClick={() => {
+            dispatch({ type: SIDEBAR_TOGGLE });
+          }}
+        >
           {windowWidth <= 580 && (
             <Image src="/logo-mobile.svg" width={24} height={25} />
           )}
           <Title>{currentBoard.name}</Title>
           {windowWidth <= 580 && (
-            <Image
-              src="/icon-chevron-down.svg"
-              width={10}
-              height={7}
-              onClick={() => {
-                dispatch({ type: SIDEBAR_TOGGLE });
-              }}
-            />
+            <Image src="/icon-chevron-down.svg" width={10} height={7} />
           )}
         </TitleWrapper>
         {currentBoard.id !== "" && (

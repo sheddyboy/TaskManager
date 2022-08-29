@@ -21,7 +21,7 @@ export const defaultBoards: BoardsProps = {
 };
 
 export const defaultReducerStates: StateReducerProps = {
-  toggleSidebar: true,
+  toggleSidebar: false,
   toggleModal: false,
   toggleOptionEditOrDeleteBoard: false,
   toggleOptionEditOrDeleteTask: false,
