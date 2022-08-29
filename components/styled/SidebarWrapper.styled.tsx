@@ -126,7 +126,6 @@ export const AddedBoard = styled.div<AddedBoardProps>`
 
 export const CreateBoard = styled.div`
   margin-left: 32px;
-  margin-top: 31px;
   display: flex;
   i {
     display: flex;
@@ -145,7 +144,7 @@ export const CreateBoard = styled.div`
   }
 `;
 export const Bottom = styled.div`
-  margin-top: 25px;
+  /* margin-top: 25px; */
 `;
 export const Theme = styled.div`
   display: flex;
@@ -154,6 +153,7 @@ export const Theme = styled.div`
   background: ${({ theme }) =>
     theme.theme === "light" ? "#f4f7fd" : "#20212C"};
   border-radius: 6px;
+  margin-top: 22px;
   margin-left: 24px;
   height: 48px;
 `;

@@ -67,23 +67,23 @@ const Sidebar = () => {
               </label>
             </AddedBoard>
           ))}
-          <CreateBoard
-            onClick={() => {
-              dispatch({ type: MODAL_TOGGLE });
-              dispatch({
-                type: MODAL_TRACKER,
-                modalTrackerPayload: { name: "addNewBoard", value: true },
-              });
-            }}
-          >
-            <i>
-              <Image src="/icon-board-purple.svg" width={16} height={16} />
-            </i>
-            <p>+ Create New Board</p>
-          </CreateBoard>
         </Board>
       </Top>
       <Bottom>
+        <CreateBoard
+          onClick={() => {
+            dispatch({ type: MODAL_TOGGLE });
+            dispatch({
+              type: MODAL_TRACKER,
+              modalTrackerPayload: { name: "addNewBoard", value: true },
+            });
+          }}
+        >
+          <i>
+            <Image src="/icon-board-purple.svg" width={16} height={16} />
+          </i>
+          <p>+ Create New Board</p>
+        </CreateBoard>
         <Theme>
           <Sun>
             <Image src="/icon-light-theme.svg" width={19} height={19} />
