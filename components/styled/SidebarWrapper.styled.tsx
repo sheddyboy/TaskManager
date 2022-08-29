@@ -177,6 +177,10 @@ export const HideSidebar = styled.div`
   line-height: 19px;
   color: #828fa3;
 
+  @media (max-width: 580px) {
+    /* display: none; */
+  }
+
   i {
     display: flex;
     justify-content: center;

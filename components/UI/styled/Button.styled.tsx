@@ -76,3 +76,22 @@ export const AddButton = styled(Button)`
   width: 174px;
   padding: 15px 25px 15px 25px;
 `;
+export const NavButton = styled(Button)`
+  padding: 15px 25px 15px 25px;
+  @media (max-width: 580px) {
+    display: none;
+  }
+`;
+export const NavButtonMobile = styled.div`
+  cursor: pointer;
+  background-color: #635fc7;
+  width: 48px;
+  height: 32px;
+  border-radius: 24px;
+  display: none;
+  @media (max-width: 580px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;

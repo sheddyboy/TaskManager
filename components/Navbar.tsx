@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import useGetWindowWidth from "../hooks/useGetWindowWidth";
 import useStateManager from "../hooks/useStateManager";
 import OptionEditOrDeleteBoard from "./OptionEditOrDeleteBoard";
 import {
@@ -8,13 +9,23 @@ import {
   Logo,
   NavbarWrapper,
   Title,
+  TitleWrapper,
 } from "./styled/NavbarWrapper.styled";
-import { AddButton } from "./UI/styled/Button.styled";
+import {
+  AddButton,
+  NavButton,
+  NavButtonMobile,
+} from "./UI/styled/Button.styled";
 
 const Navbar = () => {
+  const { windowWidth } = useGetWindowWidth();
   const { state, dispatch, actionValues } = useStateManager();
-  const { OPTION_EDIT_OR_DELETE_BOARD_TOGGLE, MODAL_TOGGLE, MODAL_TRACKER } =
-    actionValues;
+  const {
+    OPTION_EDIT_OR_DELETE_BOARD_TOGGLE,
+    MODAL_TOGGLE,
+    MODAL_TRACKER,
+    SIDEBAR_TOGGLE,
+  } = actionValues;
 
   const { theme, toggleSidebar, toggleOptionEditOrDeleteBoard, currentBoard } =
     state;
@@ -31,10 +42,25 @@ const Navbar = () => {
         </Logo>
       )}
       <Content>
-        <Title>{currentBoard.name}</Title>
+        <TitleWrapper>
+          {windowWidth <= 580 && (
+            <Image src="/logo-mobile.svg" width={24} height={25} />
+          )}
+          <Title>{currentBoard.name}</Title>
+          {windowWidth <= 580 && (
+            <Image
+              src="/icon-chevron-down.svg"
+              width={10}
+              height={7}
+              onClick={() => {
+                dispatch({ type: SIDEBAR_TOGGLE });
+              }}
+            />
+          )}
+        </TitleWrapper>
         {currentBoard.id !== "" && (
           <Actions>
-            <AddButton
+            <NavButton
               onClick={() => {
                 dispatch({ type: MODAL_TOGGLE });
                 dispatch({
@@ -46,7 +72,18 @@ const Navbar = () => {
               size="large"
             >
               + Add New Task
-            </AddButton>
+            </NavButton>
+            <NavButtonMobile
+              onClick={() => {
+                dispatch({ type: MODAL_TOGGLE });
+                dispatch({
+                  type: MODAL_TRACKER,
+                  modalTrackerPayload: { name: "addNewTask", value: true },
+                });
+              }}
+            >
+              <Image src="/icon-add-task-mobile.svg" width={12} height={12} />
+            </NavButtonMobile>
             <i
               onClick={() => {
                 dispatch({ type: OPTION_EDIT_OR_DELETE_BOARD_TOGGLE });

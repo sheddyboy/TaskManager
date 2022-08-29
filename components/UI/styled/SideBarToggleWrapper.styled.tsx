@@ -12,4 +12,7 @@ export const SideBarToggleWrapper = styled.div`
   height: 48px;
   background: #635fc7;
   border-radius: 0px 100px 100px 0px;
+  @media (max-width: 580px) {
+    display: none;
+  }
 `;

@@ -22,6 +22,14 @@ export const Logo = styled.div`
       theme.theme === "light" ? light.logoBorder : dark.logoBorder};
   width: 209px;
   height: 100%;
+
+  @media (max-width: 580px) {
+    display: none;
+  }
+`;
+export const LogoMobile = styled(Logo)`
+  border-right: none;
+  width: auto;
 `;
 export const Content = styled.div`
   display: flex;
@@ -30,6 +38,12 @@ export const Content = styled.div`
   padding-right: 32px;
   width: 100%;
 `;
+export const TitleWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Title = styled.div`
   font-size: 24px;
   display: flex;
@@ -39,6 +53,10 @@ export const Title = styled.div`
 
   @media (max-width: 768px) {
     font-size: 20px;
+  }
+  @media (max-width: 580px) {
+    margin-left: 16px;
+    margin-right: 8px;
   }
 `;
 export const Actions = styled.div`
