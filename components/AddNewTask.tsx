@@ -16,7 +16,7 @@ export const Title = styled.h2`
   font-weight: 700;
   font-size: 18px;
   line-height: 23px;
-  color: #000112;
+  color: ${({ theme }) => (theme.theme === "light" ? "#000112" : "#FFFFFF")};
   margin-bottom: 24px;
 `;
 export const Label = styled.span`
