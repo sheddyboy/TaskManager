@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const NewColumn = styled.div`
   cursor: pointer;
   margin-top: 63px;
+  margin-right: 24px;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -11,8 +12,7 @@ export const NewColumn = styled.div`
   border-radius: 6px;
 
   p {
-    padding-left: 55.5px;
-    padding-right: 55.5px;
+    width: 280px;
     font-weight: 700;
     font-size: 24px;
     line-height: 30px;
