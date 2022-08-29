@@ -10,8 +10,9 @@ import { AddButton } from "./UI/styled/Button.styled";
 
 const Body = () => {
   const { state, dispatch, actionValues } = useStateManager();
-  const { MODAL_TOGGLE } = actionValues;
-  const { toggleSidebar, currentBoard } = state;
+  const { MODAL_TOGGLE, MODAL_TRACKER, COLUMN_INPUT, BOARD_NAME_INPUT } =
+    actionValues;
+  const { toggleSidebar, currentBoard, currentTask } = state;
 
   const columns = currentBoard.data.status;
 
@@ -26,7 +27,26 @@ const Body = () => {
       {columns?.map((i) => {
         return <Column key={i.c_id} status={i.name} c_id={i.c_id} />;
       })}
-      <NewColumn>
+      <NewColumn
+        onClick={() => {
+          dispatch({ type: MODAL_TOGGLE });
+          dispatch({
+            type: COLUMN_INPUT,
+            columnInputPayload: {
+              function: "override",
+              value: currentBoard.data.status,
+            },
+          });
+          dispatch({
+            type: BOARD_NAME_INPUT,
+            boardNameInputPayload: currentBoard.name,
+          });
+          dispatch({
+            type: MODAL_TRACKER,
+            modalTrackerPayload: { name: "editBoard", value: true },
+          });
+        }}
+      >
         <p>+ New Column</p>
       </NewColumn>
       {state.toggleModal && (
