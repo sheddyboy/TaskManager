@@ -36,8 +36,6 @@ const DataManager = () => {
 
   const getBoards = () => {
     axios("/api/boards").then((data) => {
-      console.log("then called");
-
       dispatch({ type: IS_LOADING, isLoadingPayload: true });
       dispatch({
         type: BOARDS,

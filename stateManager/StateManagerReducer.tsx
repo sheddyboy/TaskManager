@@ -30,19 +30,14 @@ const reducer = (state: StateReducerProps, action: ActionReducerProps) => {
   switch (action.type) {
     case BOARDS: {
       if (action.boardsPayload?.function === "add") {
-        console.log("add called");
-
         const dummyArray = [...state.boards, ...action.boardsPayload.data];
         return { ...state, boards: dummyArray };
       }
       if (action.boardsPayload?.function === "mount") {
-        console.log("mount called");
-
         const dummyArray = [...action.boardsPayload.data];
         return { ...state, boards: dummyArray };
       }
       if (action.boardsPayload?.function === "update") {
-        console.log("update called");
         const dummyArray = [...action.boardsPayload.data];
         return { ...state, boards: dummyArray };
       }

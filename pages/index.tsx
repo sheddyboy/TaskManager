@@ -18,7 +18,6 @@ const Index = () => {
   useEffect(() => {
     if (onMount.current) {
       onMount.current = false;
-      console.log("Mounted");
       getBoards();
     }
   }, []);
