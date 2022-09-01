@@ -15,7 +15,9 @@ const StateManagerProvider = ({ children }: StateManagerProviderProps) => {
   };
   return (
     <StateManagerCtx.Provider value={value}>
-      <ThemeProvider theme={{ theme }}>{children}</ThemeProvider>
+      {/* <ThemeProvider theme={{ theme }}> */}
+      {children}
+      {/* </ThemeProvider> */}
     </StateManagerCtx.Provider>
   );
 };

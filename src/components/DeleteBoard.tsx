@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import DataManager from "../dataManager/DataManager";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import DataManager from "../dataManager";
 import { defaultBoards } from "../defaultValues";
 import useStateManager from "../hooks/useStateManager";
 import { Button, DelButton } from "./UI/styled/Button.styled";
 import { Card, ModalCard } from "./UI/styled/Card.styled";
+import { toggleModal } from "../features/toggle/toggleSlice";
+import { setCurrentBoard } from "../features/boards/boardsSlice";
 
 const Title = styled.h2`
   margin-bottom: 24px;
@@ -34,10 +37,12 @@ const ButtonWrapper = styled.div`
 `;
 
 const DeleteBoard = () => {
+  const dispatch = useAppDispatch();
+  const { currentBoard } = useAppSelector((state) => state.boards);
   const { deleteBoard, deleteBoardLocally } = DataManager();
-  const { state, dispatch, actionValues } = useStateManager();
-  const { currentBoard } = state;
-  const { MODAL_TOGGLE, CURRENT_BOARD } = actionValues;
+  // const { state, dispatch, actionValues } = useStateManager();
+  // const { currentBoard } = state;
+  // const { MODAL_TOGGLE, CURRENT_BOARD } = actionValues;
   return (
     <ModalCard>
       <Title>Delete this board?</Title>
@@ -50,16 +55,26 @@ const DeleteBoard = () => {
           onClick={() => {
             deleteBoard(currentBoard.id);
             deleteBoardLocally();
-            dispatch({ type: MODAL_TOGGLE });
-            dispatch({
-              type: CURRENT_BOARD,
-              currentBoardPayload: {
+            dispatch(toggleModal());
+
+            // dispatch({ type: MODAL_TOGGLE });
+            dispatch(
+              setCurrentBoard({
                 name: "",
                 id: "",
                 index: -1,
                 data: defaultBoards.data,
-              },
-            });
+              })
+            );
+            // dispatch({
+            //   type: CURRENT_BOARD,
+            //   currentBoardPayload: {
+            //     name: "",
+            //     id: "",
+            //     index: -1,
+            //     data: defaultBoards.data,
+            //   },
+            // });
           }}
         >
           Delete
@@ -67,7 +82,9 @@ const DeleteBoard = () => {
         <Button
           state="secondary"
           onClick={() => {
-            dispatch({ type: MODAL_TOGGLE });
+            dispatch(toggleModal());
+            console.log("called");
+            // dispatch({ type: MODAL_TOGGLE });
           }}
         >
           Cancel

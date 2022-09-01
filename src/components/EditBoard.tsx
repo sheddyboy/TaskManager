@@ -1,16 +1,27 @@
 import React from "react";
-import DataManager from "../dataManager/DataManager";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import DataManager from "../dataManager";
 import useStateManager from "../hooks/useStateManager";
 import Input from "./UI/Input";
 import { Button } from "./UI/styled/Button.styled";
 import { Card, ModalCard, Title } from "./UI/styled/Card.styled";
 import { InputField, Label } from "./UI/styled/InputWrapper.styled";
+import {
+  setBoardNameInput,
+  updateColumnInput,
+  deleteColumnInput,
+  addColumnInput,
+} from "../features/inputs/inputsSlice";
 
 const EditBoard = () => {
-  const { state, dispatch, actionValues } = useStateManager();
-  const { COLUMN_INPUT, BOARD_NAME_INPUT, MODAL_TOGGLE, BOARDS } = actionValues;
+  const { boardNameInput, columnInput } = useAppSelector(
+    (state) => state.inputs
+  );
+  const dispatch = useAppDispatch();
+  // const { state, dispatch, actionValues } = useStateManager();
+  // const { COLUMN_INPUT, BOARD_NAME_INPUT, MODAL_TOGGLE, BOARDS } = actionValues;
   const { editBoard } = DataManager();
-  const { columnInput, boardNameInput } = state;
+  // const { columnInput, boardNameInput } = state;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,10 +38,7 @@ const EditBoard = () => {
           marginBottom="20px"
           value={boardNameInput}
           onChange={(e) => {
-            dispatch({
-              type: BOARD_NAME_INPUT,
-              boardNameInputPayload: e.target.value,
-            });
+            dispatch(setBoardNameInput(e.target.value));
           }}
         />
 
@@ -47,23 +55,27 @@ const EditBoard = () => {
                 value={i.name}
                 marginBottom="12px"
                 onChange={(e) => {
-                  dispatch({
-                    type: COLUMN_INPUT,
-                    columnInputPayload: {
-                      function: "update",
-                      index: index,
-                      name: e.target.value,
-                    },
-                  });
+                  dispatch(
+                    updateColumnInput({ name: e.target.value, index: index })
+                  );
+                  // dispatch({
+                  //   type: COLUMN_INPUT,
+                  //   columnInputPayload: {
+                  //     function: "update",
+                  //     index: index,
+                  //     name: e.target.value,
+                  //   },
+                  // });
                 }}
                 canDelete={canDelete}
               />
               <i
                 onClick={() => {
-                  dispatch({
-                    type: COLUMN_INPUT,
-                    columnInputPayload: { function: "delete", index: index },
-                  });
+                  dispatch(deleteColumnInput(index));
+                  // dispatch({
+                  //   type: COLUMN_INPUT,
+                  //   columnInputPayload: { function: "delete", index: index },
+                  // });
                 }}
               >
                 <img src="/icon-cross.svg" />
@@ -75,7 +87,7 @@ const EditBoard = () => {
           state="secondary"
           marginTop="12px"
           onClick={() => {
-            dispatch({ type: COLUMN_INPUT });
+            dispatch(addColumnInput());
           }}
         >
           + Add New Column

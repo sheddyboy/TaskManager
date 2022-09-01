@@ -1,5 +1,14 @@
 import Image from "next/image";
 import React from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import {
+  toggleTheme,
+  toggleModal,
+  setModal,
+  toggleThemeButton,
+  toggleSidebar,
+} from "../features/toggle/toggleSlice";
+import { setCurrentBoard } from "../features/boards/boardsSlice";
 import useStateManager from "../hooks/useStateManager";
 import {
   AddedBoard,
@@ -15,18 +24,25 @@ import {
   Top,
 } from "./styled/SidebarWrapper.styled";
 import Toggle from "./UI/Toggle";
+import { useGetBoardsQuery } from "../features/boards/boardsAPI";
 
 const Sidebar = () => {
-  const { state, dispatch, actionValues } = useStateManager();
-  const {
-    SIDEBAR_TOGGLE,
-    THEME_TOGGLE,
-    THEME_TOGGLE_BUTTON,
-    MODAL_TOGGLE,
-    CURRENT_BOARD,
-    MODAL_TRACKER,
-  } = actionValues;
-  const { theme, themeButton, boards } = state;
+  const { data, isSuccess } = useGetBoardsQuery();
+  // console.log(data, isSuccess);
+  const { theme, themeToggle } = useAppSelector((state) => state.toggle);
+  const { boards } = useAppSelector((state) => state.boards);
+  const dispatch = useAppDispatch();
+  // const { state, dispatch, actionValues } = useStateManager();
+  // const {
+  //   SIDEBAR_TOGGLE,
+  //   THEME_TOGGLE,
+  //   THEME_TOGGLE_BUTTON,
+  //   MODAL_TOGGLE,
+  //   CURRENT_BOARD,
+  //   MODAL_TRACKER,
+  // } = actionValues;
+  // const { theme, themeButton, boards } = state;
+  // console.log(boards);
 
   return (
     <SidebarWrapper>
@@ -39,8 +55,8 @@ const Sidebar = () => {
           />
         </Logo>
         <Board>
-          <span>ALL BOARDS ({boards.length})</span>
-          {boards.map((i, index) => (
+          <span>ALL BOARDS ({data?.length})</span>
+          {data?.map((i, index) => (
             <AddedBoard key={i.id} active={false}>
               <label>
                 <input
@@ -48,15 +64,23 @@ const Sidebar = () => {
                   name="board"
                   value={i.data.name}
                   onChange={(e) => {
-                    dispatch({
-                      type: CURRENT_BOARD,
-                      currentBoardPayload: {
+                    dispatch(
+                      setCurrentBoard({
                         name: e.target.value,
                         id: i.id,
                         index: index,
                         data: i.data,
-                      },
-                    });
+                      })
+                    );
+                    // dispatch({
+                    //   type: CURRENT_BOARD,
+                    // currentBoardPayload: {
+                    //   name: e.target.value,
+                    //   id: i.id,
+                    //   index: index,
+                    //   data: i.data,
+                    // },
+                    // });
                   }}
                 />
                 <div></div>
@@ -72,11 +96,13 @@ const Sidebar = () => {
       <Bottom>
         <CreateBoard
           onClick={() => {
-            dispatch({ type: MODAL_TOGGLE });
-            dispatch({
-              type: MODAL_TRACKER,
-              modalTrackerPayload: { name: "addNewBoard", value: true },
-            });
+            // dispatch({ type: MODAL_TOGGLE });
+            dispatch(toggleModal());
+            // dispatch({
+            //   type: MODAL_TRACKER,
+            //   modalTrackerPayload: { name: "addNewBoard", value: true },
+            // });
+            dispatch(setModal("addNewBoard"));
           }}
         >
           <i>
@@ -89,10 +115,12 @@ const Sidebar = () => {
             <Image src="/icon-light-theme.svg" width={19} height={19} />
           </Sun>
           <Toggle
-            value={themeButton}
+            value={themeToggle}
             onToggle={() => {
-              dispatch({ type: THEME_TOGGLE });
-              dispatch({ type: THEME_TOGGLE_BUTTON });
+              // dispatch({ type: THEME_TOGGLE });
+              dispatch(toggleTheme());
+              dispatch(toggleThemeButton());
+              // dispatch({ type: THEME_TOGGLE_BUTTON });
             }}
           />
           <Moon>
@@ -101,7 +129,8 @@ const Sidebar = () => {
         </Theme>
         <HideSidebar
           onClick={() => {
-            dispatch({ type: SIDEBAR_TOGGLE });
+            dispatch(toggleSidebar());
+            // dispatch({ type: SIDEBAR_TOGGLE });
           }}
         >
           <i>

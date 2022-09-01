@@ -1,4 +1,5 @@
 import React from "react";
+import { useAppSelector } from "../app/hooks";
 import useStateManager from "../hooks/useStateManager";
 import { ColumnWrapper } from "./styled/ColumnWrapper.styled";
 import { StatusWrapper } from "./styled/StatusWrapper.styled";
@@ -9,8 +10,9 @@ interface ColumnProps {
   c_id: string;
 }
 const Column = ({ status, c_id }: ColumnProps) => {
-  const { state } = useStateManager();
-  const { currentBoard } = state;
+  const { currentBoard } = useAppSelector((state) => state.boards);
+  // const { state } = useStateManager();
+  // const { currentBoard } = state;
 
   const tasks = currentBoard?.data.tasks;
   const columnTasks = tasks?.filter((i) => i.c_id === c_id);

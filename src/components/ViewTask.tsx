@@ -1,12 +1,15 @@
 import Image from "next/image";
 import React from "react";
 import styled from "styled-components";
-import DataManager from "../dataManager/DataManager";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import DataManager from "../dataManager";
 import useStateManager from "../hooks/useStateManager";
 import OptionEditOrDeleteTask from "./OptionEditOrDeleteTask";
 import Checkbox from "./UI/Checkbox";
 import Dropdown, { Options } from "./UI/Dropdown";
 import { Card, ModalCard } from "./UI/styled/Card.styled";
+import { updateSubtask } from "../features/boards/boardsSlice";
+import { toggleOptionEditOrDeleteTask } from "../features/toggle/toggleSlice";
 
 const TitleWrapper = styled.div`
   position: relative;
@@ -45,15 +48,20 @@ const Content = styled.div`
 `;
 
 const ViewTask = () => {
+  const dispatch = useAppDispatch();
+  const { currentBoard, currentTask, checkBoxInput } = useAppSelector(
+    (state) => state.boards
+  );
+  const { optionEditOrDeleteTask } = useAppSelector((state) => state.toggle);
   const { changeStatus } = DataManager();
-  const { state, dispatch, actionValues } = useStateManager();
-  const { CHECKBOX_INPUT, OPTION_EDIT_OR_DELETE_TASK_TOGGLE } = actionValues;
-  const {
-    currentTask,
-    checkBoxInput,
-    currentBoard,
-    toggleOptionEditOrDeleteTask,
-  } = state;
+  // const { state, dispatch, actionValues } = useStateManager();
+  // const { CHECKBOX_INPUT, OPTION_EDIT_OR_DELETE_TASK_TOGGLE } = actionValues;
+  // const {
+  //   currentTask,
+  //   checkBoxInput,
+  //   currentBoard,
+  //   toggleOptionEditOrDeleteTask,
+  // } = state;
   const { tasks, subtasks } = currentTask;
 
   const completedSubtasks = subtasks.filter((i) => i.isCompleted === true);
@@ -63,12 +71,13 @@ const ViewTask = () => {
         <h2>{tasks.title}</h2>
         <i
           onClick={() => {
-            dispatch({ type: OPTION_EDIT_OR_DELETE_TASK_TOGGLE });
+            dispatch(toggleOptionEditOrDeleteTask());
+            // dispatch({ type: OPTION_EDIT_OR_DELETE_TASK_TOGGLE });
           }}
         >
           <Image src="/icon-vertical-ellipsis.svg" width={5} height={20} />
         </i>
-        {toggleOptionEditOrDeleteTask && <OptionEditOrDeleteTask />}
+        {optionEditOrDeleteTask && <OptionEditOrDeleteTask />}
       </TitleWrapper>
       <Content>
         <p>{tasks.description}</p>
@@ -79,10 +88,11 @@ const ViewTask = () => {
             name={i.s_title}
             value={i.isCompleted}
             onChange={() => {
-              dispatch({
-                type: CHECKBOX_INPUT,
-                checkBoxInputPayload: { index: index, value: !i.isCompleted },
-              });
+              dispatch(updateSubtask({ index: index, value: !i.isCompleted }));
+              // dispatch({
+              //   type: CHECKBOX_INPUT,
+              //   checkBoxInputPayload: { index: index, value: !i.isCompleted },
+              // });
             }}
           />
         ))}

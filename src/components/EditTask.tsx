@@ -1,5 +1,5 @@
 import React from "react";
-import DataManager from "../dataManager/DataManager";
+import DataManager from "../dataManager";
 import useStateManager from "../hooks/useStateManager";
 import { Label, Title } from "./AddNewTask";
 import Dropdown from "./UI/Dropdown";

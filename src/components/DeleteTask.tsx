@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import DataManager from "../dataManager/DataManager";
+import DataManager from "../dataManager";
 import useStateManager from "../hooks/useStateManager";
 import { Button, DelButton } from "./UI/styled/Button.styled";
 import { Card, ModalCard } from "./UI/styled/Card.styled";

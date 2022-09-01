@@ -1,4 +1,5 @@
 import React from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import useStateManager from "../hooks/useStateManager";
 import Column from "./Column";
 import { Content } from "./styled/Content.styled";
@@ -7,12 +8,20 @@ import { NewColumn } from "./styled/NewColumn.styled";
 import Modal from "./UI/Modal";
 import SideBarToggle from "./UI/SideBarToggle";
 import { AddButton } from "./UI/styled/Button.styled";
+import { toggleModal, setModal } from "../features/toggle/toggleSlice";
+import {
+  overideColumnInput,
+  setBoardNameInput,
+} from "../features/inputs/inputsSlice";
 
 const Body = () => {
-  const { state, dispatch, actionValues } = useStateManager();
-  const { MODAL_TOGGLE, MODAL_TRACKER, COLUMN_INPUT, BOARD_NAME_INPUT } =
-    actionValues;
-  const { toggleSidebar, currentBoard, currentTask } = state;
+  // const { state, dispatch, actionValues } = useStateManager();
+  // const { MODAL_TOGGLE, MODAL_TRACKER, COLUMN_INPUT, BOARD_NAME_INPUT } =
+  //   actionValues;
+  // const { toggleSidebar,  currentTask } = state;
+  const { currentBoard } = useAppSelector((state) => state.boards);
+  const { sidebarToggle } = useAppSelector((state) => state.toggle);
+  const dispatch = useAppDispatch();
 
   const columns = currentBoard.data.status;
 
@@ -23,22 +32,25 @@ const Body = () => {
           <p>This board is empty. Create a new column to get started.</p>
           <AddButton
             onClick={() => {
-              dispatch({ type: MODAL_TOGGLE });
-              dispatch({
-                type: COLUMN_INPUT,
-                columnInputPayload: {
-                  function: "override",
-                  value: currentBoard.data.status,
-                },
-              });
-              dispatch({
-                type: BOARD_NAME_INPUT,
-                boardNameInputPayload: currentBoard.name,
-              });
-              dispatch({
-                type: MODAL_TRACKER,
-                modalTrackerPayload: { name: "editBoard", value: true },
-              });
+              dispatch(toggleModal());
+              dispatch(overideColumnInput(currentBoard.data.status));
+              // dispatch({
+              //   type: COLUMN_INPUT,
+              // columnInputPayload: {
+              //   function: "override",
+              //   value: currentBoard.data.status,
+              // },
+              // });
+              dispatch(setBoardNameInput(currentBoard.name));
+              // dispatch({
+              //   type: BOARD_NAME_INPUT,
+              //   boardNameInputPayload: currentBoard.name,
+              // });
+              dispatch(setModal("editBoard"));
+              // dispatch({
+              //   type: MODAL_TRACKER,
+              //   modalTrackerPayload: { name: "editBoard", value: true },
+              // });
             }}
           >
             + Add New Column
@@ -51,22 +63,27 @@ const Body = () => {
       {columns.length > 0 && (
         <NewColumn
           onClick={() => {
-            dispatch({ type: MODAL_TOGGLE });
-            dispatch({
-              type: COLUMN_INPUT,
-              columnInputPayload: {
-                function: "override",
-                value: currentBoard.data.status,
-              },
-            });
-            dispatch({
-              type: BOARD_NAME_INPUT,
-              boardNameInputPayload: currentBoard.name,
-            });
-            dispatch({
-              type: MODAL_TRACKER,
-              modalTrackerPayload: { name: "editBoard", value: true },
-            });
+            dispatch(toggleModal());
+            dispatch(overideColumnInput(currentBoard.data.status));
+            // dispatch({
+            //   type: COLUMN_INPUT,
+            //   columnInputPayload: {
+            //     function: "override",
+            //     value: currentBoard.data.status,
+            //   },
+            // });
+            dispatch(setBoardNameInput(currentBoard.name));
+
+            // dispatch({
+            //   type: BOARD_NAME_INPUT,
+            //   boardNameInputPayload: currentBoard.name,
+            // });
+            dispatch(setModal("editBoard"));
+
+            // dispatch({
+            //   type: MODAL_TRACKER,
+            //   modalTrackerPayload: { name: "editBoard", value: true },
+            // });
           }}
         >
           <p>+ New Column</p>
@@ -79,7 +96,7 @@ const Body = () => {
           }}
         />
       )} */}
-      {!toggleSidebar && <SideBarToggle />}
+      {!sidebarToggle && <SideBarToggle />}
     </Content>
   );
 };

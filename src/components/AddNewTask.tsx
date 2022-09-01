@@ -8,7 +8,7 @@ import { Button } from "./UI/styled/Button.styled";
 import { Card, ModalCard } from "./UI/styled/Card.styled";
 import { InputField } from "./UI/styled/InputWrapper.styled";
 import { Textarea } from "./UI/styled/Textarea.styled";
-import DataManager from "../dataManager/DataManager";
+import DataManager from "../dataManager";
 import { PostBoardBody } from "../types";
 
 export const Title = styled.h2`

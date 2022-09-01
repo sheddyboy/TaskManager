@@ -1,7 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import useStateManager from "../hooks/useStateManager";
 import { OptionsCard } from "./UI/styled/Card.styled";
+import {
+  toggleOptionEditOrDeleteBoard,
+  setModal,
+  toggleModal,
+} from "../features/toggle/toggleSlice";
+import {
+  setBoardNameInput,
+  overideColumnInput,
+} from "../features/inputs/inputsSlice";
 
 const OptionEditOrDeleteBoardWrapper = styled.div`
   position: absolute;
@@ -32,49 +42,36 @@ const DeleteBoard = styled.p`
 `;
 
 const OptionEditOrDeleteBoard = () => {
-  const { state, dispatch, actionValues } = useStateManager();
-  const { currentBoard } = state;
-  const {
-    MODAL_TOGGLE,
-    MODAL_TRACKER,
-    OPTION_EDIT_OR_DELETE_BOARD_TOGGLE,
-    BOARD_NAME_INPUT,
-    COLUMN_INPUT,
-  } = actionValues;
+  const { currentBoard } = useAppSelector((state) => state.boards);
+  const dispatch = useAppDispatch();
+  // const { state, dispatch, actionValues } = useStateManager();
+  // const { currentBoard } = state;
+  // const {
+  //   MODAL_TOGGLE,
+  //   MODAL_TRACKER,
+  //   OPTION_EDIT_OR_DELETE_BOARD_TOGGLE,
+  //   BOARD_NAME_INPUT,
+  //   COLUMN_INPUT,
+  // } = actionValues;
   return (
     <OptionEditOrDeleteBoardWrapper>
       <OptionsCard>
         <EditBoard
           onClick={() => {
-            dispatch({
-              type: COLUMN_INPUT,
-              columnInputPayload: {
-                function: "override",
-                value: currentBoard.data.status,
-              },
-            });
-            dispatch({
-              type: BOARD_NAME_INPUT,
-              boardNameInputPayload: currentBoard.name,
-            });
-            dispatch({ type: MODAL_TOGGLE });
-            dispatch({ type: OPTION_EDIT_OR_DELETE_BOARD_TOGGLE });
-            dispatch({
-              type: MODAL_TRACKER,
-              modalTrackerPayload: { name: "editBoard", value: true },
-            });
+            dispatch(overideColumnInput(currentBoard.data.status));
+            dispatch(setBoardNameInput(currentBoard.name));
+            dispatch(toggleModal());
+            dispatch(toggleOptionEditOrDeleteBoard());
+            dispatch(setModal("editBoard"));
           }}
         >
           Edit Board
         </EditBoard>
         <DeleteBoard
           onClick={() => {
-            dispatch({ type: MODAL_TOGGLE });
-            dispatch({ type: OPTION_EDIT_OR_DELETE_BOARD_TOGGLE });
-            dispatch({
-              type: MODAL_TRACKER,
-              modalTrackerPayload: { name: "deleteBoard", value: true },
-            });
+            dispatch(toggleModal());
+            dispatch(toggleOptionEditOrDeleteBoard());
+            dispatch(setModal("deleteBoard"));
           }}
         >
           Delete Board

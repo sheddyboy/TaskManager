@@ -1,7 +1,11 @@
 import React from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useGetBoardsQuery } from "../features/boards/boardsAPI";
 import useStateManager from "../hooks/useStateManager";
 import { TaskProps } from "../types";
 import { MiniCardWrapper } from "./styled/MiniCardWrapper.styled";
+import { toggleModal, setModal } from "../features/toggle/toggleSlice";
+import { setCurrentTask, showSubtasks } from "../features/boards/boardsSlice";
 
 interface CurrentTaskProps {
   task: TaskProps;
@@ -9,12 +13,17 @@ interface CurrentTaskProps {
 }
 
 const Task = ({ task, index }: CurrentTaskProps) => {
-  const { state, dispatch, actionValues } = useStateManager();
-  const { MODAL_TRACKER, MODAL_TOGGLE, CURRENT_TASK, CHECKBOX_INPUT } =
-    actionValues;
-  const { boards, currentBoard } = state;
+  const dispatch = useAppDispatch();
 
-  const currentBoardData = boards.find((i) => i.id === currentBoard.id);
+  const { currentBoard } = useAppSelector((state) => state.boards);
+  const { data } = useGetBoardsQuery();
+
+  // const { state, dispatch, actionValues } = useStateManager();
+  // const { MODAL_TRACKER, MODAL_TOGGLE, CURRENT_TASK, CHECKBOX_INPUT } =
+  //   actionValues;
+  // const { boards, currentBoard } = state;
+
+  const currentBoardData = data?.find((i) => i.id === currentBoard.id);
   const currentSubtasksData = currentBoardData?.data.subtasks?.filter(
     (i) => i.t_id === task.t_id
   );
@@ -28,23 +37,29 @@ const Task = ({ task, index }: CurrentTaskProps) => {
   return (
     <MiniCardWrapper
       onClick={() => {
-        dispatch({ type: MODAL_TOGGLE });
-        dispatch({
-          type: MODAL_TRACKER,
-          modalTrackerPayload: { name: "viewTask", value: true },
-        });
+        dispatch(toggleModal());
+        dispatch(setModal("viewTask"));
         currentSubtasksData &&
           currentBoardStatus &&
-          dispatch({
-            type: CURRENT_TASK,
-            currentTaskPayload: {
+          dispatch(
+            setCurrentTask({
               tasks: task,
               subtasks: currentSubtasksData,
               status: currentBoardStatus,
               index: index,
-            },
-          });
-        dispatch({ type: CHECKBOX_INPUT });
+            })
+          );
+        // dispatch({
+        //   type: CURRENT_TASK,
+        //   currentTaskPayload: {
+        //     tasks: task,
+        //     subtasks: currentSubtasksData,
+        //     status: currentBoardStatus,
+        //     index: index,
+        //   },
+        // });
+        dispatch(showSubtasks());
+        // dispatch({ type: CHECKBOX_INPUT });
       }}
     >
       <p>{task.title}</p>

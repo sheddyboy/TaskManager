@@ -3,9 +3,12 @@ import {
   ActionReducerTypeProps,
   BoardProps,
   BoardsProps,
+  BoardsStateReducer,
+  InputsStateReducer,
   StateManagerCtxProps,
   StateReducerProps,
   SubTaskProps,
+  ToggleStateReducer,
 } from "../types";
 
 export const defaultBoard: BoardProps = {
@@ -90,6 +93,45 @@ export const actionValues: ActionReducerTypeProps = {
   CURRENT_BOARD: "CURRENT_BOARD",
   CURRENT_TASK: "CURRENT_TASK",
   MODAL_TRACKER: "MODAL_TRACKER",
+};
+export const initialStateBoards: BoardsStateReducer = {
+  boards: defaultReducerStates.boards,
+  currentBoard: defaultReducerStates.currentBoard,
+  currentTask: defaultReducerStates.currentTask,
+  checkBoxInput: defaultReducerStates.checkBoxInput,
+};
+export const initialStateInputs: InputsStateReducer = {
+  boardNameInput: "",
+  taskNameInput: "",
+  descriptionInput: "",
+  dropdownInput: {
+    name: "",
+    c_id: "",
+  },
+  columnInput: [
+    {
+      name: "",
+      c_id: "",
+    },
+  ],
+  subtaskInput: defaultBoard.subtasks,
+};
+export const initialStateToggle: ToggleStateReducer = {
+  modalTracker: [
+    { name: "viewTask", value: false },
+    { name: "addNewTask", value: false },
+    { name: "editTask", value: false },
+    { name: "addNewBoard", value: false },
+    { name: "editBoard", value: false },
+    { name: "deleteBoard", value: false },
+    { name: "deleteTask", value: false },
+  ],
+  modalToggle: false,
+  optionEditOrDeleteBoard: false,
+  optionEditOrDeleteTask: false,
+  sidebarToggle: true,
+  theme: "light",
+  themeToggle: false,
 };
 
 export const testValues: Options[] = [
