@@ -24,7 +24,7 @@ import {
   Top,
 } from "./styled/SidebarWrapper.styled";
 import Toggle from "./UI/Toggle";
-import { useGetBoardsQuery } from "../features/boards/boardsAPI";
+import { useGetBoardsQuery } from "../features/boards/boardsApi";
 
 const Sidebar = () => {
   const { data, isSuccess } = useGetBoardsQuery();

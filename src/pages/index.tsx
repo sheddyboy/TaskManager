@@ -7,10 +7,9 @@ import Navbar from "../components/Navbar";
 import Modal from "../components/UI/Modal";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { ThemeProvider } from "styled-components";
-import { useGetBoardsQuery } from "../features/boards/boardsAPI";
+import { useGetBoardsQuery } from "../features/boards/boardsApi";
 import { toggleModal } from "../features/toggle/toggleSlice";
 import DataManager from "../dataManager";
-import { updateBoard, setCurrentBoard } from "../features/boards/boardsSlice";
 
 // import  from "../dataManager";
 // import getBoards from "../dataManager/getBoards";

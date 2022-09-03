@@ -1,6 +1,6 @@
 import React from "react";
 import { useAppSelector } from "../app/hooks";
-import { useGetBoardsQuery } from "../features/boards/boardsAPI";
+import { useGetBoardsQuery } from "../features/boards/boardsApi";
 import useGetCurrentBoard from "../hooks/useGetCurrentBoard";
 import useStateManager from "../hooks/useStateManager";
 import { ColumnWrapper } from "./styled/ColumnWrapper.styled";

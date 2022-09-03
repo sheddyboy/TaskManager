@@ -1,6 +1,6 @@
 import { useAppSelector } from "../app/hooks";
 import { defaultBoards } from "../defaultValues";
-import { useGetBoardsQuery } from "../features/boards/boardsAPI";
+import { useGetBoardsQuery } from "../features/boards/boardsApi";
 
 const useGetCurrentBoard = () => {
   const { data, isSuccess } = useGetBoardsQuery();

@@ -17,7 +17,7 @@ import {
 import {
   useAddBoardMutation,
   useGetBoardsQuery,
-} from "../features/boards/boardsAPI";
+} from "../features/boards/boardsApi";
 
 const AddNewBoard = () => {
   const [addBoard] = useAddBoardMutation();

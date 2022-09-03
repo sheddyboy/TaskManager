@@ -23,7 +23,7 @@ import {
   toggleSidebar,
   toggleModal,
 } from "../features/toggle/toggleSlice";
-import { useGetBoardsQuery } from "../features/boards/boardsAPI";
+import { useGetBoardsQuery } from "../features/boards/boardsApi";
 import useGetCurrentBoard from "../hooks/useGetCurrentBoard";
 
 const Navbar = () => {
