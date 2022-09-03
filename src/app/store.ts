@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { boardsApi } from "../features/boards/boardsAPI";
+import { boardsApi } from "../features/boards/boardsApi";
 import boardsSlice from "../features/boards/boardsSlice";
 import inputsSlice from "../features/inputs/inputsSlice";
 import toggleSlice from "../features/toggle/toggleSlice";
