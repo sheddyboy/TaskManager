@@ -7,7 +7,8 @@ import useStateManager from "../hooks/useStateManager";
 import { Button, DelButton } from "./UI/styled/Button.styled";
 import { Card, ModalCard } from "./UI/styled/Card.styled";
 import { toggleModal } from "../features/toggle/toggleSlice";
-import { setCurrentBoard } from "../features/boards/boardsSlice";
+import { setCurrentBoardIndex } from "../features/boards/boardsSlice";
+import useGetCurrentBoard from "../hooks/useGetCurrentBoard";
 
 const Title = styled.h2`
   margin-bottom: 24px;
@@ -37,44 +38,23 @@ const ButtonWrapper = styled.div`
 `;
 
 const DeleteBoard = () => {
+  const { currentBoardName, currentBoardId } = useGetCurrentBoard();
   const dispatch = useAppDispatch();
-  const { currentBoard } = useAppSelector((state) => state.boards);
-  const { deleteBoard, deleteBoardLocally } = DataManager();
-  // const { state, dispatch, actionValues } = useStateManager();
-  // const { currentBoard } = state;
-  // const { MODAL_TOGGLE, CURRENT_BOARD } = actionValues;
+  const { deleteBoard } = DataManager();
   return (
     <ModalCard>
       <Title>Delete this board?</Title>
       <Content>
-        {`Are you sure you want to delete the ‘${currentBoard.name}’ board? This action
+        {`Are you sure you want to delete the ‘${currentBoardName}’ board? This action
         will remove all columns and tasks and cannot be reversed.`}
       </Content>
       <ButtonWrapper>
         <DelButton
           onClick={() => {
-            deleteBoard(currentBoard.id);
-            deleteBoardLocally();
+            deleteBoard(currentBoardId);
+            // deleteBoardLocally();
             dispatch(toggleModal());
-
-            // dispatch({ type: MODAL_TOGGLE });
-            dispatch(
-              setCurrentBoard({
-                name: "",
-                id: "",
-                index: -1,
-                data: defaultBoards.data,
-              })
-            );
-            // dispatch({
-            //   type: CURRENT_BOARD,
-            //   currentBoardPayload: {
-            //     name: "",
-            //     id: "",
-            //     index: -1,
-            //     data: defaultBoards.data,
-            //   },
-            // });
+            dispatch(setCurrentBoardIndex(0));
           }}
         >
           Delete
@@ -83,8 +63,6 @@ const DeleteBoard = () => {
           state="secondary"
           onClick={() => {
             dispatch(toggleModal());
-            console.log("called");
-            // dispatch({ type: MODAL_TOGGLE });
           }}
         >
           Cancel

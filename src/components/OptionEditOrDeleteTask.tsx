@@ -1,7 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import useStateManager from "../hooks/useStateManager";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { OptionsCard } from "./UI/styled/Card.styled";
+import {
+  setDescriptionInput,
+  setTaskNameInput,
+  overideSubtaskInput,
+} from "../features/inputs/inputsSlice";
+import {
+  setModal,
+  toggleOptionEditOrDeleteTask,
+} from "../features/toggle/toggleSlice";
 
 const OptionEditOrDeleteTaskWrapper = styled.div`
   position: absolute;
@@ -29,56 +38,27 @@ const DeleteTask = styled.p`
 `;
 
 const OptionEditOrDeleteTask = () => {
-  const { state, dispatch, actionValues } = useStateManager();
-  const { currentTask, currentBoard } = state;
-  const {
-    MODAL_TRACKER,
-    OPTION_EDIT_OR_DELETE_TASK_TOGGLE,
-    TASK_NAME_INPUT,
-    DESCRIPTION_INPUT,
-    SUBTASK_INPUT,
-  } = actionValues;
+  const dispatch = useAppDispatch();
+  const { currentTask } = useAppSelector((state) => state.boards);
 
   return (
     <OptionEditOrDeleteTaskWrapper>
       <OptionsCard>
         <EditTask
           onClick={() => {
-            dispatch({
-              type: SUBTASK_INPUT,
-              subtaskInputPayload: {
-                function: "override",
-                value: currentTask.subtasks,
-              },
-            });
-            dispatch({
-              type: DESCRIPTION_INPUT,
-              descriptionInputPayload: currentTask.tasks.description,
-            });
-            dispatch({
-              type: TASK_NAME_INPUT,
-              taskNameInputPayload: currentTask.tasks.title,
-            });
-
-            dispatch({ type: OPTION_EDIT_OR_DELETE_TASK_TOGGLE });
-            dispatch({
-              type: MODAL_TRACKER,
-              modalTrackerPayload: {
-                name: "editTask",
-                value: true,
-              },
-            });
+            dispatch(overideSubtaskInput(currentTask.subtasks));
+            dispatch(setDescriptionInput(currentTask.tasks.description));
+            dispatch(setTaskNameInput(currentTask.tasks.title));
+            dispatch(toggleOptionEditOrDeleteTask());
+            dispatch(setModal("editTask"));
           }}
         >
           Edit Task
         </EditTask>
         <DeleteTask
           onClick={() => {
-            dispatch({ type: OPTION_EDIT_OR_DELETE_TASK_TOGGLE });
-            dispatch({
-              type: MODAL_TRACKER,
-              modalTrackerPayload: { name: "deleteTask", value: true },
-            });
+            dispatch(toggleOptionEditOrDeleteTask());
+            dispatch(setModal("deleteTask"));
           }}
         >
           Delete Task

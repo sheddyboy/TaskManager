@@ -8,7 +8,7 @@ import {
   toggleThemeButton,
   toggleSidebar,
 } from "../features/toggle/toggleSlice";
-import { setCurrentBoard } from "../features/boards/boardsSlice";
+import { setCurrentBoardIndex } from "../features/boards/boardsSlice";
 import useStateManager from "../hooks/useStateManager";
 import {
   AddedBoard,
@@ -28,27 +28,15 @@ import { useGetBoardsQuery } from "../features/boards/boardsAPI";
 
 const Sidebar = () => {
   const { data, isSuccess } = useGetBoardsQuery();
-  // console.log(data, isSuccess);
   const { theme, themeToggle } = useAppSelector((state) => state.toggle);
-  const { boards } = useAppSelector((state) => state.boards);
   const dispatch = useAppDispatch();
-  // const { state, dispatch, actionValues } = useStateManager();
-  // const {
-  //   SIDEBAR_TOGGLE,
-  //   THEME_TOGGLE,
-  //   THEME_TOGGLE_BUTTON,
-  //   MODAL_TOGGLE,
-  //   CURRENT_BOARD,
-  //   MODAL_TRACKER,
-  // } = actionValues;
-  // const { theme, themeButton, boards } = state;
-  // console.log(boards);
 
   return (
     <SidebarWrapper>
       <Top>
         <Logo>
           <Image
+            alt=""
             src={theme === "light" ? "/logo-dark.svg" : "/logo-light.svg"}
             width={153}
             height={26}
@@ -64,28 +52,12 @@ const Sidebar = () => {
                   name="board"
                   value={i.data.name}
                   onChange={(e) => {
-                    dispatch(
-                      setCurrentBoard({
-                        name: e.target.value,
-                        id: i.id,
-                        index: index,
-                        data: i.data,
-                      })
-                    );
-                    // dispatch({
-                    //   type: CURRENT_BOARD,
-                    // currentBoardPayload: {
-                    //   name: e.target.value,
-                    //   id: i.id,
-                    //   index: index,
-                    //   data: i.data,
-                    // },
-                    // });
+                    dispatch(setCurrentBoardIndex(index));
                   }}
                 />
                 <div></div>
                 <i>
-                  <Image src="/icon-board.svg" width={16} height={16} />
+                  <Image alt="" src="/icon-board.svg" width={16} height={16} />
                 </i>
                 <p>{i.data.name}</p>
               </label>
@@ -96,45 +68,37 @@ const Sidebar = () => {
       <Bottom>
         <CreateBoard
           onClick={() => {
-            // dispatch({ type: MODAL_TOGGLE });
             dispatch(toggleModal());
-            // dispatch({
-            //   type: MODAL_TRACKER,
-            //   modalTrackerPayload: { name: "addNewBoard", value: true },
-            // });
             dispatch(setModal("addNewBoard"));
           }}
         >
           <i>
-            <Image src="/icon-board-purple.svg" width={16} height={16} />
+            <Image alt="" src="/icon-board-purple.svg" width={16} height={16} />
           </i>
           <p>+ Create New Board</p>
         </CreateBoard>
         <Theme>
           <Sun>
-            <Image src="/icon-light-theme.svg" width={19} height={19} />
+            <Image alt="" src="/icon-light-theme.svg" width={19} height={19} />
           </Sun>
           <Toggle
             value={themeToggle}
             onToggle={() => {
-              // dispatch({ type: THEME_TOGGLE });
               dispatch(toggleTheme());
               dispatch(toggleThemeButton());
-              // dispatch({ type: THEME_TOGGLE_BUTTON });
             }}
           />
           <Moon>
-            <Image src="/icon-dark-theme.svg" width={16} height={16} />
+            <Image alt="" src="/icon-dark-theme.svg" width={16} height={16} />
           </Moon>
         </Theme>
         <HideSidebar
           onClick={() => {
             dispatch(toggleSidebar());
-            // dispatch({ type: SIDEBAR_TOGGLE });
           }}
         >
           <i>
-            <Image src="/icon-hide-sidebar.svg" width={18} height={16} />
+            <Image alt="" src="/icon-hide-sidebar.svg" width={18} height={16} />
           </i>
           <p>Hide Sidebar</p>
         </HideSidebar>

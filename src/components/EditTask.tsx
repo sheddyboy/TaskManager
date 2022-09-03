@@ -1,5 +1,7 @@
 import React from "react";
+import { useAppSelector } from "../app/hooks";
 import DataManager from "../dataManager";
+import useGetCurrentBoard from "../hooks/useGetCurrentBoard";
 import useStateManager from "../hooks/useStateManager";
 import { Label, Title } from "./AddNewTask";
 import Dropdown from "./UI/Dropdown";
@@ -8,18 +10,28 @@ import { Button } from "./UI/styled/Button.styled";
 import { Card, ModalCard } from "./UI/styled/Card.styled";
 import { InputField } from "./UI/styled/InputWrapper.styled";
 import { Textarea } from "./UI/styled/Textarea.styled";
+import {
+  updateSubtaskInput,
+  setTaskNameInput,
+  setDescriptionInput,
+  deleteSubtaskInput,
+  addSubtaskInput,
+} from "../features/inputs/inputsSlice";
 
 const EditTask = () => {
+  const { currentBoardStatus } = useGetCurrentBoard();
+  const { subtaskInput, descriptionInput, dropdownInput, taskNameInput } =
+    useAppSelector((state) => state.inputs);
   const { editTask } = DataManager();
   const { state, dispatch, actionValues } = useStateManager();
-  const {
-    subtaskInput,
-    descriptionInput,
-    currentBoard,
-    dropdownInput,
-    taskNameInput,
-  } = state;
-  const { SUBTASK_INPUT, TASK_NAME_INPUT, DESCRIPTION_INPUT } = actionValues;
+  // const {
+  //   subtaskInput,
+  //   descriptionInput,
+  //   currentBoard,
+  //   dropdownInput,
+  //   taskNameInput,
+  // } = state;
+  // const { SUBTASK_INPUT, TASK_NAME_INPUT, DESCRIPTION_INPUT } = actionValues;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,10 +45,7 @@ const EditTask = () => {
         <Input
           value={taskNameInput}
           onChange={(e) => {
-            dispatch({
-              type: TASK_NAME_INPUT,
-              taskNameInputPayload: e.target.value,
-            });
+            dispatch(setTaskNameInput(e.target.value));
           }}
           required
           placeholder="e.g. Take coffee break"
@@ -45,10 +54,7 @@ const EditTask = () => {
         <Label>Description</Label>
         <Textarea
           onChange={(e) => {
-            dispatch({
-              type: DESCRIPTION_INPUT,
-              descriptionInputPayload: e.target.value,
-            });
+            dispatch(setDescriptionInput(e.target.value));
           }}
           value={descriptionInput}
           placeholder="e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little."
@@ -66,23 +72,13 @@ const EditTask = () => {
                 required
                 value={i.s_title}
                 onChange={(e) => {
-                  dispatch({
-                    type: SUBTASK_INPUT,
-                    subtaskInputPayload: {
-                      function: "update",
-                      index: index,
-                      name: e.target.value,
-                    },
-                  });
+                  dispatch(updateSubtaskInput({ name: e.target.value, index }));
                 }}
                 canDelete={canDelete}
               />
               <i
                 onClick={() => {
-                  dispatch({
-                    type: SUBTASK_INPUT,
-                    subtaskInputPayload: { function: "delete", index: index },
-                  });
+                  dispatch(deleteSubtaskInput(index));
                 }}
               >
                 <img src="/icon-cross.svg" />
@@ -93,7 +89,7 @@ const EditTask = () => {
         <Button
           marginBottom="24px"
           onClick={() => {
-            dispatch({ type: SUBTASK_INPUT });
+            dispatch(addSubtaskInput());
           }}
           state="secondary"
         >
@@ -102,7 +98,7 @@ const EditTask = () => {
         <Dropdown
           marginBottom="24px"
           value={dropdownInput.name}
-          options={currentBoard.data.status}
+          options={currentBoardStatus}
         />
         <Button type="submit">Save Changes</Button>
       </form>

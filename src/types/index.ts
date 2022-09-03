@@ -114,7 +114,7 @@ export interface ActionReducerTypeProps {
 
 export interface BoardsStateReducer {
   boards: BoardsProps[];
-  currentBoard: CurrentBoardProps;
+  currentBoardIndex: number;
   currentTask: CurrentTaskProps;
   checkBoxInput: SubTaskProps[];
 }

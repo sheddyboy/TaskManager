@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import DataManager from "../dataManager";
+import useGetCurrentBoard from "../hooks/useGetCurrentBoard";
 import useStateManager from "../hooks/useStateManager";
 import { Button, DelButton } from "./UI/styled/Button.styled";
 import { Card, ModalCard } from "./UI/styled/Card.styled";
+import { toggleModal } from "../features/toggle/toggleSlice";
 
 const Title = styled.h2`
   margin-bottom: 24px;
@@ -33,10 +36,9 @@ const ButtonWrapper = styled.div`
 `;
 
 const DeleteTask = () => {
+  const { currentTask } = useAppSelector((state) => state.boards);
+  const dispatch = useAppDispatch();
   const { deleteTask } = DataManager();
-  const { state, dispatch, actionValues } = useStateManager();
-  const { currentTask } = state;
-  const { MODAL_TOGGLE, CURRENT_BOARD } = actionValues;
 
   return (
     <ModalCard>
@@ -49,7 +51,7 @@ const DeleteTask = () => {
         <DelButton
           onClick={() => {
             deleteTask();
-            dispatch({ type: MODAL_TOGGLE });
+            dispatch(toggleModal());
           }}
         >
           Delete
@@ -57,7 +59,7 @@ const DeleteTask = () => {
         <Button
           state="secondary"
           onClick={() => {
-            dispatch({ type: MODAL_TOGGLE });
+            dispatch(toggleModal());
           }}
         >
           Cancel

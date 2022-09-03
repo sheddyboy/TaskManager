@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
 import { initialStateBoards } from "../../defaultValues";
-import { BoardsProps, CurrentBoardProps, CurrentTaskProps } from "../../types";
+import { BoardsProps, CurrentTaskProps } from "../../types";
 
 export const boardsSlice = createSlice({
   name: "boards",
@@ -14,8 +14,8 @@ export const boardsSlice = createSlice({
     addBoard: (state, action: PayloadAction<BoardsProps>) => {
       state.boards.push(action.payload);
     },
-    setCurrentBoard: (state, action: PayloadAction<CurrentBoardProps>) => {
-      state.currentBoard = action.payload;
+    setCurrentBoardIndex: (state, action: PayloadAction<number>) => {
+      state.currentBoardIndex = action.payload;
     },
     setCurrentTask: (state, action: PayloadAction<CurrentTaskProps>) => {
       state.currentTask = action.payload;
@@ -35,7 +35,7 @@ export const boardsSlice = createSlice({
 
 export const {
   addBoard,
-  setCurrentBoard,
+  setCurrentBoardIndex,
   setCurrentTask,
   updateBoard,
   showSubtasks,

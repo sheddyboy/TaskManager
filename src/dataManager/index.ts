@@ -1,4 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { v4 as uuidv4 } from "uuid";
+
 import { Options } from "../components/UI/Dropdown";
 import {
   useGetBoardsQuery,
@@ -14,22 +16,28 @@ import {
   SubTaskProps,
   TaskProps,
 } from "../types";
-import { setCurrentBoard, updateBoard } from "../features/boards/boardsSlice";
+import {
+  setCurrentBoardIndex,
+  updateBoard,
+} from "../features/boards/boardsSlice";
 
 import { toggleModal } from "../features/toggle/toggleSlice";
 import {
   resetColumnInput,
   resetSubtaskInput,
+  setDropdownInput,
   setBoardNameInput,
   setDescriptionInput,
   setTaskNameInput,
 } from "../features/inputs/inputsSlice";
+import useGetCurrentBoard from "../hooks/useGetCurrentBoard";
 
 const DataManager = () => {
+  const { currentBoardId } = useGetCurrentBoard();
+  // const { refetch } = useGetBoardsQuery();
+
   const dispatch = useAppDispatch();
-  const { boards, currentBoard, currentTask } = useAppSelector(
-    (state) => state.boards
-  );
+  const { boards, currentTask } = useAppSelector((state) => state.boards);
   const {
     boardNameInput,
     columnInput,
@@ -69,14 +77,14 @@ const DataManager = () => {
     // if (isSuccess) {
     //   console.log(data, "in");
     // dispatch(updateBoard(data));
-    //   dispatch(
-    //     setCurrentBoard({
-    //       name: data[0].data.name,
-    //       id: data[0].id,
-    //       index: 0,
-    //       data: data[0].data,
-    //     })
-    //   );
+    // dispatch(
+    //   setCurrentBoard({
+    //     name: data[0].data.name,
+    //     id: data[0].id,
+    //     index: 0,
+    //     data: data[0].data,
+    //   })
+    // );
     // }
     // axios("/api/boards").then((data) => {
     //   dispatch({ type: IS_LOADING, isLoadingPayload: true });
@@ -112,75 +120,108 @@ const DataManager = () => {
     // axios.delete(`/api/boards/${id}`);
   };
   const [addTaskMutation] = useAddTaskMutation();
-  const addTask = (id: string, body: PostBoardBody) => {
-    addTaskMutation({ t_id: id, subtasks: body.subtasks, tasks: body.tasks });
-    // axios.put(`/api/boards/${id}`, body);
-  };
-
-  const addTaskLocally = (tasks: TaskProps, subtasks: SubTaskProps[]) => {
-    let prevTasks = currentBoard.data.tasks ? currentBoard.data.tasks : [];
-    let prevSubTasks = currentBoard.data.subtasks
-      ? currentBoard.data.subtasks
-      : [];
-    const updatedCurrentBoard: BoardsProps = {
-      id: currentBoard.id,
-      data: {
-        name: currentBoard.data?.name,
-        status: currentBoard.data?.status,
-        tasks: [...prevTasks, tasks],
-        subtasks: [...prevSubTasks, ...subtasks],
-      },
+  const addTask = () => {
+    console.log("called");
+    const t_id = uuidv4();
+    const tasks = {
+      t_id: t_id,
+      description: descriptionInput,
+      status: dropdownInput.name,
+      c_id: dropdownInput.c_id,
+      title: taskNameInput,
     };
-    const dummyBoards = [...boards];
-    dummyBoards[currentBoard.index] = updatedCurrentBoard;
-    dispatch(updateBoard(dummyBoards));
-    // dispatch({
-    //   type: BOARDS,
-    //   boardsPayload: {
-    //     data: dummyBoards,
-    //     function: "update",
-    //   },
-    // });
-    dispatch(
-      setCurrentBoard({
-        name: currentBoard.name,
-        id: currentBoard.id,
-        index: currentBoard.index,
-        data: updatedCurrentBoard.data,
-      })
-    );
-
-    //   dispatch({
-    //     type: CURRENT_BOARD,
-    //     currentBoardPayload: {
+    const subtasks = subtaskInput.map((i) => ({
+      isCompleted: false,
+      s_id: uuidv4(),
+      c_id: dropdownInput.c_id,
+      s_title: i.s_title,
+      t_id: t_id,
+    }));
+    addTaskMutation({
+      id: currentBoardId,
+      subtasks,
+      tasks,
+    });
+    // if (isSuccess) {
+    //   dispatch(
+    //     setCurrentBoard({
     //       name: currentBoard.name,
     //       id: currentBoard.id,
     //       index: currentBoard.index,
-    //       data: updatedCurrentBoard.data,
-    //     },
-    //   });
-    // };
+    //       data: data[currentBoard.index].data,
+    //     })
+    //   );
+    // }
+    // refetch();
+    taskInputReset();
+
+    // axios.put(`/api/boards/${id}`, body);
   };
 
-  const deleteBoardLocally = () => {
-    const dummyBoards = [...boards];
-    dummyBoards.splice(currentBoard.index, 1);
+  // const addTaskLocally = (tasks: TaskProps, subtasks: SubTaskProps[]) => {
+  //   let prevTasks = currentBoard.data.tasks ? currentBoard.data.tasks : [];
+  //   let prevSubTasks = currentBoard.data.subtasks
+  //     ? currentBoard.data.subtasks
+  //     : [];
+  //   const updatedCurrentBoard: BoardsProps = {
+  //     id: currentBoard.id,
+  //     data: {
+  //       name: currentBoard.data?.name,
+  //       status: currentBoard.data?.status,
+  //       tasks: [...prevTasks, tasks],
+  //       subtasks: [...prevSubTasks, ...subtasks],
+  //     },
+  //   };
+  //   const dummyBoards = [...boards];
+  //   dummyBoards[currentBoard.index] = updatedCurrentBoard;
+  //   dispatch(updateBoard(dummyBoards));
+  //   // dispatch({
+  //   //   type: BOARDS,
+  //   //   boardsPayload: {
+  //   //     data: dummyBoards,
+  //   //     function: "update",
+  //   //   },
+  //   // });
+  //   dispatch(
+  //     setCurrentBoard({
+  //       name: currentBoard.name,
+  //       id: currentBoard.id,
+  //       index: currentBoard.index,
+  //       data: updatedCurrentBoard.data,
+  //     })
+  //   );
 
-    dispatch(updateBoard(dummyBoards));
+  //   //   dispatch({
+  //   //     type: CURRENT_BOARD,
+  //   //     currentBoardPayload: {
+  //   //       name: currentBoard.name,
+  //   //       id: currentBoard.id,
+  //   //       index: currentBoard.index,
+  //   //       data: updatedCurrentBoard.data,
+  //   //     },
+  //   //   });
+  //   // };
+  // };
 
-    // dispatch({
-    //   type: BOARDS,
-    //   boardsPayload: {
-    //     data: dummyBoards,
-    //     function: "update",
-    //   },
-    // });
-  };
+  // const deleteBoardLocally = () => {
+  //   const dummyBoards = [...boards];
+  //   dummyBoards.splice(currentBoard.index, 1);
+
+  //   dispatch(updateBoard(dummyBoards));
+
+  //   // dispatch({
+  //   //   type: BOARDS,
+  //   //   boardsPayload: {
+  //   //     data: dummyBoards,
+  //   //     function: "update",
+  //   //   },
+  //   // });
+  // };
 
   const changeStatus = (option: Options) => {
     const dummyBoards = [...boards];
     dummyBoards.map((i, index, array) => {
-      if (i.id === currentBoard.id) {
+      if (i.id === currentBoardId) {
         i.data.tasks.map((t, tIndex) => {
           if (t.t_id === currentTask.tasks.t_id) {
             array[index].data.tasks[tIndex].status = option.name;
@@ -209,7 +250,7 @@ const DataManager = () => {
   const deleteTask = () => {
     const dummyBoards = [...boards];
     dummyBoards.map((i, index, array) => {
-      if (i.id === currentBoard.id) {
+      if (i.id === currentBoardId) {
         i.data.tasks.map((t, tIndex) => {
           if (t.t_id === currentTask.tasks.t_id) {
             array[index].data.tasks.splice(tIndex, 1);
@@ -233,14 +274,17 @@ const DataManager = () => {
     // });
   };
   const editBoard = () => {
-    dispatch(
-      setCurrentBoard({
-        name: boardNameInput,
-        data: currentBoard.data,
-        id: currentBoard.id,
-        index: currentBoard.index,
-      })
-    );
+    // dispatch(
+    //   setCurrentBoard({
+    //     name: boardNameInput,
+    //     data: currentBoard.data,
+    //     id: currentBoard.id,
+    //     index: currentBoard.index,
+    //   })
+    // );
+    // dispatch(
+    //   setCurrentBoardIndex()
+    // );
 
     // dispatch({
     //   type: CURRENT_BOARD,
@@ -257,7 +301,7 @@ const DataManager = () => {
     // });
     const dummyBoards = [...boards];
     dummyBoards.map((i) => {
-      if (i.id === currentBoard.id) {
+      if (i.id === currentBoardId) {
         i.data.name = boardNameInput;
         i.data.status = columnInput;
       }
@@ -277,7 +321,7 @@ const DataManager = () => {
   const editTask = () => {
     const dummyBoards = [...boards];
     dummyBoards.map((i, index, array) => {
-      if (i.id === currentBoard.id) {
+      if (i.id === currentBoardId) {
         i.data.tasks.map((t, tIndex) => {
           if (t.t_id === currentTask.tasks.t_id) {
             array[index].data.tasks[tIndex].title = taskNameInput;
@@ -342,6 +386,12 @@ const DataManager = () => {
     //     function: "reset",
     //   },
     // });
+
+    dispatch(setDropdownInput({ name: "", c_id: "" }));
+    // dispatch({
+    //   type: DROPDOWN_INPUT,
+    //   dropdownInputPayload: { name: "", c_id: "" },
+    // });
   };
 
   return {
@@ -349,8 +399,6 @@ const DataManager = () => {
     addBoard,
     deleteBoard,
     addTask,
-    addTaskLocally,
-    deleteBoardLocally,
     changeStatus,
     deleteTask,
     editBoard,

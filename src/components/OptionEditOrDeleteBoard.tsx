@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import useStateManager from "../hooks/useStateManager";
 import { OptionsCard } from "./UI/styled/Card.styled";
 import {
   toggleOptionEditOrDeleteBoard,
@@ -12,6 +11,7 @@ import {
   setBoardNameInput,
   overideColumnInput,
 } from "../features/inputs/inputsSlice";
+import useGetCurrentBoard from "../hooks/useGetCurrentBoard";
 
 const OptionEditOrDeleteBoardWrapper = styled.div`
   position: absolute;
@@ -42,24 +42,15 @@ const DeleteBoard = styled.p`
 `;
 
 const OptionEditOrDeleteBoard = () => {
-  const { currentBoard } = useAppSelector((state) => state.boards);
+  const { currentBoardName, currentBoardStatus } = useGetCurrentBoard();
   const dispatch = useAppDispatch();
-  // const { state, dispatch, actionValues } = useStateManager();
-  // const { currentBoard } = state;
-  // const {
-  //   MODAL_TOGGLE,
-  //   MODAL_TRACKER,
-  //   OPTION_EDIT_OR_DELETE_BOARD_TOGGLE,
-  //   BOARD_NAME_INPUT,
-  //   COLUMN_INPUT,
-  // } = actionValues;
   return (
     <OptionEditOrDeleteBoardWrapper>
       <OptionsCard>
         <EditBoard
           onClick={() => {
-            dispatch(overideColumnInput(currentBoard.data.status));
-            dispatch(setBoardNameInput(currentBoard.name));
+            dispatch(overideColumnInput(currentBoardStatus));
+            dispatch(setBoardNameInput(currentBoardName));
             dispatch(toggleModal());
             dispatch(toggleOptionEditOrDeleteBoard());
             dispatch(setModal("editBoard"));

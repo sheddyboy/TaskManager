@@ -23,10 +23,13 @@ import {
   toggleSidebar,
   toggleModal,
 } from "../features/toggle/toggleSlice";
+import { useGetBoardsQuery } from "../features/boards/boardsAPI";
+import useGetCurrentBoard from "../hooks/useGetCurrentBoard";
 
 const Navbar = () => {
+  const { currentBoardName } = useGetCurrentBoard();
+
   const dispatch = useAppDispatch();
-  const { currentBoard } = useAppSelector((state) => state.boards);
   const { theme, sidebarToggle, optionEditOrDeleteBoard } = useAppSelector(
     (state) => state.toggle
   );
@@ -47,6 +50,7 @@ const Navbar = () => {
       {!sidebarToggle && (
         <Logo>
           <Image
+            alt=""
             src={theme === "light" ? "/logo-dark.svg" : "/logo-light.svg"}
             width={153}
             height={26}
@@ -60,43 +64,53 @@ const Navbar = () => {
           }}
         >
           {windowWidth <= 580 && (
-            <Image src="/logo-mobile.svg" width={24} height={25} />
+            <Image alt="" src="/logo-mobile.svg" width={24} height={25} />
           )}
-          <Title>{currentBoard.name}</Title>
+          <Title>{currentBoardName}</Title>
           {windowWidth <= 580 && (
-            <Image src="/icon-chevron-down.svg" width={10} height={7} />
+            <Image alt="" src="/icon-chevron-down.svg" width={10} height={7} />
           )}
         </TitleWrapper>
-        {currentBoard.id !== "" && (
-          <Actions>
-            <NavButton
-              onClick={() => {
-                dispatch(toggleModal());
-                dispatch(setModal("addNewTask"));
-              }}
-              state="primary"
-              size="large"
-            >
-              + Add New Task
-            </NavButton>
-            <NavButtonMobile
-              onClick={() => {
-                dispatch(toggleModal());
-                dispatch(setModal("addNewTask"));
-              }}
-            >
-              <Image src="/icon-add-task-mobile.svg" width={12} height={12} />
-            </NavButtonMobile>
-            <i
-              onClick={() => {
-                dispatch(toggleOptionEditOrDeleteBoard());
-              }}
-            >
-              <Image src="/icon-vertical-ellipsis.svg" width={5} height={20} />
-            </i>
-            {optionEditOrDeleteBoard && <OptionEditOrDeleteBoard />}
-          </Actions>
-        )}
+        {/* {currentBoard.id !== "" && ( */}
+        <Actions>
+          <NavButton
+            onClick={() => {
+              dispatch(toggleModal());
+              dispatch(setModal("addNewTask"));
+            }}
+            state="primary"
+            size="large"
+          >
+            + Add New Task
+          </NavButton>
+          <NavButtonMobile
+            onClick={() => {
+              dispatch(toggleModal());
+              dispatch(setModal("addNewTask"));
+            }}
+          >
+            <Image
+              alt=""
+              src="/icon-add-task-mobile.svg"
+              width={12}
+              height={12}
+            />
+          </NavButtonMobile>
+          <i
+            onClick={() => {
+              dispatch(toggleOptionEditOrDeleteBoard());
+            }}
+          >
+            <Image
+              alt=""
+              src="/icon-vertical-ellipsis.svg"
+              width={5}
+              height={20}
+            />
+          </i>
+          {optionEditOrDeleteBoard && <OptionEditOrDeleteBoard />}
+        </Actions>
+        {/* )} */}
       </Content>
     </NavbarWrapper>
   );

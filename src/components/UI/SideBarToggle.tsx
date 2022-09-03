@@ -14,7 +14,7 @@ const SideBarToggle = () => {
       }}
     >
       <i>
-        <Image src="/eye.svg" width={16} height={11} />
+        <Image alt="" src="/eye.svg" width={16} height={11} />
       </i>
     </SideBarToggleWrapper>
   );

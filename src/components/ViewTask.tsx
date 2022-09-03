@@ -10,6 +10,7 @@ import Dropdown, { Options } from "./UI/Dropdown";
 import { Card, ModalCard } from "./UI/styled/Card.styled";
 import { updateSubtask } from "../features/boards/boardsSlice";
 import { toggleOptionEditOrDeleteTask } from "../features/toggle/toggleSlice";
+import useGetCurrentBoard from "../hooks/useGetCurrentBoard";
 
 const TitleWrapper = styled.div`
   position: relative;
@@ -48,20 +49,13 @@ const Content = styled.div`
 `;
 
 const ViewTask = () => {
+  const { currentBoardStatus } = useGetCurrentBoard();
   const dispatch = useAppDispatch();
-  const { currentBoard, currentTask, checkBoxInput } = useAppSelector(
+  const { currentTask, checkBoxInput } = useAppSelector(
     (state) => state.boards
   );
   const { optionEditOrDeleteTask } = useAppSelector((state) => state.toggle);
   const { changeStatus } = DataManager();
-  // const { state, dispatch, actionValues } = useStateManager();
-  // const { CHECKBOX_INPUT, OPTION_EDIT_OR_DELETE_TASK_TOGGLE } = actionValues;
-  // const {
-  //   currentTask,
-  //   checkBoxInput,
-  //   currentBoard,
-  //   toggleOptionEditOrDeleteTask,
-  // } = state;
   const { tasks, subtasks } = currentTask;
 
   const completedSubtasks = subtasks.filter((i) => i.isCompleted === true);
@@ -72,10 +66,14 @@ const ViewTask = () => {
         <i
           onClick={() => {
             dispatch(toggleOptionEditOrDeleteTask());
-            // dispatch({ type: OPTION_EDIT_OR_DELETE_TASK_TOGGLE });
           }}
         >
-          <Image src="/icon-vertical-ellipsis.svg" width={5} height={20} />
+          <Image
+            alt=""
+            src="/icon-vertical-ellipsis.svg"
+            width={5}
+            height={20}
+          />
         </i>
         {optionEditOrDeleteTask && <OptionEditOrDeleteTask />}
       </TitleWrapper>
@@ -99,7 +97,7 @@ const ViewTask = () => {
       </Content>
       <Dropdown
         label="Current Status"
-        options={currentBoard.data.status}
+        options={currentBoardStatus}
         onChange={(option: Options) => {
           changeStatus(option);
         }}

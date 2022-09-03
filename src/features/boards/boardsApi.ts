@@ -10,31 +10,44 @@ import {
 
 export const boardsApi = createApi({
   reducerPath: "boardsApi",
+  tagTypes: ["Boards"],
   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
   endpoints: (builder) => ({
-    getBoards: builder.query<BoardsProps[], void>({ query: () => "/boards" }),
+    getBoards: builder.query<BoardsProps[], void>({
+      query: () => "/boards",
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "Boards" as const, id })),
+              { type: "Boards", id: "LIST" },
+            ]
+          : [{ type: "Boards", id: "LIST" }],
+    }),
     addBoard: builder.mutation<string, AddBoardProps>({
       query: (board) => ({
         url: "/boards",
         method: "POST",
         body: board,
       }),
+      invalidatesTags: [{ type: "Boards", id: "LIST" }],
     }),
     deleteBoard: builder.mutation<{ Message: string }, string>({
       query: (id) => ({
-        url: `/boards${id}`,
+        url: `/boards/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: (result, error, id) => [{ type: "Boards", id }],
     }),
     addTask: builder.mutation<
-      { Message: string },
-      Partial<PostBoardBody> & Pick<TaskProps, "t_id">
+      PostBoardBody,
+      Pick<BoardsProps, "id"> & Partial<PostBoardBody>
     >({
-      query: ({ t_id, ...patch }) => ({
-        url: `/boards${t_id}`,
+      query: ({ id, ...patch }) => ({
+        url: `/boards/${id}`,
         method: "PUT",
         body: patch,
       }),
+      invalidatesTags: [{ type: "Boards", id: "LIST" }],
     }),
   }),
 });

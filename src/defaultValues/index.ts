@@ -41,7 +41,7 @@ export const defaultReducerStates: StateReducerProps = {
   boardNameInput: "",
   taskNameInput: "",
   descriptionInput: "",
-  currentBoard: { name: "", id: "", index: -1, data: defaultBoard },
+  currentBoard: { name: "", id: "", index: 0, data: defaultBoard },
   currentTask: {
     status: [{ name: "", c_id: "" }],
     tasks: { title: "", status: "", t_id: "", c_id: "", description: "" },
@@ -96,7 +96,7 @@ export const actionValues: ActionReducerTypeProps = {
 };
 export const initialStateBoards: BoardsStateReducer = {
   boards: defaultReducerStates.boards,
-  currentBoard: defaultReducerStates.currentBoard,
+  currentBoardIndex: 0,
   currentTask: defaultReducerStates.currentTask,
   checkBoxInput: defaultReducerStates.checkBoxInput,
 };

@@ -1,21 +1,35 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import DataManager from "../dataManager";
 import useStateManager from "../hooks/useStateManager";
 import Input from "./UI/Input";
 import { Button } from "./UI/styled/Button.styled";
 import { Card, ModalCard, Title } from "./UI/styled/Card.styled";
 import { InputField, Label } from "./UI/styled/InputWrapper.styled";
+import { toggleModal } from "../features/toggle/toggleSlice";
+import {
+  addColumnInput,
+  deleteColumnInput,
+  updateColumnInput,
+  setBoardNameInput,
+} from "../features/inputs/inputsSlice";
+import {
+  useAddBoardMutation,
+  useGetBoardsQuery,
+} from "../features/boards/boardsAPI";
 
 const AddNewBoard = () => {
-  const { state, dispatch, actionValues } = useStateManager();
-  const { COLUMN_INPUT, BOARD_NAME_INPUT, MODAL_TOGGLE, BOARDS } = actionValues;
-  const { addBoard, boardInputReset } = DataManager();
-  const { columnInput, boardNameInput } = state;
+  const [addBoard] = useAddBoardMutation();
+  const dispatch = useAppDispatch();
+  const { columnInput, boardNameInput } = useAppSelector(
+    (state) => state.inputs
+  );
+  const { boardInputReset } = DataManager();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    dispatch({ type: MODAL_TOGGLE });
     e.preventDefault();
+    dispatch(toggleModal());
 
     const status = columnInput.map((i) => {
       return { name: i.name, c_id: uuidv4() };
@@ -24,17 +38,7 @@ const AddNewBoard = () => {
       name: boardNameInput,
       status: status,
     };
-    const { data } = addBoard(addBoardData);
-
-    data.then((id) => {
-      dispatch({
-        type: BOARDS,
-        boardsPayload: {
-          data: [{ id: id, data: { name: boardNameInput, status: status } }],
-          function: "add",
-        },
-      });
-    });
+    addBoard(addBoardData);
     boardInputReset();
   };
 
@@ -48,10 +52,7 @@ const AddNewBoard = () => {
           marginBottom="20px"
           value={boardNameInput}
           onChange={(e) => {
-            dispatch({
-              type: BOARD_NAME_INPUT,
-              boardNameInputPayload: e.target.value,
-            });
+            dispatch(setBoardNameInput(e.target.value));
           }}
         />
 
@@ -68,23 +69,15 @@ const AddNewBoard = () => {
                 value={i.name}
                 marginBottom="12px"
                 onChange={(e) => {
-                  dispatch({
-                    type: COLUMN_INPUT,
-                    columnInputPayload: {
-                      function: "update",
-                      index: index,
-                      name: e.target.value,
-                    },
-                  });
+                  dispatch(
+                    updateColumnInput({ name: e.target.value, index: index })
+                  );
                 }}
                 canDelete={canDelete}
               />
               <i
                 onClick={() => {
-                  dispatch({
-                    type: COLUMN_INPUT,
-                    columnInputPayload: { function: "delete", index: index },
-                  });
+                  dispatch(deleteColumnInput(index));
                 }}
               >
                 <img src="/icon-cross.svg" />
@@ -96,7 +89,7 @@ const AddNewBoard = () => {
           state="secondary"
           marginTop="12px"
           onClick={() => {
-            dispatch({ type: COLUMN_INPUT });
+            dispatch(addColumnInput());
           }}
         >
           + Add New Column

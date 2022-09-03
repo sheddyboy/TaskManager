@@ -1,5 +1,7 @@
 import React from "react";
 import { useAppSelector } from "../app/hooks";
+import { useGetBoardsQuery } from "../features/boards/boardsAPI";
+import useGetCurrentBoard from "../hooks/useGetCurrentBoard";
 import useStateManager from "../hooks/useStateManager";
 import { ColumnWrapper } from "./styled/ColumnWrapper.styled";
 import { StatusWrapper } from "./styled/StatusWrapper.styled";
@@ -10,18 +12,15 @@ interface ColumnProps {
   c_id: string;
 }
 const Column = ({ status, c_id }: ColumnProps) => {
-  const { currentBoard } = useAppSelector((state) => state.boards);
-  // const { state } = useStateManager();
-  // const { currentBoard } = state;
-
-  const tasks = currentBoard?.data.tasks;
-  const columnTasks = tasks?.filter((i) => i.c_id === c_id);
+  const { currentBoardTasks } = useGetCurrentBoard();
+  console.log(currentBoardTasks);
+  const columnTasks = currentBoardTasks.filter((i) => i.c_id === c_id);
 
   return (
     <ColumnWrapper>
       <StatusWrapper>
         <i></i>
-        <p>{`${status}(${columnTasks?.length ? columnTasks?.length : 0})`}</p>
+        <p>{`${status}(${columnTasks.length ? columnTasks?.length : 0})`}</p>
       </StatusWrapper>
       {columnTasks?.map((i, index) => (
         <Task task={i} key={i.t_id} index={index} />

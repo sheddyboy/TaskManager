@@ -6,6 +6,8 @@ import { DropdownHeaderTitle } from "./styled/DropdownHeaderTitle.styled";
 import { DropdownList } from "./styled/DropdownList.styled";
 import { DropdownListItem } from "./styled/DropdownListItem.styled";
 import { DropdownWrapper } from "./styled/DropdownWrapper.styled";
+import { setDropdownInput } from "../../features/inputs/inputsSlice";
+import { useAppDispatch } from "../../app/hooks";
 
 export interface Options {
   name: string;
@@ -29,15 +31,16 @@ const Dropdown = ({
   label,
   onChange,
 }: DropdownProps) => {
+  const dispatch = useAppDispatch();
   const [dropdownToggle, setDropdownToggle] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownToggle((dropdownToggle) => !dropdownToggle);
   };
 
-  const { state, dispatch, actionValues } = useStateManager();
-  const { dropdownInput } = state;
-  const { DROPDOWN_INPUT } = actionValues;
+  // const { state, dispatch, actionValues } = useStateManager();
+  // const { dropdownInput } = state;
+  // const { DROPDOWN_INPUT } = actionValues;
 
   return (
     <DropdownWrapper
@@ -47,7 +50,7 @@ const Dropdown = ({
       <DropdownHeader onClick={toggleDropdown}>
         <Title title={value}></Title>
         <i>
-          <Image src="/icon-chevron-down.svg" width={10} height={7} />
+          <Image alt="" src="/icon-chevron-down.svg" width={10} height={7} />
         </i>
       </DropdownHeader>
       {dropdownToggle && (
@@ -58,10 +61,11 @@ const Dropdown = ({
               title={option.name}
               onClick={() => {
                 toggleDropdown();
-                dispatch({
-                  type: DROPDOWN_INPUT,
-                  dropdownInputPayload: option,
-                });
+                dispatch(setDropdownInput(option));
+                // dispatch({
+                //   type: DROPDOWN_INPUT,
+                //   dropdownInputPayload: option,
+                // });
                 onChange && onChange(option);
               }}
             />
